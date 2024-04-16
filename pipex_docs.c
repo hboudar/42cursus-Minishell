@@ -1,6 +1,6 @@
 {---------------------------------@PIPEX------------------------------------}
 | 1) pipe & Fork first then check                                           |
-|    'nbr of commands == nbr of pipes - 1 == nbr of forks == '              |
+|    'nbr of commands == nbr of pipes - 1 == nbr of forks == nbr of waitpid'|
 |                                                                           |
 | 2) Method for all commnds                                                 |
 |    $first  :   if ("here_doc")                                            |
