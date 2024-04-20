@@ -6,14 +6,10 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/20 16:29:30 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:57:52 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int execution(t_data *prompt)
-{
-    (void)prompt;
-    return (0);
-}
+line = readline("\033[1;34m➜ minishell \033[0m");
