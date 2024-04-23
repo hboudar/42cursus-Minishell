@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/20 19:03:57 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/23 08:58:13 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@
 # include <curses.h>
 # include <limits.h>
 # include <stdbool.h>
+
+int execution(t_prompt *prompt, char *env[]);
 
 #endif
