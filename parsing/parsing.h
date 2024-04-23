@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/22 18:14:46 by aoulahra         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/23 13:06:25 by hboudar          ###   ########.fr       */
->>>>>>> c16e03627442c4373386e6ddc305ea6878482c24
+/*   Updated: 2024/04/23 15:14:44 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef PARSING_H
 # define PARSING_H
