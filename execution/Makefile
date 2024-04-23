@@ -1,7 +1,7 @@
-SRC		=
+SRC		= execution.c
 OBJ		= $(SRC:.c=.o)
-HEADER	= minishell.h
-NAME	= minishell
+HEADER	= execution.h
+NAME	= exe
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
@@ -9,7 +9,7 @@ RM		= rm -f
 all: pre $(NAME)
 
 $(NAME): $(OBJ) utils/libft.a
-	$(CC) -lreadline $(OBJ) -o $(NAME) utils/libft.a
+	$(CC) $(OBJ) -o $(NAME) utils/libft.a
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@

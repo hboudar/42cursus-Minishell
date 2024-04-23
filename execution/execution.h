@@ -6,13 +6,15 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/20 16:48:48 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/20 19:03:57 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
+# include "../parsing/parsing.h"
+# include "utils/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
