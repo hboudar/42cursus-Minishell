@@ -87,6 +87,3 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-=======
- 
->>>>>>> a64b1918a8c4b26a2199b50229ce55654d5dd616
