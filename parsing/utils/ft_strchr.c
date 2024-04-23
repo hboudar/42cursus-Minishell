@@ -1,14 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/20 16:58:25 by aoulahra         ###   ########.fr       */
+/*   Created: 2023/11/01 14:58:55 by aoulahra          #+#    #+#             */
+/*   Updated: 2023/11/07 16:17:13 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "libft.h"
 
+char	*ft_strchr(const char *str, int c)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	ptr = (char *)str;
+	while (ptr[i] != (char )c)
+	{
+		if (ptr[i] == '\0')
+			return (NULL);
+		i++;
+	}
+	return (ptr + i);
+}

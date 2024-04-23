@@ -6,12 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/20 16:24:30 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:14:46 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+# include "utils/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -35,18 +36,14 @@ enum e_prmpt_type
 {
 	AND,
 	OR,
-	PARENTHESIS,
 	NONE,
 };
 
-enum e_type
+enum e_cmd_type
 {
 	CMD,
-	IN_REDIR,
-	OUT_REDIR,
-	APPEND_REDIR,
 	HERE_DOC,
-	PIPE,
+	PIPECMD,
 };
 
 enum e_state
@@ -56,13 +53,25 @@ enum e_state
 	GENERAL,
 };
 
+enum e_type
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HERE_DOC,
+} t_type;
+
 typedef struct s_cmd
 {
 	char			*data;
 	char			**args;
-    enum e_type		type;
+	int				size;
+    enum e_cmd_type	type;
     enum e_state	state;
-	struct s_cmd	*next;
+	struct s_cmd	*left;
+	struct s_cmd	*right;
 }		t_cmd;
 
 typedef struct s_prompt
@@ -72,5 +81,29 @@ typedef struct s_prompt
 	struct s_prompt		*left;
 	struct s_prompt		*right;
 }		t_prompt;
+
+typedef struct s_token
+{
+	char			*data;
+	int				size;
+	enum e_type		type;
+	enum e_state	state;
+	struct s_token	*next;
+}		t_token;
+
+t_prompt	*parse_prompt(char *line);
+t_cmd		*parse_line(char *line);
+t_token		*parse_token(char *line);
+void		get_token_type(t_token *token);
+void		get_token_state(t_token *token);
+char		**ft_split_prompt(char *line, char *sep1, char *sep2);
+int			has_pipe(t_token *token);
+void		get_cmd(t_cmd **cmd, t_token *token);
+void		free_tab(char **args);
+size_t		ft_prmptlen(char *line);
+size_t		ft_tablen(char **args);
+void		free_cmd(t_cmd *cmd);
+void		free_token(t_token *token);
+void		print_cmd(t_cmd *cmd);
 
 #endif
