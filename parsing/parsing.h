@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/23 15:14:44 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:48:51 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ enum e_type
 
 typedef struct s_cmd
 {
-	char			*data;
 	char			**args;
 	int				size;
+	char			*infile;
+	char			*outfile;
+	char			*limiter;
+	int				appendable;
     enum e_cmd_type	type;
     enum e_state	state;
 	struct s_cmd	*left;
