@@ -3,7 +3,7 @@ OBJ		= $(SRC:.c=.o)
 HEADER	= parsing.h ../minishell.h
 NAME	= parsing
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 RM		= rm -f
 
 all: pre $(NAME)

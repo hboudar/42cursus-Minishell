@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/22 15:42:35 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:32:35 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_prompt	*parse_prompt(char *line)
+t_prompt	*parse_prompt(char *line, char **env)
 {
 	t_prompt	*prmpt;
 	char		**args;
@@ -23,7 +23,7 @@ t_prompt	*parse_prompt(char *line)
 	args = ft_split_prompt(line, "&&", "||");
 	while(args[i])
 	{
-		prmpt->cmd = parse_line(args[i]);
+		prmpt->cmd = parse_line(args[i], env);
 		i++;
 	}
 	return (prmpt);

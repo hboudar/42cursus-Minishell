@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/23 15:13:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:31:11 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_cmd(t_cmd *cmd)
 	if (cmd && cmd->type == PIPECMD)
 	{
 		print_cmd(cmd->left);
-		printf("|\n");
+		printf("| ");
 		print_cmd(cmd->right);
 	}
 	else if (!cmd || cmd->args[0] == NULL)
@@ -57,7 +57,7 @@ void	print_cmd(t_cmd *cmd)
 			printf("%s ", cmd->args[i]);
 			i++;
 		}
-		printf("\n");
+		printf(" ");
 	}
 }
 
@@ -68,7 +68,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	init_term();
 	while (1)
 	{
@@ -78,8 +77,8 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			cmd = parse_line(line);
-			// print_cmd(cmd);
+			cmd = parse_line(line, envp);
+			print_cmd(cmd);
 			// free_cmd(cmd);
 		}
 		free(line);

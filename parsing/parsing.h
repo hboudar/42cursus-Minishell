@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/23 15:14:44 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/24 19:32:47 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ enum e_cmd_type
 	PIPECMD,
 };
 
+//execution
 enum e_state
 {
 	IN_SQUOTES,
@@ -54,21 +55,28 @@ enum e_state
 	GENERAL,
 };
 
+//parsing
 enum e_type
 {
 	WORD,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
-	REDIR_APPEND,
+	APPEND,
+	DQUOTE,
+	SQUOTE,
+	WHITE_SPACE,
+	ENV,
 	REDIR_HERE_DOC,
 } t_type;
 
 typedef struct s_cmd
 {
-	char			*data;
 	char			**args;
 	int				size;
+	char			*infile;
+	char			*outfile;
+	int				appendable;
     enum e_cmd_type	type;
     enum e_state	state;
 	struct s_cmd	*left;
@@ -92,8 +100,8 @@ typedef struct s_token
 	struct s_token	*next;
 }		t_token;
 
-t_prompt	*parse_prompt(char *line);
-t_cmd		*parse_line(char *line);
+t_prompt	*parse_prompt(char *line, char **env);
+t_cmd		*parse_line(char *line, char **envp);
 t_token		*parse_token(char *line);
 void		get_token_type(t_token *token);
 void		get_token_state(t_token *token);
