@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/24 19:31:11 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:52:18 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,34 @@ void	print_cmd(t_cmd *cmd)
 	}
 }
 
+void	print_prompt(t_prompt *prompt)
+{
+	if (prompt->type == AND)
+	{
+		print_prompt(prompt->left);
+		printf("&& ");
+		print_prompt(prompt->right);
+	}
+	else if (prompt->type == OR)
+	{
+		print_prompt(prompt->left);
+		printf("|| ");
+		print_prompt(prompt->right);
+	}
+	else
+		print_cmd(prompt->cmd);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
-	t_cmd	*cmd;
+	char		*line;
+	char		**env;
+	t_prompt	*prompt;
 
 	(void)argc;
 	(void)argv;
 	init_term();
+	env = ft_tabdup(envp);
 	while (1)
 	{
 		line = readline("\033[1;34m➜ minishell \033[0m");
@@ -77,9 +97,8 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			cmd = parse_line(line, envp);
-			print_cmd(cmd);
-			// free_cmd(cmd);
+			prompt = parse_prompt(line, env);
+			print_prompt(prompt);
 		}
 		free(line);
 	}

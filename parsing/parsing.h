@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/25 19:39:49 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/27 23:42:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ typedef struct s_cmd
 typedef struct s_prompt
 {
 	t_cmd				*cmd;
+	char				**env;
+	//exit state to be filled by the execution
+	int					exit_state;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
 	struct s_prompt		*right;
@@ -115,5 +118,7 @@ size_t		ft_tablen(char **args);
 void		free_cmd(t_cmd *cmd);
 void		free_token(t_token *token);
 void		print_cmd(t_cmd *cmd);
+char		**ft_tabdup(char **args);
+t_token		*pipeless_token(t_token *token);
 
 #endif

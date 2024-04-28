@@ -1,4 +1,4 @@
-SRC		= parsing.c prompt_utils.c token_utils.c ../minishell.c
+SRC		= parsing.c prompt_utils.c token_utils.c ../minishell.c tools.c
 OBJ		= $(SRC:.c=.o)
 HEADER	= parsing.h ../minishell.h
 NAME	= parsing

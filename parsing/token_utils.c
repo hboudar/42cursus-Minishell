@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:25:47 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/24 18:28:06 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:50:47 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,30 @@ t_token	*parse_token(char *line)
 	}
 	tmp->next = NULL;
 	set_size(token);
-	print_tokens(token);
 	return (token);
+}
+
+t_token	*pipeless_token(t_token *token)
+{
+	t_token	*tmp;
+	t_token	*tmp_new;
+	t_token	*new_token;
+	int		i;
+
+	i = 0;
+	tmp = token;
+	new_token = (t_token *)malloc(sizeof(t_token));
+	tmp_new = new_token;
+	while (tmp->type != PIPE)
+	{
+		tmp_new->data = ft_strdup(tmp->data);
+		tmp_new->type = tmp->type;
+		tmp_new->state = tmp->state;
+		tmp_new->next = (t_token *)malloc(sizeof(t_token));
+		tmp_new = tmp_new->next;
+		tmp = tmp->next;
+		i++;
+	}
+	new_token->size = i;
+	return (new_token);
 }

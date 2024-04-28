@@ -6,58 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/24 19:35:25 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/04/28 12:02:15 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-size_t	ft_tablen(char **args)
-{
-	int	i;	
-	i = 0;
-	while (args[i])
-		i++;
-	return (i);
-}
-
-void	free_tab(char **args)
-{
-    int	i;
-    
-    i = 0;
-    while (args[i])
-    {
-        free(args[i]);
-        i++;
-    }
-    free(args);
-}
-
-t_token	*pipeless_token(t_token *token)
-{
-	t_token	*tmp;
-	t_token	*tmp_new;
-	t_token	*new_token;
-	int		i;
-
-	i = 0;
-	tmp = token;
-	new_token = (t_token *)malloc(sizeof(t_token));
-	tmp_new = new_token;
-	while (tmp->type != PIPE)
-	{
-		tmp_new->data = ft_strdup(tmp->data);
-		tmp_new->type = tmp->type;
-		tmp_new->state = tmp->state;
-		tmp_new->next = (t_token *)malloc(sizeof(t_token));
-		tmp_new = tmp_new->next;
-		tmp = tmp->next;
-		i++;
-	}
-	new_token->size = i;
-	return (new_token);
-}
 
 void	free_token(t_token *token)
 {
