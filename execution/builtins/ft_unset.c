@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/28 20:48:10 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:23:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool    is_valid_name(const char *name)
     return true;
 }
 
-int ft_unset(t_prompt *prompt, char *env[])
+int ft_unset(t_prompt *prompt, t_env *env)
 {
     int i;
     int return_value;

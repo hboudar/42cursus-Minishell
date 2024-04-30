@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:10 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/27 22:49:57 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:22:41 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int ft_echo(t_prompt *prompt, char *env[])
+int ft_echo(t_prompt *prompt, t_env *env)
 {
     ;
     return (0);

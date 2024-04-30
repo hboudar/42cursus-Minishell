@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/27 18:51:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:06:46 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	one_prompt(t_prompt *prompt, char *env[])
+int	one_prompt(t_prompt *prompt, t_env *env)
 {
 	if (prompt->cmd->type == CMD)
 	{
@@ -30,7 +30,7 @@ int	one_prompt(t_prompt *prompt, char *env[])
     }
 }
 
-int	execution(t_prompt *prompt, char *env[])
+int	execution(t_prompt *prompt, t_env *env)
 {
 	if (prompt->type == NONE)
 		return (one_prompt(prompt, env));

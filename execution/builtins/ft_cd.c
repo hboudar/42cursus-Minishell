@@ -6,66 +6,68 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/30 16:14:22 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:19:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void set_oldpwd(char *env[], char *oldpwd)
+void set_oldpwd(char *oldpwd, t_env *env)
 {
     char *tmp;
     int i;
 
     i = -1;
-    while (env && env[++i])
+    while (env)
     {
-        if (!ft_strncmp(env[i], "OLDPWD=", 7))
+        if (!ft_strncmp(env->key, "OLDPWD=", 8))
         {
-            tmp = env[i];
-            env[i] = ft_strjoin("OLDPWD=", oldpwd);
-            if (!env[i])
+            tmp = env->value;
+            env->value = oldpwd;
+            if (!env->value)
             {
-                env[i] = tmp;
+                env->value = tmp;
                 perror("ft_strjoin in cd");
                 break ;
             }
             free(tmp);
             tmp = NULL;
         }
+        env = env->next;
     }
     free(oldpwd);
     oldpwd = NULL;
 }
 
-void set_pwd(char *env[], char *pwd)
+void set_pwd(char *pwd, t_env *env)
 {
     char *tmp;
     int i;
 
     i = -1;
-    while (env && env[++i])
+    while (env)
     {
-        if (!ft_strncmp(env[i], "PWD=", 4))
+        if (!ft_strncmp(env->key, "PWD=", 8))
         {
-            tmp = env[i];
-            env[i] = ft_strjoin("PWD=", pwd);
-            if (!env[i])
+            tmp = env->value;
+            env->value = pwd;
+            if (!env->value)
             {
-                env[i] = tmp;
+                env->value = tmp;
                 perror("ft_strjoin in cd");
                 break ;
             }
             free(tmp);
             tmp = NULL;
         }
+        env = env->next;
     }
     free(pwd);
     pwd = NULL;
 }
 
 //TODO: cd ..
-int ft_cd(t_prompt *prompt, char *env[])
+int ft_cd(t_prompt *prompt, t_env *env)
 {
     char *oldpwd;
     char *pwd;
@@ -89,7 +91,7 @@ int ft_cd(t_prompt *prompt, char *env[])
         perror("getcwd");
         return (prompt->exit_state);
     }
-    set_pwd(env, pwd);
-    set_oldpwd(env, oldpwd);
+    set_pwd(pwd, env);
+    set_oldpwd(oldpwd, env);
     return (0);
 }

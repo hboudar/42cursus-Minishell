@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/30 16:14:55 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:22:20 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int	is_builtin(t_prompt *prompt)
 			|| !ft_strncmp(prompt->cmd->args[0], "exit", 5)));
 }
 
-int	execute_builtin(t_prompt *prompt, char *env[])
+int	execute_builtin(t_prompt *prompt, t_env *env)
 {
 	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))
 		prompt->exit_state = ft_echo(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))
 		prompt->exit_state = ft_cd(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))
-		prompt->exit_state = ft_pwd(prompt, env);
+		prompt->exit_state = ft_pwd(prompt);
 	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))
 		prompt->exit_state = ft_export(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))
