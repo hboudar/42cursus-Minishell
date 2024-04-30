@@ -42,3 +42,15 @@ execution()
 
 
 //  add a variable to (t_prompt) (char *env[]) & allociih fl main function.
+
+//$?  :   return value of the last executed command.
+
+// what about : 
+typedef struct s_env
+{
+    char *key;
+    char *value;
+    struct s_env *next;
+} t_env;
+
+//intilize the exit_status to 0 in the main function.
