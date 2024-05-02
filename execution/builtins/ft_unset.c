@@ -6,14 +6,45 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/25 16:50:59 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:23:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int ft_unset(t_prompt *prompt)
+bool    is_valid_name(const char *name)
 {
-    ;
-    return (0);
+    int i;
+
+    if (!ft_isalpha(name[0]) && name[0] != '_')
+        return false;
+    i = 1;
+    while (name[i])
+    {
+        if (!ft_isalnum(name[i]) || name[i] != '_')
+            return false;
+        i++;
+    }
+    return true;
+}
+
+int ft_unset(t_prompt *prompt, t_env *env)
+{
+    int i;
+    int return_value;
+
+    (1) && (i = 1, return_value = 0);
+    while (prompt->cmd->args[i])
+    {
+        if (is_valid_name(prompt->cmd->args[i]))
+            ft_unsetenv(prompt->cmd->args[i], env);
+        else
+        {
+            ft_putstr_fd("minishell: unset: `", 2);
+            ft_putstr_fd(prompt->cmd->args[i], 2);
+            ft_putstr_fd("': not a valid identifier\n", 2);
+            return_value = 1;
+        }
+    }   
+    return (return_value);
 }

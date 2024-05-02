@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/25 16:50:51 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/04/30 19:22:56 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int ft_export(t_prompt *prompt)
+int ft_export(t_prompt *prompt, t_env *env)
 {
     ;
     return (0);
