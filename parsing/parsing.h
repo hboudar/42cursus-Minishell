@@ -6,11 +6,9 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/27 23:42:25 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:58:13 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef PARSING_H
 # define PARSING_H
@@ -64,12 +62,17 @@ enum e_type
 	REDIR_IN,
 	REDIR_OUT,
 	APPEND,
-	DQUOTE,
-	SQUOTE,
 	WHITE_SPACE,
 	ENV,
 	REDIR_HERE_DOC,
-} t_type;
+};
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_cmd
 {
@@ -78,8 +81,8 @@ typedef struct s_cmd
 	char			*infile;
 	char			*outfile;
 	int				appendable;
-    enum e_cmd_type	type;
-    enum e_state	state;
+	enum e_cmd_type	type;
+	enum e_state	state;
 	struct s_cmd	*left;
 	struct s_cmd	*right;
 }		t_cmd;
@@ -87,9 +90,12 @@ typedef struct s_cmd
 typedef struct s_prompt
 {
 	t_cmd				*cmd;
-	char				**env;
+	t_env				*env;
 	//exit state to be filled by the execution
 	int					exit_state;
+	int					hasparanthese;
+	int					openpar;
+	int					closepar;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
 	struct s_prompt		*right;
@@ -104,8 +110,8 @@ typedef struct s_token
 	struct s_token	*next;
 }		t_token;
 
-t_prompt	*parse_prompt(char *line, char **env);
-t_cmd		*parse_line(char *line, char **envp);
+t_prompt	*parse_prompt(char *line, t_env *env);
+t_cmd		*parse_line(char *line, t_env *envp);
 t_token		*parse_token(char *line);
 void		get_token_type(t_token *token);
 void		get_token_state(t_token *token);
@@ -118,7 +124,22 @@ size_t		ft_tablen(char **args);
 void		free_cmd(t_cmd *cmd);
 void		free_token(t_token *token);
 void		print_cmd(t_cmd *cmd);
-char		**ft_tabdup(char **args);
+t_env		*ft_tabdup(char **args);
 t_token		*pipeless_token(t_token *token);
+void		expand_env(t_token *token, t_env *env);
+char		*ft_getenv(char *name, t_env *env);
+void		set_size(t_token *token);
+int			ft_iswhitespace(char *str);
+void		tokenize_whitespace(char **line, int *i, t_token **token);
+void		tokenize_dquotes(char **line, int *i, t_token **token);
+void		tokenize_squotes(char **line, int *i, t_token **token);
+void		tokenize_pipe(char **line, int *i, t_token **token);
+void		tokenize_append(char **line, int *i, t_token **token);
+void		tokenize_redir_out(char **line, int *i, t_token **token);
+void		tokenize_redir_in(char **line, int *i, t_token **token);
+void		tokenize_here_doc(char **line, int *i, t_token **token);
+void		tokenize_env(char **line, int *i, t_token **token);
+void		tokenize_word(char **line, int *i, t_token **token);
+void		tokenize(char **line, int *i, t_token **token);
 
 #endif

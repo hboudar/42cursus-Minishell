@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:25:47 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/27 23:50:47 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:59:10 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@ int	has_pipe(t_token *token)
 	return (0);
 }
 
-int	ft_iswhitespace(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] <= 13 && str[i] >= 9) || str[i] == 32)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 void	get_token_type(t_token *token)
 {
 	if (ft_strncmp(token->data, "|", 2) == 0)
@@ -47,10 +33,6 @@ void	get_token_type(t_token *token)
 		token->type = APPEND;
 	else if (ft_strncmp(token->data, "<", 4) == 0)
 		token->type = REDIR_IN;
-	else if (ft_strncmp(token->data, "\"", 2) == 0)
-		token->type = DQUOTE;
-	else if (ft_strncmp(token->data, "'", 2) == 0)
-		token->type = SQUOTE;
 	else if (ft_strncmp(token->data, "$", 1) == 0)
 		token->type = ENV;
 	else if (ft_strncmp(token->data, "<<", 3) == 0)
@@ -131,7 +113,7 @@ void print_tokens(t_token *token)
 	{
 		i = 0;
 		space_left = 14 - ft_strlen(tmp->data);
-		printf("|    '%s'", tmp->data);
+		printf("|    %s", tmp->data);
 		while (i < space_left)
 		{
 			printf(" ");
@@ -177,11 +159,7 @@ void print_tokens(t_token *token)
 		}
 		i = 0;
 		char *new_type;
-		if (tmp->type == SQUOTE)
-			new_type = "QUOTE";
-		else if (tmp->type == DQUOTE)
-			new_type = "DOUBLE_QUOTE";
-		else if (tmp->type == WORD)
+		if (tmp->type == WORD)
 			new_type = "WORD";
 		else if (tmp->type == WHITE_SPACE)
 			new_type = "WHITE_SPACE";
@@ -214,34 +192,6 @@ void print_tokens(t_token *token)
 	printf("-------------------------------------------------------------------------------\n");
 }
 
-t_token	*parse_token(char *line)
-{
-	t_token	*token;
-	t_token	*tmp;
-	size_t	i;
-
-	i = -1;
-	token = (t_token *)malloc(sizeof(t_token));
-	tmp = token;
-	while (++i <= ft_strlen(line))
-	{
-		if (line[i] == ' ' || line[i] == '\0')
-		{
-			tmp->data = ft_substr(line, 0, i);
-			get_token_state(tmp);
-			get_token_type(tmp);
-			line = line + i + 1;
-			i = 0;
-			tmp->next = (t_token *)malloc(sizeof(t_token));
-			tmp = tmp->next;
-			ft_bzero(tmp, sizeof(t_token));
-		}
-	}
-	tmp->next = NULL;
-	set_size(token);
-	return (token);
-}
-
 t_token	*pipeless_token(t_token *token)
 {
 	t_token	*tmp;
@@ -265,4 +215,34 @@ t_token	*pipeless_token(t_token *token)
 	}
 	new_token->size = i;
 	return (new_token);
+}
+
+void	free_token(t_token *token)
+{
+	t_token	*tmp;
+
+	while (token)
+	{
+		tmp = token;
+		token = token->next;
+		free(tmp->data);
+		free(tmp);
+	}
+}
+
+t_token	*parse_token(char *line)
+{
+	int		i;
+	t_token	*tmp;
+	t_token	*token;
+
+	i = 0;
+	token = (t_token *)malloc(sizeof(t_token));
+	tmp = token;
+	while (i < (int)ft_strlen(line))
+		tokenize(&line, &i, &tmp);
+	tmp->next = NULL;
+	set_size(token);
+	print_tokens(token);
+	return (token);
 }

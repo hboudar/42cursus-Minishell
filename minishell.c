@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/27 23:52:18 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:49:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_cmd(t_cmd *cmd)
 	if (cmd && cmd->type == PIPECMD)
 	{
 		print_cmd(cmd->left);
-		printf("| ");
+		printf("|");
 		print_cmd(cmd->right);
 	}
 	else if (!cmd || cmd->args[0] == NULL)
@@ -54,10 +54,9 @@ void	print_cmd(t_cmd *cmd)
 		i = 0;
 		while (cmd->args[i])
 		{
-			printf("%s ", cmd->args[i]);
+			printf(" %s", cmd->args[i]);
 			i++;
 		}
-		printf(" ");
 	}
 }
 
@@ -66,23 +65,32 @@ void	print_prompt(t_prompt *prompt)
 	if (prompt->type == AND)
 	{
 		print_prompt(prompt->left);
-		printf("&& ");
+		printf("&&");
 		print_prompt(prompt->right);
 	}
 	else if (prompt->type == OR)
 	{
 		print_prompt(prompt->left);
-		printf("|| ");
+		printf("||");
 		print_prompt(prompt->right);
 	}
 	else
 		print_cmd(prompt->cmd);
 }
 
+void	print_env(t_env *env)
+{
+	while (env)
+	{
+		printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	char		**env;
+	t_env		*env;
 	t_prompt	*prompt;
 
 	(void)argc;
@@ -99,6 +107,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(line);
 			prompt = parse_prompt(line, env);
 			print_prompt(prompt);
+			printf("\n");
 		}
 		free(line);
 	}
