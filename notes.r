@@ -36,6 +36,7 @@ execution()
     {
         if (execution(prompt->left, env))
             execution(prompt->right, env);
+    }
 }
 
 //  cd with only a relative or absolute path. when no path is given, syntax error.
