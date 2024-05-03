@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/30 19:22:20 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/02 17:17:11 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ int	is_builtin(t_prompt *prompt)
 
 int	execute_builtin(t_prompt *prompt, t_env *env)
 {
-	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))
+	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))//not yet
 		prompt->exit_state = ft_echo(prompt, env);
-	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))
+	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done excepet "cd .."
 		prompt->exit_state = ft_cd(prompt, env);
-	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))
+	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))//done
 		prompt->exit_state = ft_pwd(prompt);
-	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))
+	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))//not yet
 		prompt->exit_state = ft_export(prompt, env);
-	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))
+	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))//almost done
 		prompt->exit_state = ft_unset(prompt, env);
-	else if (!ft_strncmp(prompt->cmd->args[0], "env", 4))
+	else if (!ft_strncmp(prompt->cmd->args[0], "env", 4))//done
 		prompt->exit_state = ft_env(prompt, env);
-	else if (!ft_strncmp(prompt->cmd->args[0], "exit", 5))
+	else if (!ft_strncmp(prompt->cmd->args[0], "exit", 5))//done
 		prompt->exit_state = ft_exit(prompt);
 	return (prompt->exit_state);
 }
