@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/02 10:27:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:45:10 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 		}
 		else if (tmp->data)
 		{
-			if (ft_strncmp(tmp->data, "$", 2) == 0)
-				tmp = tmp->next;
 			(*cmd)->type = CMD;
 			args[j] = ft_strdup(tmp->data);
 			j++;
@@ -54,14 +52,12 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 	(*cmd)->size = j;
 }
 
-t_cmd	*parse_line(char *line, t_env *env)
+t_cmd	*parse_cmd(t_token	*token, t_env *env)
 {
 	t_cmd	*cmd;
-	t_token	*token;
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	ft_bzero(cmd, sizeof(t_cmd));
-	token = parse_token(line);
 	expand_env(token, env);
 	get_cmd(&cmd, token);
 	return (cmd);

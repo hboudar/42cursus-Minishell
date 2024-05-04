@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/01 18:49:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/04 21:35:32 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,28 +54,10 @@ void	print_cmd(t_cmd *cmd)
 		i = 0;
 		while (cmd->args[i])
 		{
-			printf(" %s", cmd->args[i]);
+			printf("%s", cmd->args[i]);
 			i++;
 		}
 	}
-}
-
-void	print_prompt(t_prompt *prompt)
-{
-	if (prompt->type == AND)
-	{
-		print_prompt(prompt->left);
-		printf("&&");
-		print_prompt(prompt->right);
-	}
-	else if (prompt->type == OR)
-	{
-		print_prompt(prompt->left);
-		printf("||");
-		print_prompt(prompt->right);
-	}
-	else
-		print_cmd(prompt->cmd);
 }
 
 void	print_env(t_env *env)
@@ -95,7 +77,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	init_term();
+	// init_term();
 	env = ft_tabdup(envp);
 	while (1)
 	{

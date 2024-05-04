@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/01 15:58:13 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/04 21:12:42 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@
 
 enum e_prmpt_type
 {
+	NONE,
 	AND,
 	OR,
-	NONE,
 };
 
 enum e_cmd_type
@@ -49,9 +49,13 @@ enum e_cmd_type
 //execution
 enum e_state
 {
+	GENERAL,
+	ENVIROMENT,
+	INFILE,
+	OUTFILE,
 	IN_SQUOTES,
 	IN_DQUOTES,
-	GENERAL,
+	LIMITER,
 };
 
 //parsing
@@ -65,6 +69,12 @@ enum e_type
 	WHITE_SPACE,
 	ENV,
 	REDIR_HERE_DOC,
+	SQUOTES,
+	DQUOTES,
+	OPENPAR,
+	CLOSEPAR,
+	AND_TOKEN,
+	OR_TOKEN,
 };
 
 typedef struct s_env
@@ -81,6 +91,7 @@ typedef struct s_cmd
 	char			*infile;
 	char			*outfile;
 	int				appendable;
+	char			limiter;
 	enum e_cmd_type	type;
 	enum e_state	state;
 	struct s_cmd	*left;
@@ -90,12 +101,8 @@ typedef struct s_cmd
 typedef struct s_prompt
 {
 	t_cmd				*cmd;
-	t_env				*env;
 	//exit state to be filled by the execution
 	int					exit_state;
-	int					hasparanthese;
-	int					openpar;
-	int					closepar;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
 	struct s_prompt		*right;
@@ -105,6 +112,7 @@ typedef struct s_token
 {
 	char			*data;
 	int				size;
+	int				skip_space;
 	enum e_type		type;
 	enum e_state	state;
 	struct s_token	*next;
@@ -141,5 +149,16 @@ void		tokenize_here_doc(char **line, int *i, t_token **token);
 void		tokenize_env(char **line, int *i, t_token **token);
 void		tokenize_word(char **line, int *i, t_token **token);
 void		tokenize(char **line, int *i, t_token **token);
+int			check_and_or(t_token *token);
+t_cmd		*parse_cmd(t_token	*token, t_env *env);
+t_token		*get_and_or(t_token *token);
+void		free_token(t_token *token);
+void		get_token_state(t_token *token);
+char		*ft_remove_quotes(char *str);
+void		get_token_type(t_token *token);
+int			has_pipe(t_token *token);
+void		print_tokens(t_token *token);
+void		print_prompt(t_prompt *prompt);
+void		remove_token(t_token **token, t_token *node);
 
 #endif
