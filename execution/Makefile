@@ -1,4 +1,4 @@
-SRC		= execution.c
+SRC		= execution.c ft_cd.c ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c utils_builtins.c 
 OBJ		= $(SRC:.c=.o)
 HEADER	= execution.h
 NAME	= exe
