@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:18 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 16:08:19 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 22:15:49 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_exit(t_prompt *prompt)
 			i++;
 		if (prompt->cmd->args[1][i] != '\0')
 			ft_exit_error(prompt);
-		else if (prompt->cmd->args[1][i] == '\0')
+		else
 		{
 			prompt->exit_state = (int)costum_atoi(prompt->cmd->args[1], prompt);
 			if (prompt->cmd->args[2] != NULL)

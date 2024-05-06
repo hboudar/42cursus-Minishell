@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 16:09:02 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 21:40:13 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	execute_builtin(t_prompt *prompt, t_env *env)
 {
 	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))//done
 		prompt->exit_state = ft_echo(prompt, env);
-	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done excepet "cd .."
+	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done excepet "cd .."fnfnff
 		prompt->exit_state = ft_cd(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))//done
 		prompt->exit_state = ft_pwd(prompt);
