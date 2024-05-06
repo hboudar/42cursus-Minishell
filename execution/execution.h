@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 16:14:40 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:19:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define EXECUTION_H
 
 # include "../parsing/parsing.h"
-# include "utils/libft.h"
 
 //execution main :
 
