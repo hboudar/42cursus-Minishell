@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:33:28 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:38:27 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ enum e_state
 enum e_type
 {
 	WORD,
-	PIPE,
+	PIPE_TOKEN,
 	REDIR_IN,
 	REDIR_OUT,
 	APPEND,

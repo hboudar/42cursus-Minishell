@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:08:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/04 10:55:47 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:37:38 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	tokenize_pipe(char **line, int *i, t_token **token)
 {
 	(*token)->data = ft_strdup("|");
 	(*token)->size = 1;
-	(*token)->type = PIPE;
+	(*token)->type = PIPE_TOKEN;
 	(*token)->state = GENERAL;
 	*line = *line + 1;
 	*i = 0;

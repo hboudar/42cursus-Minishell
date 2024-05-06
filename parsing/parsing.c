@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/04 11:45:10 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:36:01 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 	{
 		if (has_pipe(token))
 		{
-			(*cmd)->type = PIPECMD;
+			(*cmd)->type = PIPE;
 			(*cmd)->left = (t_cmd *)malloc(sizeof(t_cmd));
 			(*cmd)->right = (t_cmd *)malloc(sizeof(t_cmd));
 			get_cmd(&(*cmd)->left, pipeless_token(token));
