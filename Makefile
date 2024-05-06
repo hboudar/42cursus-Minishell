@@ -27,6 +27,7 @@ pre:
 
 clean:
 	$(RM) $(OBJ)
+	@cd utils && make clean
 
 fclean: clean
 	$(RM) $(NAME)

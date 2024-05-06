@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/29 11:19:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:50:38 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	ft_iswhitespace(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] <= 13 && str[i] >= 9) || str[i] == 32)
-			return (1);
+		if ((str[i] > 13 || str[i] < 9) && str[i] != 32)
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
