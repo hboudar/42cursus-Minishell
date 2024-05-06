@@ -6,47 +6,44 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/04/28 12:10:58 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/04 21:18:20 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char	*ft_substr_trim(char *s, unsigned int start, size_t len)
+t_token	*get_and_or(t_token *token)
 {
-	if (s[start] == '(')
-		return (ft_substr(s, start + 1, len - 2));
-	return (ft_substr(s, start, len));
+	while (token)
+	{
+		if (token->type == AND_TOKEN || token->type == OR_TOKEN)
+			return (token);
+		token = token->next;
+	}
+	return (NULL);
 }
 
-t_prompt	*parse_prompt(char *line, char **env)
+int	check_and_or(t_token *token)
 {
-	t_prompt	*prmpt;
-	int			i;
+	t_token	*tmp;
 
-	i = 0;
-	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
-	if (line[i] == '(')
-		while (line[i] != ')' || line[i] != '\0')
-			i++;
-	while (line[i] == ' ')
-		i++;
-	if (line[i] && line[i] == '&' && line[i + 1] == '&')
+	tmp = token;
+	while (tmp)
 	{
-		prmpt->type = AND;
-		prmpt->left = parse_prompt(ft_substr_trim(line, 0, i), env);
-		prmpt->right = parse_prompt(ft_substr_trim(line, i + 2, ft_strlen(line) - i - 2), env);
+		if (tmp->type == AND_TOKEN || tmp->type == OR_TOKEN)
+		{
+			if (!tmp->next || tmp->next->type == AND_TOKEN || tmp->next->type == OR_TOKEN)
+			{
+				printf("syntax error near unexpected token `");
+				if (tmp->next->type == AND_TOKEN)
+					printf("&&\n");
+				else
+					printf("||\n");
+				return (-1);
+			}
+			return (1);
+		}
+		tmp = tmp->next;
 	}
-	else if (line[i] && line[i] == '|' && line[i + 1] == '|')
-	{
-		prmpt->type = OR;
-		prmpt->left = parse_prompt(ft_substr_trim(line, 0, i), env);
-		prmpt->right = parse_prompt(ft_substr_trim(line, i + 2, ft_strlen(line) - i - 2), env);
-	}
-	else
-	{
-		prmpt->type = NONE;
-		prmpt->cmd = parse_line(line + i, env);
-	}
-	return (prmpt);
+	return (0);
 }

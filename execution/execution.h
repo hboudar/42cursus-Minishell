@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/30 19:23:34 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/03 16:53:35 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@
 # include "../parsing/parsing.h"
 # include "utils/libft.h"
 # include <stdbool.h>
-
-
-typedef struct s_env
-{
-    char	*key;
-    char	*value;
-    struct s_env	*next;
-}	t_env;
 
 //execution main :
 
