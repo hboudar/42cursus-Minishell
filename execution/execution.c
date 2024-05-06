@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 16:28:44 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:36:43 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	one_cmd(t_prompt *prompt, t_env *env)
 
 int	execution(t_prompt *prompt, t_env *env)
 {
-	if (prompt->type == CMD)
+	if (prompt->type == P_CMD)
 		return (one_cmd(prompt, env));
-	else if (prompt->type == PIPE)
-		return (pipe_cmds(prompt, env));
-	// else if (prompt->type == OR)
+	// else if (prompt->type == P_PIPE)
+	// 	pipe_execution(prompt, env);
+	// else if (prompt->type == P_OR)
 	// {
 	// 	if (!execution(prompt->left, env))
 	// 		execution(prompt->right, env);
 	// }
-	// else if (prompt->type == AND)
+	// else if (prompt->type == P_AND)
 	// {
 	// 	if (execution(prompt->left, env))
 	// 		execution(prompt->right, env);
