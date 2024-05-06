@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:07:10 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:35:14 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_cmd(t_cmd *cmd)
 
 void	print_cmd(t_cmd *cmd)
 {
-	if (cmd && cmd->type == PIPECMD)
+	if (cmd && cmd->type == PIPE)
 	{
 		print_cmd(cmd->left);
 		printf("|");

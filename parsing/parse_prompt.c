@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/04 21:34:18 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:35:46 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 	if (check_and_or(*token))
 	{
 		tmp = get_and_or(*token);
-		(*prmpt)->type = (tmp->type == AND_TOKEN) * AND
-			+ (tmp->type == OR_TOKEN) * OR;
+		(*prmpt)->type = (tmp->type == AND_TOKEN) * P_AND
+			+ (tmp->type == OR_TOKEN) * P_OR;
 		(*prmpt)->left = (t_prompt *)malloc(sizeof(t_prompt));
 		ft_bzero((*prmpt)->left, sizeof(t_prompt));
 		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
@@ -116,7 +116,7 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 	}
 	else
 	{
-		(*prmpt)->type = NONE;
+		(*prmpt)->type = P_CMD;
 		(*prmpt)->cmd = parse_cmd(*token, env);
 		(*prmpt)->left = NULL;
 		(*prmpt)->right = NULL;

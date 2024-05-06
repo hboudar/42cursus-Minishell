@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/04 21:36:33 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:36:37 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	print_prompt(t_prompt *prompt)
 {
 	if (!prompt)
 		return ;
-	if (prompt->type == AND)
+	if (prompt->type == P_AND)
 	{
 		print_prompt(prompt->left);
 		printf(" && " );
 		print_prompt(prompt->right);
 	}
-	else if (prompt->type == OR)
+	else if (prompt->type == P_OR)
 	{
 		print_prompt(prompt->left);
 		printf(" || ");
