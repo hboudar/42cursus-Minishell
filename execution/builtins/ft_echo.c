@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:10 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 15:31:12 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:51:58 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../execution.h"
 
 //when {echo - args} : "-" is not displayed
 
@@ -45,8 +45,7 @@ void echo_with_newline(t_prompt *prompt)
 
 int ft_echo(t_prompt *prompt, t_env *env)
 {
-    int i;
-
+    (void)env;
     if (prompt->cmd->args[1])
     {
         if (!ft_strncmp(prompt->cmd->args[1], "-n", 3))

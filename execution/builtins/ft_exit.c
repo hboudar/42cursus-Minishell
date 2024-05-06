@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:18 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/30 16:08:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:52:44 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../execution.h"
 
 void	ft_exit_error(t_prompt *prompt)
 {
@@ -24,7 +24,7 @@ void	ft_exit_error(t_prompt *prompt)
 unsigned char	costum_atoi(const char *s, t_prompt *prompt)
 {
 	unsigned long	n_ll;
-	long long	n;
+	unsigned long	n;
 	int				sign;
 	int				i;
 

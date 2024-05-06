@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/04/30 19:06:46 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:47:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	one_prompt(t_prompt *prompt, t_env *env)
 	{
 		if (is_builtin(prompt))
 			return (execute_builtin(prompt, env));
-		return (execute_cmd(prompt));
+		// return (execute_cmd(prompt));
 	}
     else if (prompt->cmd->type == PIPECMD)
     {
@@ -28,6 +28,7 @@ int	one_prompt(t_prompt *prompt, t_env *env)
     {
         ;
     }
+	return (prompt->exit_state);
 }
 
 int	execution(t_prompt *prompt, t_env *env)
@@ -44,4 +45,5 @@ int	execution(t_prompt *prompt, t_env *env)
 		if (execution(prompt->left, env))
 			execution(prompt->right, env);
 	}
+	return (prompt->exit_state);
 }

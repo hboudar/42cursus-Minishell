@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 15:32:27 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 15:50:46 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../execution.h"
 
 int	is_builtin(t_prompt *prompt)
 {
