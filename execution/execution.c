@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 16:41:21 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:42:00 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	execute_cmd(t_prompt *prompt)
 {
 	(void)prompt;
+	return (0);
 }
 
 int	one_cmd(t_prompt *prompt, t_env *env)
