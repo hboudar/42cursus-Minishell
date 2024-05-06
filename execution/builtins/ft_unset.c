@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 15:51:22 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:08:51 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-bool    is_valid_name(const char *name)
+static bool    is_valid_name(const char *name)
 {
     int i;
 
@@ -28,7 +28,7 @@ bool    is_valid_name(const char *name)
     return true;
 }
 
-void    ft_unsetenv(t_prompt *prompt, const char *name, t_env *env)
+static void    ft_unsetenv(t_prompt *prompt, const char *name, t_env *env)
 {
     t_env *tmp;
     t_env *prev;

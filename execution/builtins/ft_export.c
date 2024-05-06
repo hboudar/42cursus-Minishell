@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 15:53:56 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:08:38 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int is_valid_name(const char *name)
+static int is_valid_name(const char *name)
 {
     int i;
 
@@ -28,7 +28,7 @@ int is_valid_name(const char *name)
     return (1);
 }
 
-void export_only(t_prompt *prompt, t_env *env)
+static void export_only(t_prompt *prompt, t_env *env)
 {
     t_env *tmp;
 
@@ -44,7 +44,7 @@ void export_only(t_prompt *prompt, t_env *env)
     prompt->exit_state = 0;
 }
 
-void    add_env(const char *key, const char *value, t_env *env)
+static void    add_env(const char *key, const char *value, t_env *env)
 {
     t_env *tmp;
 

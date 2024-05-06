@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 15:51:00 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/06 16:04:23 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void set_pwd(char *pwd, t_env *env)
     pwd = NULL;
 }
 
-//TODO: cd ..
 int ft_cd(t_prompt *prompt, t_env *env)
 {
     char *oldpwd;
