@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/04 21:12:42 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:33:28 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
-# include "utils/libft.h"
+# include "../utils/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -34,16 +34,17 @@
 
 enum e_prmpt_type
 {
-	NONE,
-	AND,
-	OR,
+	P_CMD,
+	P_PIPE,
+	P_AND,
+	P_OR,
 };
 
 enum e_cmd_type
 {
 	CMD,
 	HERE_DOC,
-	PIPECMD,
+	PIPE,
 };
 
 //execution

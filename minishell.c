@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/04 21:35:32 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 16:07:10 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			prompt = parse_prompt(line, env);
-			print_prompt(prompt);
-			printf("\n");
+			execution(prompt, env);
 		}
 		free(line);
 	}
