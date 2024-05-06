@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:08:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:48:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 18:51:52 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	tokenize_whitespace(char **line, int *i, t_token **token)
 {
 	(*token)->data = ft_strdup(" ");
+	while ((*line)[*i] == ' ')
+		(*i)++;
 	(*token)->size = 1;
 	(*token)->type = WHITE_SPACE;
 	(*token)->state = GENERAL;
-	while ((*line)[*i] == ' ')
-		(*i)++;
 	*line = *line + *i;
 	*i = 0;
 	(*token)->next = (t_token *)malloc(sizeof(t_token));
@@ -33,7 +33,10 @@ void	tokenize_dquotes(char **line, int *i, t_token **token)
 	while ((*line)[*i] != '\"')
 		(*i)++;
 	(*token)->data = ft_substr(*line, 1, *i - 1);
-	(*token)->size = *i + 1;
+	*line = *line + *i + 1;
+	while ((*line)[*i] != ' ' && (*line)[*i] != '\0')
+		(*i)++;
+	(*token)->data = ft_strjoin((*token)->data, ft_substr(*line, 0, *i));
 	get_token_type(*token);
 	(*token)->state = IN_DQUOTES;
 	*line = *line + *i + 1;
@@ -49,6 +52,10 @@ void	tokenize_squotes(char **line, int *i, t_token **token)
 	while ((*line)[*i] != '\'')
 		(*i)++;
 	(*token)->data = ft_substr(*line, 1, *i - 1);
+	*line = *line + *i + 1;
+	while ((*line)[*i] != ' ' && (*line)[*i] != '\0')
+		(*i)++;
+	(*token)->data = ft_strjoin((*token)->data, ft_substr(*line, 0, *i));
 	(*token)->size = *i + 1;
 	get_token_type(*token);
 	(*token)->state = IN_SQUOTES;
