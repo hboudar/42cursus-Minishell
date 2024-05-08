@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:38:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:42:54 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ enum e_cmd_type
 {
 	CMD,
 	HERE_DOC,
-	PIPE,
 };
 
 //execution
@@ -78,10 +77,19 @@ enum e_type
 	OR_TOKEN,
 };
 
+enum e_print
+{
+	PRINT,
+	NO_PRINT,
+	ENV_PRINT,
+	EXP_PRINT,
+};
+
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	enum e_print	print;
 	struct s_env	*next;
 }	t_env;
 
@@ -102,7 +110,6 @@ typedef struct s_cmd
 typedef struct s_prompt
 {
 	t_cmd				*cmd;
-	//exit state to be filled by the execution
 	int					exit_state;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
@@ -161,5 +168,7 @@ int			has_pipe(t_token *token);
 void		print_tokens(t_token *token);
 void		print_prompt(t_prompt *prompt);
 void		remove_token(t_token **token, t_token *node);
+t_env		*empty_env(void);
+int			check_syntax(t_token *token);
 
 #endif

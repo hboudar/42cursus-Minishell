@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:45:03 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:46:52 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_token	*pipeless_token(t_token *token)
 	tmp = token;
 	new_token = (t_token *)malloc(sizeof(t_token));
 	tmp_new = new_token;
-	while (tmp->type != PIPE)
+	while (tmp->type != PIPE_TOKEN)
 	{
 		tmp_new->data = ft_strdup(tmp->data);
 		tmp_new->type = tmp->type;
@@ -117,7 +117,12 @@ t_token	*parse_token(char *line)
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
 	tmp->next = NULL;
-	print_tokens(token);
+	if (!check_syntax(token))
+	{
+		printf("syntax error\n");
+		free_token(token);
+		return (NULL);
+	}
 	fix_token(&token);
 	set_size(token);
 	set_state(token);

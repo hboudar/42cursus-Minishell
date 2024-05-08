@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:36:37 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:41:50 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void print_tokens(t_token *token)
 			new_type = "WHITE_SPACE";
 		else if (tmp->type == ENV)
 			new_type = "ENV";
-		else if (tmp->type == PIPE)
+		else if (tmp->type == PIPE_TOKEN)
 			new_type = "PIPE_LINE";
 		else if (tmp->type == REDIR_IN)
 			new_type = "REDIR_IN";

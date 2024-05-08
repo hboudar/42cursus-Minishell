@@ -6,11 +6,22 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/03 21:27:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:22:16 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+t_env	*empty_env(void)
+{
+	t_env	*env;
+
+	env = (t_env *)malloc(sizeof(t_env));
+	env->key = NULL;
+	env->value = NULL;
+	env->next = NULL;
+	return (env);
+}
 
 char	*ft_getenv(char *name, t_env *env)
 {

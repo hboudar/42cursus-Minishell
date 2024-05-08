@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:36:01 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/07 22:40:26 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,12 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		if (has_pipe(token))
-		{
-			(*cmd)->type = PIPE;
-			(*cmd)->left = (t_cmd *)malloc(sizeof(t_cmd));
-			(*cmd)->right = (t_cmd *)malloc(sizeof(t_cmd));
-			get_cmd(&(*cmd)->left, pipeless_token(token));
-			while (tmp->type != PIPE)
-			{
-				tmp = tmp->next;
-				i++;
-			}
-			get_cmd(&(*cmd)->right, tmp->next);
-			break ;
-		}
-		else if (tmp->data)
-		{
-			(*cmd)->type = CMD;
-			args[j] = ft_strdup(tmp->data);
-			j++;
-		}
+		args[j] = ft_strdup(tmp->data);
+		j++;
 		tmp = tmp->next;
 	}
 	args[j] = NULL;
+	(*cmd)->type = CMD;
 	(*cmd)->args = args;
 	(*cmd)->size = j;
 }
