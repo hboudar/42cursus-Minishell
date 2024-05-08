@@ -1,11 +1,12 @@
-SRC		= minishell.c parsing/parsing.c parsing/prompt_utils.c parsing/token_utils.c \
+SRC		=	minishell.c parsing/parsing.c parsing/prompt_utils.c parsing/token_utils.c \
 			parsing/tools.c parsing/env.c parsing/token_type.c \
 			parsing/token_type2.c parsing/tokenize.c parsing/parse_prompt.c \
 			parsing/.print.c parsing/parse_token.c \
-			execution/execution.c execution/builtins/ft_cd.c execution/builtins/ft_echo.c \
-			execution/builtins/ft_env.c execution/builtins/ft_exit.c \
-			execution/builtins/ft_export.c execution/builtins/ft_pwd.c execution/builtins/ft_unset.c \
-			execution/builtins/utils_builtins.c
+			execution/execution.c \
+			execution/cmd/ft_env.c execution/cmd/ft_exit.c execution/cmd/ft_export.c execution/cmd/ft_pwd.c \
+			execution/cmd/ft_unset.c execution/cmd/ft_cd.c execution/cmd/ft_echo.c execution/cmd/non_builtin.c \
+			execution/cmd/utils_builtins.c execution/utils/env_to_envp.c execution/utils/find_path.c
+
 OBJ		= $(SRC:.c=.o)
 HEADER	= execution.h
 NAME	= minishell
