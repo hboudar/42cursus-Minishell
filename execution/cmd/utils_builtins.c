@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/06 16:09:02 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:04:01 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	is_builtin(t_prompt *prompt)
 
 int	execute_builtin(t_prompt *prompt, t_env *env)
 {
+
+	//TODO:if a function fail returs 1
 	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))//done
 		prompt->exit_state = ft_echo(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done excepet "cd .."
@@ -33,7 +35,7 @@ int	execute_builtin(t_prompt *prompt, t_env *env)
 		prompt->exit_state = ft_pwd(prompt);
 	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))//not yet
 		prompt->exit_state = ft_export(prompt, env);
-	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))//almost done
+	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))//done
 		prompt->exit_state = ft_unset(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "env", 4))//done
 		prompt->exit_state = ft_env(prompt, env);

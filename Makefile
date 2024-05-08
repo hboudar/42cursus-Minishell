@@ -1,4 +1,4 @@
-SRC		= minishell.c parsing/parsing.c parsing/prompt_utils.c parsing/token_utils.c \
+SRC		=	minishell.c parsing/parsing.c parsing/prompt_utils.c parsing/token_utils.c \
 			parsing/tools.c parsing/env.c parsing/token_type.c \
 			parsing/token_type2.c parsing/tokenize.c parsing/parse_prompt.c \
 			parsing/.print.c parsing/parse_token.c parsing/syntaxe_error.c \
