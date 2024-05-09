@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/07 22:41:50 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/08 23:33:01 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void print_tokens(t_token *token)
 	printf("-------------------------------------------------------------------------------\n");
 	printf("|    Value           |    Lenght        |    State         |    Type          |\n");
 	printf("-------------------------------------------------------------------------------\n");
-	while (tmp->data)
+	while (tmp && tmp->data)
 	{
 		i = 0;
 		space_left = 14 - ft_strlen(tmp->data);

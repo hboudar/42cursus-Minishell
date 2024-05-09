@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/04 21:18:20 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/08 23:39:53 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_and_or(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		if (tmp->type == AND_TOKEN || tmp->type == OR_TOKEN)
+		if (tmp->type == AND_TOKEN || tmp->type == OR_TOKEN || tmp->type == PIPE_TOKEN)
 		{
 			if (!tmp->next || tmp->next->type == AND_TOKEN || tmp->next->type == OR_TOKEN)
 			{

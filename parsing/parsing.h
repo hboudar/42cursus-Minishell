@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/07 22:42:54 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/08 23:02:53 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,25 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_infile
+{
+	char			*data;
+	struct s_infile	*next;
+}	t_infile;
+
+typedef struct s_outfile
+{
+	char			*data;
+	int				appendable;
+	struct s_outfile	*next;
+}	t_outfile;
+
 typedef struct s_cmd
 {
 	char			**args;
 	int				size;
-	char			*infile;
-	char			*outfile;
+	t_infile		*infile;
+	t_outfile		*outfile;
 	int				appendable;
 	char			limiter;
 	enum e_cmd_type	type;
