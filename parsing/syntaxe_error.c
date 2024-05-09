@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/07 22:18:31 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:47:03 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,20 @@ int	check_syntax(t_token *token)
     tmp = token;
     while (tmp->next)
     {
-        if (tmp->type == P_CMD && tmp->next->type == P_CMD)
+        if (tmp->type == REDIR_IN && tmp->next->type != WORD)
             return (1);
-        if (tmp->type == P_PIPE && tmp->next->type == P_PIPE)
+        if (tmp->type == REDIR_OUT && tmp->next->type != WORD)
             return (1);
-        if (tmp->type == P_AND && tmp->next->type == P_AND)
+        if (tmp->type == APPEND && tmp->next->type != WORD)
             return (1);
-        if (tmp->type == P_OR && tmp->next->type == P_OR)
+        if (tmp->type == PIPE_TOKEN && (tmp->next->type == PIPE_TOKEN || tmp->next->type == CLOSEPAR
+            || tmp->next->type == OR_TOKEN || tmp->next->type == AND_TOKEN))
             return (1);
-        if (tmp->type == P_PIPE && tmp->next->type == P_AND)
+        if (tmp->type == OR_TOKEN && (tmp->next->type == PIPE_TOKEN 
+            || tmp->next->type == OR_TOKEN || tmp->next->type == AND_TOKEN))
             return (1);
-        if (tmp->type == P_PIPE && tmp->next->type == P_OR)
-            return (1);
-        if (tmp->type == P_AND && tmp->next->type == P_PIPE)
-            return (1);
-        if (tmp->type == P_AND && tmp->next->type == P_OR)
-            return (1);
-        if (tmp->type == P_OR && tmp->next->type == P_PIPE)
-            return (1);
-        if (tmp->type == P_OR && tmp->next->type == P_AND)
+        if (tmp->type == AND_TOKEN && (tmp->next->type == PIPE_TOKEN
+            || tmp->next->type == OR_TOKEN || tmp->next->type == AND_TOKEN))
             return (1);
         tmp = tmp->next;
     }
