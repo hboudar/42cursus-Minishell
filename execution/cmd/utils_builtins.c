@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/08 17:04:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/09 14:06:29 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int	is_builtin(t_prompt *prompt)
 			|| !ft_strncmp(prompt->cmd->args[0], "exit", 5)));
 }
 
+//TODO:if a function fail returs 1
 int	execute_builtin(t_prompt *prompt, t_env *env)
 {
-
-	//TODO:if a function fail returs 1
+	// int	fd; for redirections
+	
 	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))//done
 		prompt->exit_state = ft_echo(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done excepet "cd .."
