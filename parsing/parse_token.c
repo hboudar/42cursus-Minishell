@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/07 22:46:52 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/08 23:34:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 void	state_type(t_token *tmp)
 {
-	if (tmp->type == INFILE)
+	if (tmp->type == REDIR_IN)
 		tmp->next->state = INFILE;
-	else if (tmp->type == OUTFILE)
+	else if (tmp->type == REDIR_OUT)
 		tmp->next->state = OUTFILE;
-	else if (tmp->type == ENVIROMENT)
+	else if (tmp->type == ENV)
 		tmp->next->state = ENVIROMENT;
-	else if (tmp->type == GENERAL)
-		tmp->next->state = GENERAL;
 	else if (tmp->type == SQUOTES && tmp->state == IN_SQUOTES)
 		tmp->next->state = GENERAL;
-	else if (tmp->state == DQUOTES)
+	else if (tmp->state == IN_DQUOTES)
 		tmp->next->state = IN_DQUOTES;
-	else if (tmp->state == SQUOTES)
+	else if (tmp->state == IN_SQUOTES)
 		tmp->next->state = IN_SQUOTES;
-	else if (tmp->type == HERE_DOC)
+	else if (tmp->type == REDIR_HERE_DOC)
 		tmp->next->state = LIMITER;
 	else
 		tmp->next->state = GENERAL;
@@ -98,10 +96,11 @@ void	fix_token(t_token **token)
 	while (tmp)
 	{
 		tmp2 = tmp->next;
-		if (tmp->type == WHITE_SPACE)
+		if (tmp->type == WHITE_SPACE || !tmp->data)
 			remove_token(token, tmp);
 		tmp = tmp2;
 	}
+	print_tokens(*token);
 }
 
 t_token	*parse_token(char *line)
@@ -117,13 +116,13 @@ t_token	*parse_token(char *line)
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
 	tmp->next = NULL;
-	if (!check_syntax(token))
+	fix_token(&token);
+	if (check_syntax(token))
 	{
 		printf("syntax error\n");
 		free_token(token);
 		return (NULL);
 	}
-	fix_token(&token);
 	set_size(token);
 	set_state(token);
 	return (token);
