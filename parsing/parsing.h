@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/08 23:02:53 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:33:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ enum e_state
 enum e_type
 {
 	WORD,
-	PIPE_TOKEN,
+	PIPE_TKN,
 	REDIR_IN,
 	REDIR_OUT,
 	APPEND,
@@ -115,9 +115,6 @@ typedef struct s_cmd
 	int				appendable;
 	char			limiter;
 	enum e_cmd_type	type;
-	enum e_state	state;
-	struct s_cmd	*left;
-	struct s_cmd	*right;
 }		t_cmd;
 
 typedef struct s_prompt
@@ -170,9 +167,9 @@ void		tokenize_here_doc(char **line, int *i, t_token **token);
 void		tokenize_env(char **line, int *i, t_token **token);
 void		tokenize_word(char **line, int *i, t_token **token);
 void		tokenize(char **line, int *i, t_token **token);
-int			check_and_or(t_token *token);
+int			check_and_or_pipe(t_token *token);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
-t_token		*get_and_or(t_token *token);
+t_token		*get_and_or_pipe(t_token *token);
 void		free_token(t_token *token);
 void		get_token_state(t_token *token);
 char		*ft_remove_quotes(char *str);
@@ -183,5 +180,6 @@ void		print_prompt(t_prompt *prompt);
 void		remove_token(t_token **token, t_token *node);
 t_env		*empty_env(void);
 int			check_syntax(t_token *token);
+t_token		**split_token(t_token *token, t_token *split);
 
 #endif

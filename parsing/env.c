@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 22:22:16 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:28:19 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	expand_env(t_token *token, t_env *env)
 	int		i;
 	char	*data;
 	t_token	*tmp;
+	t_token	*tmp2;
 
 	i = 0;
 	tmp = token;
@@ -90,8 +91,9 @@ void	expand_env(t_token *token, t_env *env)
 	{
 		if (tmp->type == ENV && tmp->state != IN_SQUOTES)
 		{
-			tmp = tmp->next;
-			data = ft_getenv(tmp->data, env);
+			tmp2 = tmp->next;
+			remove_token(&token, tmp);
+			data = ft_getenv(tmp2->data, env);
 			if (data)
 			{
 				data = ft_replace_env_var(tmp->data, data);
