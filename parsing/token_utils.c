@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:25:47 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 16:38:14 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:26:03 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	has_pipe(t_token *token)
 {
 	while (token)
 	{
-		if (token->type == PIPE_TOKEN)
+		if (token->type == PIPE_TKN)
 			return (1);
 		token = token->next;
 	}
@@ -26,7 +26,7 @@ int	has_pipe(t_token *token)
 void	get_token_type(t_token *token)
 {
 	if (ft_strncmp(token->data, "|", 2) == 0)
-		token->type = PIPE_TOKEN;
+		token->type = PIPE_TKN;
 	else if (ft_strncmp(token->data, ">", 2) == 0)
 		token->type = REDIR_OUT;
 	else if (ft_strncmp(token->data, ">>", 3) == 0)

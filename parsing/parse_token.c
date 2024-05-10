@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/09 16:39:52 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:31:37 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,6 @@ void	set_size(t_token *token)
 	token->size = i + 1;
 	if (token->next)
 		set_size(token->next);
-}
-
-t_token	*pipeless_token(t_token *token)
-{
-	t_token	*tmp;
-	t_token	*tmp_new;
-	t_token	*new_token;
-	int		i;
-
-	i = 0;
-	tmp = token;
-	new_token = (t_token *)malloc(sizeof(t_token));
-	tmp_new = new_token;
-	while (tmp->type != PIPE_TOKEN)
-	{
-		tmp_new->data = ft_strdup(tmp->data);
-		tmp_new->type = tmp->type;
-		tmp_new->state = tmp->state;
-		tmp_new->next = (t_token *)malloc(sizeof(t_token));
-		tmp_new = tmp_new->next;
-		tmp = tmp->next;
-		i++;
-	}
-	new_token->size = i;
-	return (new_token);
 }
 
 void	fix_token(t_token **token)

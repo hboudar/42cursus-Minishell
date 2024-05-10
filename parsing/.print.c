@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/08 23:33:01 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 09:29:52 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,13 @@ void	print_prompt(t_prompt *prompt)
 		printf(" || ");
 		print_prompt(prompt->right);
 	}
-	else
+	else if (prompt->type == P_PIPE)
+	{
+		print_prompt(prompt->left);
+		printf(" | ");
+		print_prompt(prompt->right);
+	}
+	else if (prompt->type == P_CMD)
 		print_cmd(prompt->cmd);
 }
 
@@ -123,7 +129,7 @@ void print_tokens(t_token *token)
 			new_type = "WHITE_SPACE";
 		else if (tmp->type == ENV)
 			new_type = "ENV";
-		else if (tmp->type == PIPE_TOKEN)
+		else if (tmp->type == PIPE_TKN)
 			new_type = "PIPE_LINE";
 		else if (tmp->type == REDIR_IN)
 			new_type = "REDIR_IN";

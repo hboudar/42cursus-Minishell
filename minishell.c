@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/07 22:39:15 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:08:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,7 @@ void	free_cmd(t_cmd *cmd)
 
 void	print_cmd(t_cmd *cmd)
 {
-	if (cmd && cmd->type == PIPE_TOKEN)
-	{
-		print_cmd(cmd->left);
-		printf("|");
-		print_cmd(cmd->right);
-	}
-	else if (!cmd || cmd->args[0] == NULL)
+	if (!cmd || cmd->args[0] == NULL)
 		printf("Empty command\n");
 	else
 	{
@@ -64,7 +58,7 @@ void	print_env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s=%s\n", env->key, env->value);
+		printf("%s%s\n", env->key, env->value);
 		env = env->next;
 	}
 }
@@ -75,9 +69,9 @@ int	main(int argc, char **argv, char **envp)
 	t_env		*env;
 	t_prompt	*prompt;
 
-	(void)argc;
 	(void)argv;
-	// init_term();
+	if (!isatty(0) || argc != 1)
+		return (0);
 	env = ft_tabdup(envp);
 	while (1)
 	{
@@ -88,7 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			prompt = parse_prompt(line, env);
-			if (prompt && prompt->cmd && prompt->cmd->args[0])
+			if (prompt && (prompt->type != P_CMD || prompt->cmd))
 				execution(prompt, env);
 		}
 		free(line);

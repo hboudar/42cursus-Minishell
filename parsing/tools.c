@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/06 22:21:24 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:03:59 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_env	*ft_tabdup(char **args)
 		j = 0;
 		while (args[i][j] && args[i][j] != '=')
 			j++;
-		tmp->key = ft_substr(args[i], 0, j);
+		tmp->key = ft_substr(args[i], 0, j + 1);
 		tmp->value = ft_substr(args[i], j + 1, ft_strlen(args[i]) - j - 1);
 		tmp->next = (t_env *)malloc(sizeof(t_env));
 		tmp = tmp->next;
