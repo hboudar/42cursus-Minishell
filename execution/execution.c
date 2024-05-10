@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/09 16:42:40 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/09 16:50:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_cmd(t_prompt *prompt, t_env *env)
 {
-	printf("here");
 	if (prompt->cmd->args == NULL)
 		return (1);
 	else if (is_builtin(prompt))
