@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 16:18:53 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/11 18:26:54 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_builtin(t_prompt *prompt)
 int	execute_builtin(t_prompt *prompt, t_env *env)
 {
 	// int	fd; for redirections
-	
+
 	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))//done
 		prompt->exit_state = ft_echo(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done excepet "cd .."
@@ -39,7 +39,7 @@ int	execute_builtin(t_prompt *prompt, t_env *env)
 	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))//done
 		prompt->exit_state = ft_unset(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "env", 4))//done
-		prompt->exit_state = ft_env(env);
+		prompt->exit_state = ft_env(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "exit", 5))//done
 		prompt->exit_state = ft_exit(prompt);
 	return (prompt->exit_state);
