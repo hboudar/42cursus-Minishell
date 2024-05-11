@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/09 16:43:02 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/11 16:23:39 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,19 @@ static int	error(char *msg)
 static void	child_process(t_prompt *prompt, t_env *env)
 {
     char   *path;
-    char  **envp;
+    char  **envp = NULL;
 
     path = find_path(prompt->cmd->args, env);
     if (!path)
-        exit(1);
+    {
+        if (execve(path, prompt->cmd->args, envp) == -1)
+        {
+            perror("execve failed");
+            free(path);
+            free_envp(envp);
+            exit(1);
+        }
+    }
     envp = env_to_envp(env);
     if (execve(path, prompt->cmd->args, envp) == -1)
     {

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/08 10:39:24 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/10 18:57:48 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,26 @@ static int is_valid_name(const char *name)
     return (1);
 }
 
-static void export_only(t_prompt *prompt, t_env *env)
+void    sort_env(t_env *env)
 {
     t_env *tmp;
 
     tmp = env;
-    while (tmp)
+    while (env)
     {
-        if (tmp->value)
-            printf("declare -x %s=\"%s\"\n", tmp->key, tmp->value);
+        ;
+    }
+}
+
+static void export_only(t_prompt *prompt, t_env *env)
+{
+    while (env)
+    {
+        if (env->value)
+            printf("declare -x %s\"%s\"\n", env->key, env->value);
         else
-            printf("declare -x %s\n", tmp->key);
-        tmp = tmp->next;
+            printf("declare -x %s\n", env->key);
+        env = env->next;
     }
     prompt->exit_state = 0;
 }
