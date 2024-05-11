@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/11 16:25:14 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:32:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	t_prompt	*prompt;
 
 	(void)argv;
-	if (!isatty(0) || argc != 1)
+	if (!isatty(0) || argc != 1 || !envp)
 		return (0);
 	env = ft_tabdup(envp);
 	while (1)
@@ -82,6 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			prompt = parse_prompt(line, env);
+			printf("execution \n");
 			if (prompt && (prompt->type != P_CMD || prompt->cmd))
 				execution(prompt, env);
 		}
