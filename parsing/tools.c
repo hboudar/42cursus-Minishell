@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/10 23:44:04 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:41:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ t_env	*ft_tabdup(char **args)
 	i = -1;
 	new_args = (t_env *)malloc(sizeof(t_env));
 	tmp = new_args;
-	if (!args)
-		return (empty_env());
 	while (args[++i])
 	{
 		j = 0;

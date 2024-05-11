@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/10 09:28:19 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:49:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_getenv(char *name, t_env *env)
 	data = NULL;
 	while (env)
 	{
-		if (ft_strncmp(env->key, name, ft_strlen(name)) == 0)
+		if (!ft_strncmp(env->key, name, ft_strlen(name)))
 		{
 			data = ft_strdup(env->value);
 			break ;
@@ -64,6 +64,8 @@ char	*ft_replace_env_var(char *cmd, char *env_var)
 	int		len;
 	char	*new_cmd;
 
+	if (!env_var)
+		return (NULL);
 	i = 0;
 	len = ft_get_expanded_len(cmd, env_var);
 	new_cmd = (char *)malloc(len);
@@ -94,13 +96,12 @@ void	expand_env(t_token *token, t_env *env)
 			tmp2 = tmp->next;
 			remove_token(&token, tmp);
 			data = ft_getenv(tmp2->data, env);
+			data = ft_replace_env_var(tmp->data, data);
+			free(tmp->data);
 			if (data)
-			{
-				data = ft_replace_env_var(tmp->data, data);
-				free(tmp->data);
 				tmp->data = data;
-				printf("data: %s\n", tmp->data);
-			}
+			else
+				tmp->data = ft_strdup("");
 		}
 		tmp = tmp->next;
 	}
