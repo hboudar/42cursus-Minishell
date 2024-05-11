@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/10 09:38:34 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:25:38 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_prompt	*parse_prompt(char *line, t_env *env)
 	token = parse_token(line);
 	if (!token)
 		return (NULL);
+	print_tokens(token);
 	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
 	ft_bzero(prmpt, sizeof(t_prompt));
 	build_prompt(&prmpt, &token, env);
