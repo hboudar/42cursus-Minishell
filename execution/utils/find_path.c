@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:07:24 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 16:19:30 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/11 16:43:13 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,13 @@ static char    *free_array(char **array)
 
 static char    *get_env_value(char *key, t_env *env)
 {
-    t_env   *tmp;
-
-    tmp = env;
-    while (tmp && tmp->key)
+    while (env && env->key)
     {
-        if (!ft_strncmp(tmp->key, key, 5))
+        if (!ft_strncmp(env->key, key, 5))
             break ;
-        tmp = tmp->next;
+        env = env->next;
     }
-    return (tmp->value);
+    return (env->value);
 }
 
 static char    *ft_pathcmd(char *cmd, char **path, int i)
@@ -51,7 +48,7 @@ static char    *ft_pathcmd(char *cmd, char **path, int i)
     tmp = ft_strjoin(path[i], "/");
     if (!tmp)
     {
-        perror("ft_strjoi failed");
+        perror("ft_strjoin failed");
         return (free_array(path));
     }
     tmp2 = ft_strjoin(tmp, cmd);
@@ -70,7 +67,8 @@ char	*find_path(char **cmd, t_env *env)
     char	*tmp;
     int		i;
 
-    (1) && (path = ft_split(get_env_value("PATH", env), ':'), i = -1);
+    path = ft_split(get_env_value("PATH=", env), ':');
+    i = -1;
     if (!path)
         return (perror("ft_split failed"), NULL);
     while (path[++i])
