@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/10 09:33:36 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:42:07 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ enum e_print
 	EXP_PRINT,
 };
 
+
 typedef struct s_env
 {
 	char			*key;
@@ -101,8 +102,8 @@ typedef struct s_infile
 
 typedef struct s_outfile
 {
-	char			*data;
-	int				appendable;
+	char				*data;
+	int					appendable;
 	struct s_outfile	*next;
 }	t_outfile;
 
@@ -112,7 +113,6 @@ typedef struct s_cmd
 	int				size;
 	t_infile		*infile;
 	t_outfile		*outfile;
-	int				appendable;
 	char			limiter;
 	enum e_cmd_type	type;
 }		t_cmd;
