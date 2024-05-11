@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:46:44 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/08 10:41:39 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/11 16:48:36 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,22 @@ char   **free_envp(char **envp)
     return (NULL);
 }
 
-char	**env_to_envp(t_env *env)
+char	**env_to_envp(t_env *tmp, t_env *tmp1)
 {
     char	**envp;
-    t_env    *tmp;
     int		i;
 
-    (1) && (i = 0, tmp = env);
-    while (tmp)
-        (1) && (i++, tmp = tmp->next);
+    i = -1;
+    while (tmp1 && ++i >= 0)
+        tmp1 = tmp1->next;
     envp = malloc(sizeof(char *) * (i + 1));
     if (!envp)
-        return (NULL);
-    (1) && (i = -1, tmp = env);
+        return (perror("malloc function"), NULL);
+    i = -1;
     while (tmp)
     {
         envp[++i] = ft_strjoin(tmp->key, tmp->value);
-        if (!envp[i])
+        if (envp[i] == NULL)
         {
             perror("ft_strjoin failed");
             return (free_envp(envp));
