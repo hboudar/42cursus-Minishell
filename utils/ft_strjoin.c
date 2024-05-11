@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 16:07:41 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 16:52:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/12 00:35:11 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	j;
 	char	*str;
 
-	if (s1 && !s2)
-		return (ft_strdup(s1));
 	if (!s1 && !s2)
 		return (NULL);
+	else if (!s2)
+		return (ft_strdup(s1));
+	else if (!s1)
+		return (ft_strdup(s2));
 	size = ft_strlen(s1) + ft_strlen(s2);
 	str = malloc (sizeof(char) * (size + 1));
 	if (!str)
