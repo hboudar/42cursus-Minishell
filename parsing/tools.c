@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/10 13:03:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/10 23:44:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,19 @@ void	free_tab(char **args)
 	free(args);
 }
 
-void	ft_null_end(t_env **new_args, int i)
+void	set_type_env(t_env *env)
 {
-	int		j;
 	t_env	*tmp;
 
-	j = 0;
-	tmp = *new_args;
-	while (j < i - 1)
+	tmp = env;
+	while (tmp)
 	{
+		if (ft_strchr(tmp->key, '='))
+			tmp->print = ENV_PRINT;
+		else
+			tmp->print = EXP_PRINT;
 		tmp = tmp->next;
-		j++;
 	}
-	free(tmp->next);
-	tmp->next = NULL;
 }
 
 t_env	*ft_tabdup(char **args)
@@ -58,12 +57,12 @@ t_env	*ft_tabdup(char **args)
 	t_env	*new_args;
 	t_env	*tmp;
 
-	i = 0;
+	i = -1;
 	new_args = (t_env *)malloc(sizeof(t_env));
 	tmp = new_args;
 	if (!args)
 		return (empty_env());
-	while (args[i])
+	while (args[++i])
 	{
 		j = 0;
 		while (args[i][j] && args[i][j] != '=')
@@ -72,9 +71,11 @@ t_env	*ft_tabdup(char **args)
 		tmp->value = ft_substr(args[i], j + 1, ft_strlen(args[i]) - j - 1);
 		tmp->next = (t_env *)malloc(sizeof(t_env));
 		tmp = tmp->next;
-		i++;
 	}
-	ft_null_end(&new_args, i);
+	tmp->key = ft_strdup("OLDPWD");
+	tmp->value = NULL;
+	tmp->next = NULL;
+	set_type_env(new_args);
 	return (new_args);
 }
 
