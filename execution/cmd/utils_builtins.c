@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/09 14:06:29 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/10 18:16:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ int	execute_builtin(t_prompt *prompt, t_env *env)
 		prompt->exit_state = ft_cd(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))//done
 		prompt->exit_state = ft_pwd(prompt);
-	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))//not yet
+	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))//not yet (check if printable)
 		prompt->exit_state = ft_export(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))//done
 		prompt->exit_state = ft_unset(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "env", 4))//done
-		prompt->exit_state = ft_env(prompt, env);
+		prompt->exit_state = ft_env(env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "exit", 5))//done
 		prompt->exit_state = ft_exit(prompt);
 	return (prompt->exit_state);

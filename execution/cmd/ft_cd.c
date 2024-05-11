@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/08 10:39:13 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/09 18:45:36 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int ft_cd(t_prompt *prompt, t_env *env)
 
     oldpwd = getcwd(NULL, 0);
     if (!oldpwd)
-    {
-        perror("getcwd");
-        return (1);
-    }
+        return (perror("getcwd"), 1);
     if (chdir(prompt->cmd->args[1]) == -1)
     {
         free(oldpwd);
@@ -85,11 +82,7 @@ int ft_cd(t_prompt *prompt, t_env *env)
     }
     pwd = getcwd(NULL, 0);
     if (!pwd)
-    {
-        free(oldpwd);
-        perror("getcwd");
-        return (1);
-    }
+        return (free(oldpwd), perror("getcwd"), 1);
     set_pwd(pwd, env);
     set_oldpwd(oldpwd, env);
     return (0);
