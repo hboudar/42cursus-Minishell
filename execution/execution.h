@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 16:49:19 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/11 17:10:03 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int ft_cd(t_prompt *prompt, t_env *env);
 int ft_pwd(t_prompt *prompt);
 int ft_export(t_prompt *prompt, t_env *env);
 int ft_unset(t_prompt *prompt, t_env *env);
-int ft_env(t_env *env);
+int ft_env(t_prompt *prompt, t_env *env);
 int ft_exit(t_prompt *prompt);
 
 int    execute_nonebuiltin(t_prompt *prompt, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:07:24 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 16:43:13 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/11 19:12:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static char    *get_env_value(char *key, t_env *env)
     while (env && env->key)
     {
         if (!ft_strncmp(env->key, key, 5))
-            break ;
+            return (env->value);
         env = env->next;
     }
-    return (env->value);
+    return (NULL);
 }
 
 static char    *ft_pathcmd(char *cmd, char **path, int i)
@@ -67,8 +67,10 @@ char	*find_path(char **cmd, t_env *env)
     char	*tmp;
     int		i;
 
-    path = ft_split(get_env_value("PATH=", env), ':');
     i = -1;
+    if (!get_env_value("PATH=", env))
+        return (NULL);
+    path = ft_split(get_env_value("PATH=", env), ':');
     if (!path)
         return (perror("ft_split failed"), NULL);
     while (path[++i])
@@ -83,6 +85,7 @@ char	*find_path(char **cmd, t_env *env)
         }
         free(tmp);
     }
-    free_array(path);
-    return (cmd[0]);
+    return (free_array(path), cmd[0]);
 }
+
+//TODO:check leaks

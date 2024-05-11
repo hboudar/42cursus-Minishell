@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/09 18:45:36 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/11 21:49:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,56 +14,35 @@
 
 void set_oldpwd(char *oldpwd, t_env *env)
 {
-    char *tmp;
-    int i;
-
-    i = -1;
     while (env)
     {
         if (!ft_strncmp(env->key, "OLDPWD=", 8))
         {
-            tmp = env->value;
-            env->value = oldpwd;
             if (!env->value)
+                env->value = oldpwd;
+            else
             {
-                env->value = tmp;
-                perror("ft_strjoin in cd");
-                break ;
+                free(env->value);
+                env->value = NULL;
+                env->value = oldpwd;
             }
-            free(tmp);
-            tmp = NULL;
         }
         env = env->next;
     }
-    free(oldpwd);
-    oldpwd = NULL;
 }
 
 void set_pwd(char *pwd, t_env *env)
 {
-    char *tmp;
-    int i;
-
-    i = -1;
     while (env)
     {
         if (!ft_strncmp(env->key, "PWD=", 8))
         {
-            tmp = env->value;
+            free(env->value);
+            env->value = NULL;
             env->value = pwd;
-            if (!env->value)
-            {
-                env->value = tmp;
-                perror("ft_strjoin in cd");
-                break ;
-            }
-            free(tmp);
-            tmp = NULL;
         }
         env = env->next;
     }
-    free(pwd);
-    pwd = NULL;
 }
 
 int ft_cd(t_prompt *prompt, t_env *env)
