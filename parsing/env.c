@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/11 21:49:40 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:54:09 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	expand_env(t_token *token, t_env *env)
 			tmp2 = tmp->next;
 			remove_token(&token, tmp);
 			data = ft_getenv(tmp2->data, env);
-			data = ft_replace_env_var(tmp->data, data);
+			data = ft_replace_env_var(tmp2->data, data);
 			free(tmp->data);
 			if (data)
 				tmp->data = data;
