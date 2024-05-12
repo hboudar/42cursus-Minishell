@@ -6,27 +6,38 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/12 00:54:55 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/12 20:01:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-static int is_valid_name(const char *name)
+static int is_valid(const char *name, int i, int mode)
 {
-    int i;
+    char    *equal;
+    char    *plus;
 
-    if (!ft_isalpha(name[0]) && name[0] != '_')
-        return (0);
-    else if (ft_strchr(name, '='))
-        return (1);
-    i = 1;
-    while (name[i])
+    if (!mode)
     {
-        if (!ft_isalnum(name[i]) && name[i] != '_')
+        if (!ft_isalpha(name[0]) && name[0] != '_')
             return (0);
-        i++;
+        else if (ft_strchr(name, '='))
+            return (1);
+        while (name[i])
+        {
+            if (!ft_isalnum(name[i]) && name[i] != '_')
+                return (0);
+            i++;
+        }
+        return (1);
     }
+    (1) && (equal = ft_strchr(name, '='), plus = ft_strchr(name, '+'));
+    if (!equal && !plus)
+        return (0);
+    else if (!plus || (plus && equal && plus > equal))
+        return (1);
+    else if (plus && equal && plus < equal)
+        return (2);
     return (1);
 }
 
@@ -46,7 +57,7 @@ static int export_only(t_env *env)
     return (0);
 }
 
-static void    add_env_1(const char *str, t_env *env)
+static void    add_env(const char *str, t_env *env)
 {
     while (env)
     {
@@ -59,14 +70,14 @@ static void    add_env_1(const char *str, t_env *env)
     env->next = malloc(sizeof(t_env));
     if (!env->next)
     {
-        perror("malloc in add_env_2 failed");
+        perror("malloc in add_env failed");
         return ;
     }
     env->next->key = ft_strdup(str);
     if (!env->next->key)
     {
         free(env->next);
-        perror("ft_strdup in add_env_2 failed");
+        perror("ft_strdup in add_env failed");
         return ;
     }
     env->next->value = NULL;
@@ -74,49 +85,109 @@ static void    add_env_1(const char *str, t_env *env)
     env->next->print = EXP_PRINT;
 }
 
-static void    add_env_2(const char *str, t_env *env)
+static void add_env_equal_2(const char *str, t_env *env)
 {
-    while (env->next)
-        env = env->next;
     env->next = malloc(sizeof(t_env));
     if (!env->next)
-        return (perror("malloc in add_env_1 failed"));
-    env->next->key = ft_substr(str, 0, (size_t)(ft_strchr(str, '=') - str));
+        return (perror("E: malloc in export"));
+    env->next->key = ft_substr(str, 0, ft_strchr(str, '=') + 1 - str);
     if (!env->next->key)
-        return (free(env->next), perror("ft_substr in add_env_1 failed"));
-    env->next->value = ft_strdup(ft_strchr(str, '='));
+        return (free(env->next), perror("E: ft_substr in export"));
+    env->next->value = ft_strdup(ft_strchr(str, '=') + 1);
     if (!env->next->value)
-        return (free(env->next->key), free(env->next), perror("ft_strdup in add_env_1 failed"));
+        return (free(env->next->key), free(env->next), perror("E: ft_strdup in export"));
     env->next->next = NULL;
     env->next->print = PRINT;
 }
 
-static void   add_env_3(const char *str, t_env *env)
+static void    add_env_equal(const char *str, t_env *env)
 {
-    char    *tmp;
+    char   *tmp;
 
     while (env)
     {
-        if (!ft_strncmp(env->key, str, ft_strlen(str)) && env->value)
-        {
-            tmp = ft_strjoin(env->value, ft_strchr(str, '=') + 1);
-            if (!tmp)
-                return (perror("ft_strjoin in add_env_3 failed"));
-            free(env->value);
-            env->value = tmp;
-            return ;
-        }
-        else if (!ft_strncmp(env->key, str, ft_strlen(str)) && !env->value)
-        {
-            env->value = ft_strdup(ft_strchr(str, '='));
-            if (!env->value)
-                return (perror("ft_strdup in add_env_3 failed"));
-            return ;
-        }
+        if (!ft_strncmp(env->key, str, ft_strlen(env->key)) || !env->next)
+            break ;
         env = env->next;
     }
+    if (!ft_strncmp(env->key, str, ft_strlen(env->key)))
+    {
+        (env->value) && (free(env->value), env->value = NULL);
+        env->value = ft_strdup(ft_strchr(str, '=') + 1);
+        if (!env->value)
+            return (perror("E: ft_strdup in export"));
+        if (ft_strchr(env->key, '='))
+            return ;
+        (1) && (tmp = env->key, env->key = ft_strjoin(env->key, "="));
+        if (!env->key)
+            return (perror("E: ft_strjoin in export"));
+        free(tmp);
+        env->print = PRINT;
+    }
+    else
+        add_env_equal_2(str, env);
 }
 
+static void add_env_plus_2(const char *str, t_env *env, int mode)
+{
+    char   *tmp;
+
+    if (mode)
+    {
+        env->value = ft_strdup(ft_strchr(str, '=') + 1);
+        if (!env->value)
+            return (perror("ft_strdup in add_env_plus failed"));
+        tmp = env->key;
+        env->key = ft_strjoin(env->key, "=");
+        free(tmp);
+        if (!env->key)
+            return (perror("ft_strjoin in add_env_plus failed"));
+        return ;
+    }
+    env->next = malloc(sizeof(t_env));
+    if (!env->next)
+        return (perror("malloc in add_env failed"));
+    tmp = ft_substr(str, 0, ft_strchr(str, '+') - str);
+    if (!tmp)
+        return (free(env->next), perror("ft_strdup in add_env failed"));
+    env->next->key = ft_strjoin(tmp, "=");
+    free(tmp);
+    if (!env->next->key)
+        return (free(env->next), perror("ft_strdup in add_env failed"));
+    env->next->value = ft_strdup(ft_strchr(str, '=') + 1);
+    if (!env->next->value)
+        return (free(env->next->key), free(env->next), perror("ft_strdup in add_env failed"));
+    env->next->next = NULL;
+    env->print = PRINT;
+}
+
+static void   add_env_plus(const char *str, t_env *env)
+{
+    char   *tmp;
+
+    while (env)
+    {
+        if (!ft_strncmp(env->key, ft_strchr(str, '+') - 1, ft_strlen(ft_strchr(str, '+') - 1)) || !env->next)
+            break ;
+        env = env->next;
+    }
+    if (!ft_strncmp(env->key, ft_strchr(str, '+') - 1, ft_strlen(ft_strchr(str, '+') - 1)))
+    {
+        if (ft_strchr(env->key, '='))
+        {
+            tmp = env->value;
+            env->value = ft_strjoin(env->value, ft_strchr(str, '=') + 1);
+            free(tmp);
+            if (!env->value)
+                return (perror("ft_strdup in add_env_plus failed"));
+        }
+        else
+            add_env_plus_2(str, env, 1);
+        env->print = PRINT;
+    }
+    else
+        add_env_plus_2(str, env, 0);
+}
 int ft_export(t_prompt *prompt, t_env *env)
 {
     int i;
@@ -126,17 +197,17 @@ int ft_export(t_prompt *prompt, t_env *env)
     i = 0;
     while (prompt->cmd->args[++i])
     {
-        if (!is_valid_name(prompt->cmd->args[i]))
+        if (!is_valid(prompt->cmd->args[i], 1, 0))
         {
             printf("export: `%s': not a valid identifier\n", prompt->cmd->args[i]);
             prompt->exit_state = 1;
         }
-        else if (ft_strchr(prompt->cmd->args[i], '+'))
-            add_env_3(prompt->cmd->args[i], env);
-        else if (ft_strchr(prompt->cmd->args[i], '='))
-            add_env_2(prompt->cmd->args[i], env);
-        else
-            add_env_1(prompt->cmd->args[i], env);
+        else if (!is_valid(prompt->cmd->args[i], 1, 1))
+            add_env(prompt->cmd->args[i], env);
+        else if (is_valid(prompt->cmd->args[i], 1, 1) == 1)
+            add_env_equal(prompt->cmd->args[i], env);
+        else if (is_valid(prompt->cmd->args[i], 1, 1) == 2)
+            add_env_plus(prompt->cmd->args[i], env);
     }
     return (0);
 }
