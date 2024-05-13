@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/11 18:41:25 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:03:31 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	set_type_env(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		if (ft_strchr(tmp->key, '='))
+		if (ft_strchr(tmp->key, '=') && ft_strncmp(tmp->key, "_=", 3))
+			tmp->print = PRINT;
+		else if (!ft_strncmp(tmp->key, "_=", 3))
 			tmp->print = ENV_PRINT;
 		else
 			tmp->print = EXP_PRINT;
@@ -57,12 +59,14 @@ t_env	*ft_tabdup(char **args)
 	t_env	*new_args;
 	t_env	*tmp;
 
-	i = -1;
 	new_args = (t_env *)malloc(sizeof(t_env));
-	tmp = new_args;
+	(1) && (i = -1, tmp = new_args);
 	while (args[++i])
 	{
 		j = 0;
+		if (!ft_strncmp(args[i], "OLDPWD", 6)
+			|| !ft_strncmp(args[i], "SHELL", 5))
+			continue ;
 		while (args[i][j] && args[i][j] != '=')
 			j++;
 		tmp->key = ft_substr(args[i], 0, j + 1);
@@ -71,7 +75,7 @@ t_env	*ft_tabdup(char **args)
 		tmp = tmp->next;
 	}
 	tmp->key = ft_strdup("OLDPWD");
-	tmp->value = NULL;
+	tmp->print = EXP_PRINT;
 	tmp->next = NULL;
 	set_type_env(new_args);
 	return (new_args);
