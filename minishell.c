@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/13 21:13:32 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/13 21:25:13 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ void	print_env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s%s\n", env->key, env->value);
+		printf("%s" , env->key);
+		if (env->value)
+			printf("%s\n", env->value);
+		else
+			printf("\n");
 		env = env->next;
 	}
 }
