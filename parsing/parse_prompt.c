@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/11 16:25:38 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:32:05 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,12 @@ t_prompt	*parse_prompt(char *line, t_env *env)
 	if (!token)
 		return (NULL);
 	print_tokens(token);
+	fix_token(&token);
+	if (check_syntax(token))
+	{
+		printf("Syntax error\n");
+		return (NULL);
+	}
 	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
 	ft_bzero(prmpt, sizeof(t_prompt));
 	build_prompt(&prmpt, &token, env);

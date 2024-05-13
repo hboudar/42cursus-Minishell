@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/11 19:06:51 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:31:52 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,8 @@ int			has_pipe(t_token *token);
 void		print_tokens(t_token *token);
 void		print_prompt(t_prompt *prompt);
 void		remove_token(t_token **token, t_token *node);
-t_env		*empty_env(void);
 int			check_syntax(t_token *token);
 t_token		**split_token(t_token *token, t_token *split);
+void		fix_token(t_token **token);
 
 #endif
