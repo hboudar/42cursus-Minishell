@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/13 20:25:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/13 21:15:51 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ char	*find_path(char **cmd, t_env *env);
 char	**env_to_envp(t_env *env, t_env *env1);
 char   **free_envp(char **envp);
 
-void ft_shell_lvl(t_env *env);
 
 #endif

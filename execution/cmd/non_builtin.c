@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/13 21:13:15 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/13 21:14:22 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	child_process(t_prompt *prompt, t_env *env)
     char  **envp;
 
 
-        path = find_path(prompt->cmd->args, env);
+    path = find_path(prompt->cmd->args, env);
     envp = env_to_envp(env, env);
     if (execve(path, prompt->cmd->args, envp) == -1)
     {
