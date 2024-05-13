@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/13 20:24:21 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/13 21:13:32 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,33 @@ void	print_env(t_env *env)
 		printf("%s%s\n", env->key, env->value);
 		env = env->next;
 	}
+}
+
+void ft_shell_lvl(t_env *env)
+{
+    t_env *tmp;
+    char *str;
+
+    tmp = env;
+    while (tmp)
+    {
+        if (!ft_strncmp(tmp->key, "SHLVL", 5))
+        {
+            str = ft_itoa(ft_atoi(tmp->value) + 1);
+            if (!str)
+                return (perror("E: ft_itoa in ft_shell_lvl"));
+            if (ft_strncmp(tmp->value, "999", 3) == 0)
+            {
+                free(str);
+                free(tmp->value);
+                return ;
+            }
+            free(tmp->value);
+            tmp->value = str;
+            break ;
+        }
+        tmp = tmp->next;
+    }
 }
 
 int	main(int argc, char **argv, char **envp)
