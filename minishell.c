@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/11 20:32:25 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:24:21 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!isatty(0) || argc != 1 || !envp)
 		return (0);
 	env = ft_tabdup(envp);
+	ft_shell_lvl(env);
 	while (1)
 	{
 		line = readline("\033[1;34m➜ minishell \033[0m");
