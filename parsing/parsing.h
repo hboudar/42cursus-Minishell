@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 22:43:01 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:50:35 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int			check_syntax(t_token *token);
 int			check_syntax_bonus(t_token *token);
 int			has_pipe(t_token *token);
 int			has_semicolon(char *line);
-char		**ft_split_prompt(char *line, char *sep1, char *sep2);
+int			count_files(char **file);
 char		*ft_getenv(char *name, t_env *env);
 char		*ft_remove_quotes(char *str);
 char		**add_last(char **file, char *data);
