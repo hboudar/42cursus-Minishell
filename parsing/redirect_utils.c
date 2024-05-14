@@ -6,38 +6,38 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 22:49:20 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/14 23:10:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-char	**add_last(char **file, char *data)
+void    add_last(char ***file, char *data)
 {
-	char	**tmp;
-	int        i;
-	
-	if (!file || !*file)
+	int		i;
+	char	**new;
+
+	i = 0;
+	if (!*file)
 	{
-		tmp = (char **)malloc(2);
-		*tmp = data;
-        *(tmp + 1) = NULL;
+		new = (char **)malloc(sizeof(char *) * 2);
+		new[0] = data;
+		new[1] = NULL;
+		*file = new;
+		return ;
 	}
-	else
+	i = count_files(*file);
+	new = (char **)malloc(sizeof(char *) * (i + 2));
+	i = 0;
+	while ((*file)[i])
 	{
-		i = count_files(file);
-		tmp = (char **)malloc(sizeof(char) * (i + 2));
-		i = 0;
-		while (file[i])
-		{
-			tmp[i] = ft_strdup(file[i]);
-			i++;
-		}
-		tmp[i] = data;
-		tmp[i + 1] = NULL;
-		free_tab(file);
+		new[i] = ft_strdup((*file)[i]);
+		i++;
 	}
-	return (tmp);
+	new[i] = data;
+	new[i + 1] = NULL;
+	free_tab(*file);
+	*file = new;
 }
 
 t_infile    *ft_newinfile(char *data)

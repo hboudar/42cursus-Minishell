@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 22:50:35 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/14 23:07:43 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ int			has_semicolon(char *line);
 int			count_files(char **file);
 char		*ft_getenv(char *name, t_env *env);
 char		*ft_remove_quotes(char *str);
-char		**add_last(char **file, char *data);
 void		set_size(t_token *token);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
+void		add_last(char ***file, char *data);
 void		tokenize_dquotes(char **line, int *i, t_token **token);
 void		expand_env(t_token *token, t_env *env);
 void		tokenize_squotes(char **line, int *i, t_token **token);
