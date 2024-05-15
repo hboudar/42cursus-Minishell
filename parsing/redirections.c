@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 19:43:07 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:00:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	remove_redirections(t_token **token)
 			remove_token(token, tmp);
 			tmp = *token;
 		}
-		if (tmp)
+		else if (tmp)
 			tmp = tmp->next;
 	}
 }
