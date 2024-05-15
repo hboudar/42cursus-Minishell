@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 20:00:40 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:18:42 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,16 @@ void	fill_redirections(t_cmd *cmd, t_token *token)
 	while (token)
 	{
 		if (token->type == REDIR_IN)
-			ft_infileaddback(&(cmd->infile),
-				ft_newinfile(ft_strdup(token->next->data)));
+		{
+			ft_fileaddback(&(cmd->file),
+				ft_newfile(ft_strdup(token->next->data), 0));
+			cmd->file->appendable = 0;
+		}
 		else if (token->type == REDIR_OUT || token->type == APPEND)
 		{
-			ft_outfileaddback(&(cmd->outfile),
-				ft_newoutfile(ft_strdup(token->next->data)));
-			cmd->outfile->appendable = token->type == APPEND;
+			ft_fileaddback(&(cmd->file),
+				ft_newfile(ft_strdup(token->next->data), 1));
+			cmd->file->appendable = token->type == APPEND;
         }
 		else if (token->type == REDIR_HERE_DOC)
 			add_last(&cmd->limiter, ft_strdup(token->next->data));
