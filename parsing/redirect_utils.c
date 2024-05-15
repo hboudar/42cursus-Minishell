@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 20:10:53 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:15:18 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ void	ft_outfileaddback(t_file **file, t_file *new)
     while (tmp->next)
         tmp = tmp->next;
     tmp->next = new;
+}
+
+void	free_files(t_file *file)
+{
+	t_file	*tmp;
+
+	while (file)
+	{
+		tmp = file;
+		file = file->next;
+		free(tmp->data);
+		free(tmp);
+	}
 }

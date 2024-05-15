@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 20:18:30 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:15:46 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,10 @@ void		get_token_type(t_token *token);
 void		get_token_state(t_token *token);
 void		remove_token(t_token **token, t_token *node);
 void		ft_fileaddback(t_file **file, t_file *new);
+void		free_prompt(t_prompt *prompt);
+void		free_files(t_file *file);
 void		remove_redirections(t_token **token);
+void		print_env(t_env *env);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);
@@ -179,6 +182,6 @@ t_token		*parse_token(char *line);
 t_token		*pipeless_token(t_token *token);
 t_token		*get_and_or_pipe(t_token *token);
 t_token		**split_token(t_token *token, t_token *split);
-t_prompt	*parse_prompt(char *line, t_env *env);
+t_prompt	*parse_prompt(t_prompt *oldprmpt , char *line, t_env *env);
 
 #endif

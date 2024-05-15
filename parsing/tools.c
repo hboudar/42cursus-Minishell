@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/13 13:03:31 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:14:08 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_tab(char **args)
 	int	i;
 
 	i = 0;
+	if (!args)
+		return ;
 	while (args[i])
 	{
 		free(args[i]);
