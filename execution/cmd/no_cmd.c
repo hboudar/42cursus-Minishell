@@ -6,38 +6,53 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/13 21:32:37 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/15 20:03:30 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int    no_cmd(t_prompt *prompt)
+static void    ft_infile(t_prompt *prompt)
 {
     int fd;
 
-    if (prompt->cmd->infile)
+    fd = open(prompt->cmd->infile->data, O_RDONLY);
+    if (fd == -1)
     {
-        fd = open(prompt->cmd->infile->data, O_RDONLY);
-        if (fd == -1)
-        {
-            ft_putstr_fd("minishell: ", 2);
-            ft_putstr_fd(prompt->cmd->infile->data, 2);
-            ft_putstr_fd(": No such file or directory\n", 2);
-            prompt->exit_state = 1;
-        }
+        printf ("%s: %s: No such file or directory\n", prompt->cmd->infile->data, strerror(errno));
+        prompt->exit_state = 1;
+        return ;
     }
-    if (prompt->cmd->outfile)
+    prompt->exit_state = 0;
+}
+
+static void   ft_outfile(t_prompt *prompt)
+{
+    int fd;
+
+    while (prompt->cmd->outfile)
     {
-        while (prompt->cmd->outfile->next)
+        if (prompt->cmd->outfile->appendable)
         {
-            open(prompt->cmd->outfile->data, O_CREAT | O_RDWR, 0644);
-            prompt->cmd->outfile = prompt->cmd->outfile->next;
-        }
-        if (prompt->cmd->outfile->appendable == 1)
             fd = open(prompt->cmd->outfile->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            if (fd == -1)
+            {
+                printf ("%s: %s: No such file or directory\n", prompt->cmd->outfile->data, strerror(errno));
+                prompt->exit_state = 1;
+                return ;
+            }
+        }
         else
             fd = open(prompt->cmd->outfile->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        prompt->cmd->outfile = prompt->cmd->outfile->next;
     }
-    return (0);
+}
+
+int    no_cmd(t_prompt *prompt)
+{
+    if (prompt->cmd->infile)
+        ft_infile(prompt);
+    if (prompt->cmd->outfile)
+        ft_outfile(prompt);
+    return (prompt->exit_state);
 }
