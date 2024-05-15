@@ -6,11 +6,40 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 23:04:47 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:37:35 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	count_files(char **file)
+{
+    int	i;
+
+    i = 0;
+    while (file[i])
+        i++;
+    return (i);
+}
+
+void	remove_redirections(t_token **token)
+{
+	t_token	*tmp;
+
+	tmp = *token;
+	while (tmp)
+	{
+		if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT
+			|| tmp->type == APPEND || tmp->type == REDIR_HERE_DOC)
+		{
+			remove_token(token, tmp->next);
+			remove_token(token, tmp);
+			tmp = *token;
+		}
+		if (tmp)
+			tmp = tmp->next;
+	}
+}
 
 void	fill_redirections(t_cmd *cmd, t_token *token)
 {
