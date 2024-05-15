@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 23:10:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:10:53 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,51 +40,27 @@ void    add_last(char ***file, char *data)
 	*file = new;
 }
 
-t_infile    *ft_newinfile(char *data)
+t_file    *ft_newfile(char *data, int type)
 {
-    t_infile	*new;
+    t_file	*new;
 
-    new = (t_infile *)malloc(sizeof(t_infile));
+    new = (t_file *)malloc(sizeof(t_file));
     new->data = data;
+    new->type = type;
     new->next = NULL;
     return (new);
 }
 
-t_outfile    *ft_newoutfile(char *data)
+void	ft_outfileaddback(t_file **file, t_file *new)
 {
-    t_outfile	*new;
+    t_file	*tmp;
 
-    new = (t_outfile *)malloc(sizeof(t_outfile));
-    new->data = data;
-    new->next = NULL;
-    return (new);
-}
-
-void	ft_infileaddback(t_infile **infile, t_infile *new)
-{
-    t_infile	*tmp;
-
-    if (!*infile)
+    if (!*file)
     {
-        *infile = new;
+        *file = new;
         return ;
     }
-    tmp = *infile;
-    while (tmp->next)
-        tmp = tmp->next;
-    tmp->next = new;
-}
-
-void	ft_outfileaddback(t_outfile **outfile, t_outfile *new)
-{
-    t_outfile	*tmp;
-
-    if (!*outfile)
-    {
-        *outfile = new;
-        return ;
-    }
-    tmp = *outfile;
+    tmp = *file;
     while (tmp->next)
         tmp = tmp->next;
     tmp->next = new;

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 23:12:50 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:19:41 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,22 +166,15 @@ void print_tokens(t_token *token)
 
 void	print_redirections(t_cmd *cmd)
 {
-	t_infile	*tmp_in;
-	t_outfile	*tmp_out;
+	t_file	*tmp;
 	char		**args;
 
-	tmp_in = cmd->infile;
-	tmp_out = cmd->outfile;
+	tmp = cmd->file;
 	args = cmd->limiter;
-	while (tmp_in)
+	while (tmp)
 	{
-		printf("infile: %s\n", tmp_in->data);
-		tmp_in = tmp_in->next;
-	}
-	while (tmp_out)
-	{
-		printf("outfile: %s\n", tmp_out->data);
-		tmp_out = tmp_out->next;
+		printf("file: %s\n", tmp->data);
+		tmp = tmp->next;
 	}
 	while (args && *args)
 	{

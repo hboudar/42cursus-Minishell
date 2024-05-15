@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 19:32:30 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:18:30 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,25 +94,19 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_infile
+typedef struct s_file
 {
 	char			*data;
-	struct s_infile	*next;
-}	t_infile;
-
-typedef struct s_outfile
-{
-	char				*data;
-	int					appendable;
-	struct s_outfile	*next;
-}	t_outfile;
+	int				type;
+	int				appendable;
+	struct s_file	*next;
+}	t_file;
 
 typedef struct s_cmd
 {
 	char			**args;
 	int				size;
-	t_infile		*infile;
-	t_outfile		*outfile;
+	t_file			*file;
 	char			**limiter;
 	enum e_cmd_type	type;
 }		t_cmd;
@@ -175,18 +169,16 @@ void		print_tokens(t_token *token);
 void		get_token_type(t_token *token);
 void		get_token_state(t_token *token);
 void		remove_token(t_token **token, t_token *node);
-void		ft_infileaddback(t_infile **infile, t_infile *new);
-void		ft_outfileaddback(t_outfile **outfile, t_outfile *new);
+void		ft_fileaddback(t_file **file, t_file *new);
 void		remove_redirections(t_token **token);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);
+t_file		*ft_newfile(char *data, int type);
 t_token		*parse_token(char *line);
 t_token		*pipeless_token(t_token *token);
 t_token		*get_and_or_pipe(t_token *token);
 t_token		**split_token(t_token *token, t_token *split);
 t_prompt	*parse_prompt(char *line, t_env *env);
-t_infile	*ft_newinfile(char *data);
-t_outfile	*ft_newoutfile(char *data);
 
 #endif
