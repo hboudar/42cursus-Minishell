@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 23:07:43 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:32:30 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void		get_token_state(t_token *token);
 void		remove_token(t_token **token, t_token *node);
 void		ft_infileaddback(t_infile **infile, t_infile *new);
 void		ft_outfileaddback(t_outfile **outfile, t_outfile *new);
+void		remove_redirections(t_token **token);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);

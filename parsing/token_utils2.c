@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:31:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/10 09:32:28 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:29:34 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	remove_token(t_token **token, t_token *node)
 
 	tmp = *token;
 	tmp2 = NULL;
-	while (tmp != node)
+	while (tmp && tmp != node)
 	{
 		tmp2 = tmp;
 		tmp = tmp->next;
