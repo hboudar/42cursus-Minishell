@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 19:40:06 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:53:31 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 	int		i;
 	int		j;
 	char	**args;
-	t_token	*tmp;
 
 	i = 0;
 	j = 0;
 	if (token)
 		args = (char **)malloc(sizeof(char *) * (token->size + 1));
-	tmp = token;
-	while (tmp)
+	else
+		args = NULL;
+	while (token)
 	{
-		args[j] = ft_strdup(tmp->data);
+		args[j] = ft_strdup(token->data);
 		j++;
-		tmp = tmp->next;
+		token = token->next;
 	}
 	if (token)
 		args[j] = NULL;
