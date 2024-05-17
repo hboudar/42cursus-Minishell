@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 18:48:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/17 23:42:28 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ static void    ft_unsetenv(const char *name, t_env *env)
     {
         if (!ft_strncmp(tmp->key, name, ft_strlen(name)))
         {
-            if (tmp->key)
-                (1) && (free(tmp->key), tmp->key = NULL);
-            if (tmp->value)
-                (1) && (free(tmp->value), tmp->value = NULL);
-            if (prev)
+            (tmp->key) && (free(tmp->key), tmp->key = NULL);
+            (tmp->value) && (free(tmp->value), tmp->value = NULL);
+            if (prev != NULL)
                 prev->next = tmp->next;
             else
                 env = tmp->next;
