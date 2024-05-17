@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 19:41:37 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:14:47 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	free_cmd(t_cmd *cmd)
 	i = 0;
 	if (!cmd)
 		return ;
-	while (cmd->args[i])
-	{
-		free(cmd->args[i]);
-		i++;
-	}
-	free(cmd->args);
+	free_tab(cmd->args);
+	free_tab(cmd->limiter);
+	free_files(cmd->file);
+	cmd->args = NULL;
+	cmd->limiter = NULL;
+	cmd->file = NULL;	
 	free(cmd);
 }
 
@@ -51,19 +51,6 @@ void	print_cmd(t_cmd *cmd)
 			printf("%s", cmd->args[i]);
 			i++;
 		}
-	}
-}
-
-void	print_env(t_env *env)
-{
-	while (env)
-	{
-		printf("%s" , env->key);
-		if (env->value)
-			printf("%s\n", env->value);
-		else
-			printf("\n");
-		env = env->next;
 	}
 }
 
@@ -105,6 +92,7 @@ int	main(int argc, char **argv, char **envp)
 		return (0);
 	env = ft_tabdup(envp);
 	ft_shell_lvl(env);
+	prompt = NULL;
 	while (1)
 	{
 		line = readline("\033[1;34m➜ minishell \033[0m");
@@ -113,10 +101,9 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			prompt = parse_prompt(line, env);
-			printf("execution \n");
+			prompt = parse_prompt(prompt, line, env);
 			if (prompt && (prompt->type != P_CMD || prompt->cmd))
-				execution(prompt, env);
+				prompt->exit_state = execution(prompt, env);
 		}
 		free(line);
 	}

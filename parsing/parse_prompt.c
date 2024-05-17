@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 19:55:30 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:04:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 	}
 }
 
-t_prompt	*parse_prompt(char *line, t_env *env)
+t_prompt	*parse_prompt(t_prompt *oldprmpt , char *line, t_env *env)
 {
 	t_prompt	*prmpt;
 	t_token		*token;
@@ -94,6 +94,11 @@ t_prompt	*parse_prompt(char *line, t_env *env)
 	}
 	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
 	ft_bzero(prmpt, sizeof(t_prompt));
+	if (oldprmpt)
+	{
+		prmpt->exit_state = oldprmpt->exit_state;
+		free_prompt(oldprmpt);
+	}
 	build_prompt(&prmpt, &token, env);
 	return (prmpt);
 }

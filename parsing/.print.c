@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 20:19:41 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:09:28 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,5 +180,18 @@ void	print_redirections(t_cmd *cmd)
 	{
 		printf("limiter: %s\n", *args);
 		args++;
+	}
+}
+
+void	print_env(t_env *env)
+{
+	while (env)
+	{
+		printf("%s" , env->key);
+		if (env->value)
+			printf("%s\n", env->value);
+		else
+			printf("\n");
+		env = env->next;
 	}
 }
