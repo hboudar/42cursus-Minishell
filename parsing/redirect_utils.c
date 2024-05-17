@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 21:15:18 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:00:06 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_file    *ft_newfile(char *data, int type)
     return (new);
 }
 
-void	ft_outfileaddback(t_file **file, t_file *new)
+void	ft_fileaddback(t_file **file, t_file *new)
 {
     t_file	*tmp;
 
