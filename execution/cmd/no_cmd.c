@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/15 20:32:14 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/17 15:54:38 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 //     }
 // }
 
-void    ft_redirect(t_prompt *prompt)
+static void    ft_redirect(t_prompt *prompt)
 {
     if (!prompt->cmd->file)
         return ;
@@ -72,11 +72,31 @@ void    ft_redirect(t_prompt *prompt)
     }
 }
 
+static void	here_doc(t_prompt *prompt)
+{
+	char	*str;
+    char    *limiter;
+
+    limiter = prompt->cmd->limiter[0];
+	while (1)
+	{
+		str = readline("> ");
+		if (ft_strlen(str) - 1 == ft_strlen(limiter)
+			&& !ft_strncmp(str, limiter, ft_strlen(limiter)))
+		{
+			free(str);
+			str = NULL;
+			exit(0);
+		}
+		free(str);
+		str = NULL;
+	}
+}
 
 int    no_cmd(t_prompt *prompt)
 {
     if (prompt->cmd->type == HERE_DOC)
-        ft_heredoc(prompt);
+        here_doc(prompt);
     ft_redirect(prompt);
     return (prompt->exit_state);
 }
