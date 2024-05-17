@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 19:53:31 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:06:09 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 	}
 	if (token)
 		args[j] = NULL;
-	(*cmd)->type = CMD * ((*cmd)->limiter == NULL);
+	(*cmd)->type = HERE_DOC * ((*cmd)->limiter != NULL);
 	(*cmd)->args = args;
 	(*cmd)->size = j;
 }
