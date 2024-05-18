@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/17 16:30:10 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:19:52 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,8 @@ int	ft_cmd(t_prompt *prompt, t_env *env)
 	if (prompt->cmd->args == NULL)
 		return (no_cmd(prompt));
 	else if (is_builtin(prompt))
-	{
-		execute_builtin(prompt, env);
-		printf("builtin\n");
-		return (0);
-	}
-		// return (execute_builtin(prompt, env));
+		return (execute_builtin(prompt, env));
 	return (execute_nonebuiltin(prompt, env));
-	return (0);
 }
 
 int ft_pipe(t_prompt *prompt, t_env *env)
@@ -48,8 +42,8 @@ int	execution(t_prompt *prompt, t_env *env)
 {
 	if (prompt->type == P_CMD)
 		return (ft_cmd(prompt, env));
-	else if (prompt->type == P_PIPE)
-		return (ft_pipe(prompt, env));
+	// else if (prompt->type == P_PIPE)
+	// 	return (ft_pipe(prompt, env));
 	// else if (prompt->type == P_OR)
 	// {
 	// 	if (!execution(prompt->left, env))

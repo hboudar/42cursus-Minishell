@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/17 23:42:28 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:15:45 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static bool    is_valid_name(const char *name)
     return true;
 }
 
-static void    ft_unsetenv(const char *name, t_env *env)
+static void    ft_unsetenv(const char *name, t_env **env)
 {
     t_env *tmp;
     t_env *prev;
 
-    tmp = env;
+    tmp = *env;
     prev = NULL;
     while (tmp)
     {
@@ -44,8 +44,9 @@ static void    ft_unsetenv(const char *name, t_env *env)
             if (prev != NULL)
                 prev->next = tmp->next;
             else
-                env = tmp->next;
-            (1) && (free(tmp), tmp = NULL);
+                *env = (*env)->next;
+            // free(tmp);
+            // tmp = NULL;
             break ;
         }
         prev = tmp;
@@ -53,7 +54,7 @@ static void    ft_unsetenv(const char *name, t_env *env)
     }
 }
 
-int ft_unset(t_prompt *prompt, t_env *env)
+int ft_unset(t_prompt *prompt, t_env **env)
 {
     int i;
     int exit_state;
@@ -72,5 +73,14 @@ int ft_unset(t_prompt *prompt, t_env *env)
         }
         i++;
     }
+    t_env *tmp = *env;
+    while (tmp)
+    {
+        if (tmp->key)
+            ft_putstr_fd(tmp->key, 1);
+        ft_putstr_fd("\n", 1);
+        tmp = tmp->next;
+    }
+    printf("--------------------\n");
     return (exit_state);
 }
