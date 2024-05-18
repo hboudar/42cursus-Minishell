@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/18 18:15:45 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/18 23:56:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void    ft_unsetenv(const char *name, t_env **env)
                 prev->next = tmp->next;
             else
                 *env = (*env)->next;
-            // free(tmp);
-            // tmp = NULL;
+            free(tmp);
+            tmp = NULL;
             break ;
         }
         prev = tmp;
@@ -56,8 +56,8 @@ static void    ft_unsetenv(const char *name, t_env **env)
 
 int ft_unset(t_prompt *prompt, t_env **env)
 {
-    int i;
     int exit_state;
+    int i;
 
     (1) && (i = 1, exit_state = 0);
     while (prompt->cmd->args[i])
@@ -73,14 +73,5 @@ int ft_unset(t_prompt *prompt, t_env **env)
         }
         i++;
     }
-    t_env *tmp = *env;
-    while (tmp)
-    {
-        if (tmp->key)
-            ft_putstr_fd(tmp->key, 1);
-        ft_putstr_fd("\n", 1);
-        tmp = tmp->next;
-    }
-    printf("--------------------\n");
     return (exit_state);
 }
