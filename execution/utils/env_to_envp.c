@@ -12,6 +12,8 @@
 
 #include "../execution.h"
 
+//changing the struct t_env into double pointer char **
+
 char   **free_envp(char **envp)
 {
     int i;
