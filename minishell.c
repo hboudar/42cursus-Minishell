@@ -6,20 +6,30 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 18:41:51 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:30:51 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int		g_caught = 0;
+
 void	handler(int signum)
 {
-	if (signum == SIGINT)
+	extern int	g_caught;
+
+	if (signum == SIGINT && g_caught == 0)
 	{
 		printf("\n");
 		rl_clear_history();
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (signum == SIGQUIT && g_caught == 1)
+	{
+		printf("Quit: 3\n");
+		rl_on_new_line();
 		rl_redisplay();
 	}
 }
@@ -89,13 +99,9 @@ int	main(int argc, char **argv, char **envp)
 	prompt = NULL;
 	while (1)
 	{
-		printf("\nexecution\n");
 		line = readline("\033[1;34m➜ minishell \033[0m");
 		if (!line)
-		{
-			printf("exit\n");
 			break ;
-		}
 		if (line[0] != '\0')
 		{
 			add_history(line);
