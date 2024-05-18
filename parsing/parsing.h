@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 21:15:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:28:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int			check_syntax_bonus(t_token *token);
 int			has_pipe(t_token *token);
 int			has_semicolon(char *line);
 int			count_files(char **file);
+int			was_syntax_error(t_prompt *prompt);
 char		*ft_getenv(char *name, t_env *env);
 char		*ft_remove_quotes(char *str);
 void		set_size(t_token *token);
@@ -150,7 +151,7 @@ void		tokenize_pipe(char **line, int *i, t_token **token);
 void		get_cmd(t_cmd **cmd, t_token *token);
 void		free_tab(char **args);
 void		tokenize_append(char **line, int *i, t_token **token);
-void		free_cmd(t_cmd *cmd);
+void		free_cmd(t_cmd **cmd);
 void		free_token(t_token *token);
 void		print_cmd(t_cmd *cmd);
 void		fill_redirections(t_cmd *cmd, t_token *token);
@@ -170,11 +171,15 @@ void		get_token_type(t_token *token);
 void		get_token_state(t_token *token);
 void		remove_token(t_token **token, t_token *node);
 void		ft_fileaddback(t_file **file, t_file *new);
-void		free_prompt(t_prompt *prompt);
+void		free_prompt(t_prompt **prompt);
 void		free_files(t_file *file);
 void		remove_redirections(t_token **token);
 void		print_env(t_env *env);
-t_env		*ft_tabdup(char **args);
+void		print_cmd(t_cmd *cmd);
+void		ft_shell_lvl(t_env *env);
+void		end_token(t_token *tmp, t_token *token);
+void		ft_tabdup(char **args, t_env *env);
+void		parse_prompt(t_prompt **oldprmpt , char *line, t_env *env);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);
 t_file		*ft_newfile(char *data, int type);
@@ -182,6 +187,5 @@ t_token		*parse_token(char *line);
 t_token		*pipeless_token(t_token *token);
 t_token		*get_and_or_pipe(t_token *token);
 t_token		**split_token(t_token *token, t_token *split);
-t_prompt	*parse_prompt(t_prompt *oldprmpt , char *line, t_env *env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/16 10:39:01 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:29:12 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,6 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 	if (tmp && tmp->type == OPENPAR)
 	{
 		tmp2 = get_closepar(tmp);
-		if (!tmp2)
-		{
-			printf("Syntax error\n");
-			return ;
-		}
 		remove_token(token, tmp);
 		tmp = tmp2->next;
 		remove_token(token, tmp2);
@@ -77,29 +72,31 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 	}
 }
 
-t_prompt	*parse_prompt(t_prompt *oldprmpt , char *line, t_env *env)
+void	parse_prompt(t_prompt **oldprmpt , char *line, t_env *env)
 {
 	t_prompt	*prmpt;
 	t_token		*token;
 
 	token = parse_token(line);
 	if (!token)
-		return (NULL);
+		return ;
 	fix_token(&token);
-	print_tokens(token);
 	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
 	ft_bzero(prmpt, sizeof(t_prompt));
+	if (*oldprmpt)
+	{
+		prmpt->exit_state = (*oldprmpt)->exit_state;
+		free_prompt(oldprmpt);
+		*oldprmpt = prmpt;
+	}
 	if (check_syntax_bonus(token) || check_syntax(token))
 	{
 		printf("Syntax error\n");
-		prmpt->exit_state = 258;
-		return (prmpt);
+		prmpt->exit_state = 300;
+		*oldprmpt = prmpt;
+		free_token(token);
+		return ;
 	}
-	if (oldprmpt)
-	{
-		prmpt->exit_state = oldprmpt->exit_state;
-		free_prompt(oldprmpt);
-	}
-	build_prompt(&prmpt, &token, env);
-	return (prmpt);
+	build_prompt(&prmpt, &token, env);	
+	*oldprmpt = prmpt;
 }

@@ -6,11 +6,25 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 20:01:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 12:28:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	was_syntax_error(t_prompt *prompt)
+{
+	if (prompt->exit_state == 300)
+	{
+		prompt->exit_state = 258;
+		return (1);
+	}
+	if (prompt->left && was_syntax_error(prompt->left))
+		return (1);
+	if (prompt->right && was_syntax_error(prompt->right))
+		return (1);
+	return (0);
+}
 
 int	has_semicolon(char *line)
 {
@@ -28,6 +42,19 @@ int	has_semicolon(char *line)
 
 int	check_syntax_bonus(t_token *token)
 {
+	int i;
+	t_token *tmp;
+
+	i = 0;
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == OPENPAR || tmp->type == CLOSEPAR)
+			i++;
+		tmp = tmp->next;
+	}
+	if (i % 2 != 0)
+		return (1);
 	while (token)
 	{
 		if (token->type == OPENPAR && (!token->next

@@ -15,13 +15,16 @@ CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
 LIBFT	= utils/libft.a
 
+READLINE_LIB = $(shell brew --prefix readline)/lib
+READLINE_INCLUDES = $(shell brew --prefix readline)/include
+
 all: pre $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) -lreadline $(OBJ) -o $(NAME) $(LIBFT)
+	$(CC) -lreadline $(CFLAGS) -L $(READLINE_LIB) -o $(NAME) $(OBJ) $(LIBFT)
 
-%.o: %.c $(HEADER) $(LIBFT)
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o : %.c
+	$(CC) $(CFLAGS) -I $(READLINE_INCLUDES) -c $< -o $@
 
 pre:
 	@cd utils && make

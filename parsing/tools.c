@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 21:14:08 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 11:46:58 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_tab(char **args)
 		i++;
 	}
 	free(args);
+	args = NULL;
 }
 
 void	set_type_env(t_env *env)
@@ -54,15 +55,13 @@ void	set_type_env(t_env *env)
 	}
 }
 
-t_env	*ft_tabdup(char **args)
+void	ft_tabdup(char **args, t_env *env)
 {
 	int		i;
 	int		j;
-	t_env	*new_args;
 	t_env	*tmp;
 
-	new_args = (t_env *)malloc(sizeof(t_env));
-	(1) && (i = -1, tmp = new_args);
+	(1) && (i = -1, tmp = env);
 	while (args[++i])
 	{
 		j = 0;
@@ -79,8 +78,8 @@ t_env	*ft_tabdup(char **args)
 	tmp->key = ft_strdup("OLDPWD");
 	tmp->print = EXP_PRINT;
 	tmp->next = NULL;
-	set_type_env(new_args);
-	return (new_args);
+	set_type_env(env);
+	ft_shell_lvl(env);
 }
 
 int	ft_iswhitespace(char *str)

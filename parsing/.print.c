@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 21:09:28 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:46:35 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,37 @@
 void	print_prompt(t_prompt *prompt)
 {
 	if (!prompt)
+	{
+		printf("Empty prompt\n");
 		return ;
+	}
 	if (prompt->type == P_AND)
 	{
+		printf("entered and\n");
 		print_prompt(prompt->left);
 		printf(" && " );
 		print_prompt(prompt->right);
 	}
 	else if (prompt->type == P_OR)
 	{
+		printf("entered or\n");
 		print_prompt(prompt->left);
 		printf(" || ");
 		print_prompt(prompt->right);
 	}
 	else if (prompt->type == P_PIPE)
 	{
+		printf("entered pipe\n");
 		print_prompt(prompt->left);
 		printf(" | ");
 		print_prompt(prompt->right);
 	}
 	else if (prompt->type == P_CMD)
+	{
+		printf("entered cmd\n");
 		print_cmd(prompt->cmd);
+		printf("\n");
+	}
 }
 
 void print_tokens(t_token *token)
@@ -193,5 +203,22 @@ void	print_env(t_env *env)
 		else
 			printf("\n");
 		env = env->next;
+	}
+}
+
+void	print_cmd(t_cmd *cmd)
+{
+	if (!cmd || !cmd->args || !cmd->args[0])
+		printf("Empty command\n");
+	else
+	{
+		int	i;
+
+		i = 0;
+		while (cmd->args[i])
+		{
+			printf("%s", cmd->args[i]);
+			i++;
+		}
 	}
 }

@@ -6,20 +6,21 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 21:06:47 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/17 18:54:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	free_prompt(t_prompt *prompt)
+void	free_prompt(t_prompt **prompt)
 {
-	if (!prompt)
+	if (!*prompt)
 		return ;
-	free_prompt(prompt->left);
-	free_prompt(prompt->right);
-	free_cmd(prompt->cmd);
-	free(prompt);
+	free_prompt(&(*prompt)->left);
+	free_prompt(&(*prompt)->right);
+	free_cmd(&(*prompt)->cmd);
+	free(*prompt);
+	*prompt = NULL;
 }
 
 t_token	*get_and_or_pipe(t_token *token)

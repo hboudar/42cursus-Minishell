@@ -6,92 +6,86 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/17 16:01:49 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:50:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_term(void)
+void	handler(int signum)
 {
-	struct termios	term;
-
-	tcgetattr(0, &term);
-	term.c_lflag &= ~(ICANON | ECHO);
-	tcsetattr(0, TCSANOW, &term);
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_clear_history();
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-void	free_cmd(t_cmd *cmd)
+void	init_signals(void)
+{
+	rl_catch_signals = 0;
+	signal(SIGINT, &handler);
+	signal(SIGQUIT, &handler);
+}
+
+void	free_cmd(t_cmd **cmd)
 {
 	int	i;
 
 	i = 0;
-	if (!cmd)
+	if (!*cmd)
 		return ;
-	free_tab(cmd->args);
-	free_tab(cmd->limiter);
-	free_files(cmd->file);
-	cmd->args = NULL;
-	cmd->limiter = NULL;
-	cmd->file = NULL;	
-	free(cmd);
+	free_tab((*cmd)->args);
+	free_tab((*cmd)->limiter);
+	free_files((*cmd)->file);
+	(*cmd)->args = NULL;
+	(*cmd)->limiter = NULL;
+	(*cmd)->file = NULL;	
+	free(*cmd);
+	*cmd = NULL;
 }
 
-void	print_cmd(t_cmd *cmd)
+void	ft_shell_lvl(t_env *env)
 {
-	if (!cmd || cmd->args[0] == NULL)
-		printf("Empty command\n");
-	else
+	t_env *tmp;
+	char *str;
+
+	tmp = env;
+	while (tmp)
 	{
-		int	i;
-
-		i = 0;
-		while (cmd->args[i])
+		if (!ft_strncmp(tmp->key, "SHLVL", 5))
 		{
-			printf("%s", cmd->args[i]);
-			i++;
+			str = ft_itoa(ft_atoi(tmp->value) + 1);
+			if (!str)
+				return (perror("E: ft_itoa in ft_shell_lvl"));
+			if (ft_strncmp(tmp->value, "999", 3) == 0)
+			{
+				free(str);
+				free(tmp->value);
+				return ;
+			}
+			free(tmp->value);
+			tmp->value = str;
+			break ;
 		}
+		tmp = tmp->next;
 	}
-}
-
-void ft_shell_lvl(t_env *env)
-{
-    t_env *tmp;
-    char *str;
-
-    tmp = env;
-    while (tmp)
-    {
-        if (!ft_strncmp(tmp->key, "SHLVL", 5))
-        {
-            str = ft_itoa(ft_atoi(tmp->value) + 1);
-            if (!str)
-                return (perror("E: ft_itoa in ft_shell_lvl"));
-            if (ft_strncmp(tmp->value, "999", 3) == 0)
-            {
-                free(str);
-                free(tmp->value);
-                return ;
-            }
-            free(tmp->value);
-            tmp->value = str;
-            break ;
-        }
-        tmp = tmp->next;
-    }
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	t_env		*env;
+	t_env		env;
 	t_prompt	*prompt;
 
 	(void)argv;
 	if (!isatty(0) || argc != 1 || !envp)
 		return (0);
-	env = ft_tabdup(envp);
-	ft_shell_lvl(env);
+	ft_tabdup(envp, &env);
+	init_signals();
 	prompt = NULL;
 	while (1)
 	{
@@ -101,10 +95,10 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			prompt = parse_prompt(prompt, line, env);
-			printf("execution\n");
-			if (prompt && (prompt->type != P_CMD || prompt->cmd))
-				prompt->exit_state = execution(prompt, env);
+			parse_prompt(&prompt, line, &env);
+			printf("\nexecution\n");
+			if (!was_syntax_error(prompt) && (prompt->type != P_CMD || prompt->cmd))
+				prompt->exit_state = execution(prompt, &env);
 		}
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:31:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/15 19:29:34 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:52:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,11 @@ t_token	*pipeless_token(t_token *token)
 	return (new_token);
 }
 
+void	end_token(t_token *tmp, t_token *token)
+{
+	while (token->next != tmp)
+		token = token->next;
+	free(tmp->data);
+	free(tmp);
+	token->next = NULL;
+}

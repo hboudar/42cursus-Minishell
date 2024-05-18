@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 20:00:24 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:51:59 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_token	*parse_token(char *line)
 	tmp = token;
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
-	tmp->next = NULL;
+	end_token(tmp, token);
 	set_size(token);
 	set_state(token);
 	return (token);
