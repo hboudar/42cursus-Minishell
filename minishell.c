@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 18:25:18 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:37:41 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!isatty(0) || argc != 1 || !envp)
 		return (0);
 	env = ft_tabdup(envp);
-	init_signals();
+	// init_signals();
 	prompt = NULL;
 	while (1)
 	{
