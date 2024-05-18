@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 14:50:25 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:23:41 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	ft_shell_lvl(t_env *env)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	t_env		env;
+	t_env		*env;
 	t_prompt	*prompt;
 
 	(void)argv;
 	if (!isatty(0) || argc != 1 || !envp)
 		return (0);
-	ft_tabdup(envp, &env);
+	env = ft_tabdup(envp);
 	init_signals();
 	prompt = NULL;
 	while (1)

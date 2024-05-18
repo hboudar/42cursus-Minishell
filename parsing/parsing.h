@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 12:28:40 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:24:03 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,8 +178,8 @@ void		print_env(t_env *env);
 void		print_cmd(t_cmd *cmd);
 void		ft_shell_lvl(t_env *env);
 void		end_token(t_token *tmp, t_token *token);
-void		ft_tabdup(char **args, t_env *env);
 void		parse_prompt(t_prompt **oldprmpt , char *line, t_env *env);
+t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);
 t_file		*ft_newfile(char *data, int type);
