@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/18 18:17:17 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:29:05 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 //execution main :
 
-int execution(t_prompt *prompt, t_env *env);
+int execution(t_prompt *prompt, t_env **env);
 
 //one_cmd :
 
