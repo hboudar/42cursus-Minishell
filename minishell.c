@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 18:23:41 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:25:18 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			parse_prompt(&prompt, line, &env);
+			parse_prompt(&prompt, line, env);
 			printf("\nexecution\n");
 			if (!was_syntax_error(prompt) && (prompt->type != P_CMD || prompt->cmd))
 				prompt->exit_state = execution(prompt, &env);
