@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/18 18:49:05 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:02:34 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,17 @@ static void	here_doc2(t_prompt *prompt, int *fd)
 
     close(fd[0]);
     limiter = prompt->cmd->limiter[0];
+    signal(SIGINT, signal_handler);
+    signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		str = readline("> ");
-		if (ft_strlen(str) == ft_strlen(limiter)
-			&& !ft_strncmp(str, limiter, ft_strlen(limiter)))
+		if ((ft_strlen(str) == ft_strlen(limiter)
+			&& !ft_strncmp(str, limiter, ft_strlen(limiter))) || !str)
 		{
 			free(str);
 			str = NULL;
-            break ;
+            return ;
 		}
 		free(str);
 		str = NULL;
