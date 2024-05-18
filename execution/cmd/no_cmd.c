@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/18 19:02:34 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/18 21:47:46 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,16 @@ static void	here_doc2(t_prompt *prompt, int *fd)
 
 static void here_doc(t_prompt *prompt)
 {
-    int fd[2];
+    extern int g_caught;
     pid_t pid;
+    int fd[2];
 
     if (pipe(fd) == -1)
     {
         printf("pipe error\n");
         return ;
     }
-    pid = fork();
+    (1) && (g_caught = 2, pid = fork());
     if (pid == -1)
     {
         printf("fork error\n");
@@ -118,14 +119,12 @@ static void here_doc(t_prompt *prompt)
     {
         waitpid(pid, &prompt->exit_state, 0);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-        close(fd[1]);
-        dup2(fd[0], 0);
+        (1) && (g_caught = 0, close(fd[1]), dup2(fd[0], 0));
     }
 }
 
 int    no_cmd(t_prompt *prompt)
 {
-    // while
     if (prompt->cmd->type == HERE_DOC)
         here_doc(prompt);
     // ft_redirect(prompt);
