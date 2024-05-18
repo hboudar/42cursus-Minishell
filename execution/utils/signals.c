@@ -12,6 +12,8 @@
 
 #include "../execution.h"
 
+//for signals only
+
 void    signal_handler(int sig)
 {
     if (sig == SIGINT)
