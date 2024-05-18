@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/17 16:21:33 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/18 18:49:05 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@
 //     }
 // }
 
-static void    ft_redirect(t_prompt *prompt)
-{
-    if (!prompt->cmd->file)
-        return ;
-    while (prompt->cmd->file)
-    {
-        break ;
-    }
-}
+// static void    ft_redirect(t_prompt *prompt)
+// {
+//     if (!prompt->cmd->file)
+//         return ;
+//     while (prompt->cmd->file)
+//     {
+//         break ;
+//     }
+// }
 
 static void	here_doc2(t_prompt *prompt, int *fd)
 {
@@ -87,7 +87,7 @@ static void	here_doc2(t_prompt *prompt, int *fd)
 		{
 			free(str);
 			str = NULL;
-			exit (0);
+            break ;
 		}
 		free(str);
 		str = NULL;
@@ -97,7 +97,7 @@ static void	here_doc2(t_prompt *prompt, int *fd)
 static void here_doc(t_prompt *prompt)
 {
     int fd[2];
-    int pid;
+    pid_t pid;
 
     if (pipe(fd) == -1)
     {
@@ -126,6 +126,6 @@ int    no_cmd(t_prompt *prompt)
     // while
     if (prompt->cmd->type == HERE_DOC)
         here_doc(prompt);
-    ft_redirect(prompt);
+    // ft_redirect(prompt);
     return (prompt->exit_state);
 }
