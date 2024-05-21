@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 22:25:53 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/20 15:49:14 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ int ft_cd(t_prompt *prompt, t_env *env)
     char *oldpwd;
     char *pwd;
 
+    if (prompt->cmd->args[1] == NULL)
+    {
+        ft_putstr_fd("cd: HOME not set\n", 2);
+        return (1);
+    }
     oldpwd = getcwd(NULL, 0);
     if (!oldpwd)
         return (perror("getcwd"), 1);
