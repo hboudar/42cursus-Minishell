@@ -6,24 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 14:24:54 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:18:26 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-void	fix_quotes(t_token *token)
-{
-	t_token	*tmp;
-	int		i;
-
-	tmp = token;
-	i = 0;
-	while (tmp)
-	{
-		 
-	}
-}
 
 void	get_cmd(t_cmd **cmd, t_token *token)
 {
@@ -54,13 +41,13 @@ t_cmd	*parse_cmd(t_token *token, t_env *env)
 {
 	t_cmd	*cmd;
 
+	(void)env;
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	ft_bzero(cmd, sizeof(t_cmd));
-	// fix_quotes(token);
-	expand_env(token, env);
 	fill_redirections(cmd, token);
 	remove_redirections(&token);
 	get_cmd(&cmd, token);
+	print_tokens(token);
 	free_token(token);
 	return (cmd);
 }
