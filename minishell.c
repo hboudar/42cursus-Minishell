@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 20:30:51 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:57:49 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,24 @@ void	handler(int signum)
 
 void	init_signals(void)
 {
-	rl_catch_signals = 0;
-	signal(SIGINT, &handler);
-	signal(SIGQUIT, &handler);
+	if (g_caught == 0)
+	{
+		rl_catch_signals = 0;
+		signal(SIGINT, &handler);
+		signal(SIGQUIT, &handler);
+	}
+	else
+		g_caught = 0;
 }
 
-void	free_cmd(t_cmd **cmd)
+int	check_env(char **envp)
 {
-	int	i;
-
-	i = 0;
-	if (!*cmd)
-		return ;
-	free_tab((*cmd)->args);
-	free_tab((*cmd)->limiter);
-	free_files((*cmd)->file);
-	(*cmd)->args = NULL;
-	(*cmd)->limiter = NULL;
-	(*cmd)->file = NULL;	
-	free(*cmd);
-	*cmd = NULL;
+	if (envp && !envp[0])
+	{
+		printf("Error: empty enviroment\n");
+		return (1);
+	}
+	return (0);
 }
 
 void	ft_shell_lvl(t_env *env)
@@ -92,13 +90,13 @@ int	main(int argc, char **argv, char **envp)
 	t_prompt	*prompt;
 
 	(void)argv;
-	if (!isatty(0) || argc != 1 || !envp)
-		return (0);
+	if (!isatty(0) || argc != 1 || check_env(envp))
+		exit (1);
 	env = ft_tabdup(envp);
-	init_signals();
 	prompt = NULL;
 	while (1)
 	{
+		init_signals();
 		line = readline("\033[1;34m➜ minishell \033[0m");
 		if (!line)
 			break ;

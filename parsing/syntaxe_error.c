@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 20:31:52 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:47:05 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ int	has_semicolon(char *line)
 	return (0);
 }
 
-int	check_word(t_token *token)
-{
-	while (token)
-	{
-		if (token->type == WORD && !ft_isalnum(token->data[0]))
-		{
-			printf("entered\n");
-			return (1);
-		}
-		token = token->next;
-	}
-	return (0);
-}
+// int	check_word(t_token *token)
+// {
+// 	while (token)
+// 	{
+// 		if (token->type == WORD && !ft_isalnum(token->data[0]))
+// 		{
+// 			printf("entered\n");
+// 			return (1);
+// 		}
+// 		token = token->next;
+// 	}
+// 	return (0);
+// }
 
 int	check_syntax_bonus(t_token *token)
 {
@@ -80,7 +80,7 @@ int	check_syntax_bonus(t_token *token)
 			return (1);
 		token = token->next;
 	}
-	return (check_word(tmp));
+	return (0);
 }
 
 int	check_syntax(t_token *token)

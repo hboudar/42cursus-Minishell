@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:25:47 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/10 09:26:03 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:18:19 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	free_token(t_token *token)
 	{
 		tmp = token;
 		token = token->next;
-		free(tmp->data);
+		if (tmp->data)
+			free(tmp->data);
 		free(tmp);
 	}
 }

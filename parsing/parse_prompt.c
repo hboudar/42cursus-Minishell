@@ -6,11 +6,27 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 14:29:12 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:08:47 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	set_exit_state(t_prompt **oldprmpt, t_prompt *prmpt)
+{
+	if (*oldprmpt)
+	{
+		prmpt->exit_state = (*oldprmpt)->exit_state;
+		free_prompt(oldprmpt);
+		*oldprmpt = prmpt;
+	}
+	else
+	{
+		prmpt->exit_state = 300;
+		*oldprmpt = prmpt;
+	}
+	return (1);
+}
 
 t_token	*get_closepar(t_token *token)
 {
@@ -44,18 +60,17 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 		remove_token(token, tmp);
 		tmp = tmp2->next;
 		remove_token(token, tmp2);
-		if (!check_and_or_pipe(tmp))
+		if (!check_and_or(tmp))
 		{
 			build_prompt(prmpt, token, env);
 			return ;
 		}
 	}
-	if (check_and_or_pipe(*token))
+	if (check_and_or(*token))
 	{
-		tmp = get_and_or_pipe(*token);
+		tmp = get_and_or(*token);
 		(*prmpt)->type = (tmp->type == AND_TOKEN) * P_AND
-			+ (tmp->type == OR_TOKEN) * P_OR
-			+ (tmp->type == PIPE_TKN) * P_PIPE;
+			+ (tmp->type == OR_TOKEN) * P_OR;
 		(*prmpt)->left = (t_prompt *)malloc(sizeof(t_prompt));
 		ft_bzero((*prmpt)->left, sizeof(t_prompt));
 		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
@@ -77,12 +92,11 @@ void	parse_prompt(t_prompt **oldprmpt , char *line, t_env *env)
 	t_prompt	*prmpt;
 	t_token		*token;
 
-	token = parse_token(line);
-	if (!token)
-		return ;
-	fix_token(&token);
 	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
 	ft_bzero(prmpt, sizeof(t_prompt));
+	token = parse_token(line, env);
+	if (!token && set_exit_state(oldprmpt, prmpt))
+		return ;
 	if (*oldprmpt)
 	{
 		prmpt->exit_state = (*oldprmpt)->exit_state;

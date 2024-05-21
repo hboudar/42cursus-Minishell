@@ -6,11 +6,29 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/17 21:51:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:24:49 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	check_quotes(char *line)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == '\"' || line[i] == '\'')
+			count++;
+		i++;
+	}
+	if (count % 2 != 0)
+		return (1);
+	return (0);
+}
 
 void	state_type(t_token *tmp)
 {
@@ -32,35 +50,6 @@ void	state_type(t_token *tmp)
 		tmp->next->state = GENERAL;
 }
 
-void	set_state(t_token	*token)
-{
-	t_token	*tmp;
-
-	tmp = token;
-	while (tmp->next)
-	{
-		state_type(tmp);
-		tmp = tmp->next;
-	}
-}
-
-void	set_size(t_token *token)
-{
-	int		i;
-	t_token	*tmp;
-
-	i = 0;
-	tmp = token;
-	while (tmp->next)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	token->size = i + 1;
-	if (token->next)
-		set_size(token->next);
-}
-
 void	fix_token(t_token **token)
 {
 	t_token	*tmp;
@@ -71,20 +60,26 @@ void	fix_token(t_token **token)
 	while (tmp)
 	{
 		tmp2 = tmp->next;
-		if (tmp->type == WHITE_SPACE || !tmp->data)
+		if (tmp->type == WHITE_SPACE)
 			remove_token(token, tmp);
+		else if(tmp->type == WORD && tmp->next && tmp->next->type == WORD)
+		{
+			tmp->data = ft_strjoin(tmp->data, tmp->next->data);
+			remove_token(token, tmp->next);
+			tmp2 = tmp;
+		}
 		tmp = tmp2;
 	}
 }
 
-t_token	*parse_token(char *line)
+t_token	*parse_token(char *line, t_env *env)
 {
 	int		i;
 	t_token	*tmp;
 	t_token	*token;
 
 	i = 0;
-	if (has_semicolon(line))
+	if (has_semicolon(line) || check_quotes(line))
 	{
 		printf("Syntax error\n");
 		return (NULL);
@@ -94,7 +89,8 @@ t_token	*parse_token(char *line)
 	tmp = token;
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
-	end_token(tmp, token);
+	expand_tokens(&token, env);
+	fix_token(&token);
 	set_size(token);
 	set_state(token);
 	return (token);

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/13 13:23:22 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:22:19 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_getenv(char *name, t_env *env)
 	data = NULL;
 	while (env)
 	{
+		printf("env->key: %s\n", env->key);
+		printf("name: %s\n", name);
 		if (!ft_strncmp(env->key, name, ft_strlen(name)))
 		{
 			data = ft_strdup(env->value);
@@ -26,10 +28,12 @@ char	*ft_getenv(char *name, t_env *env)
 		}
 		env = env->next;
 	}
+	if (!data)
+		data = ft_strdup("");
 	return (data);
 }
 
-void	expand_env(t_token *token, t_env *env)
+void	expand_env(t_token **token, t_env *env)
 {
 	int		i;
 	char	*data;
@@ -37,21 +41,32 @@ void	expand_env(t_token *token, t_env *env)
 	t_token	*tmp2;
 
 	i = 0;
-	tmp = token;
-	while (tmp)
-	{
-		if (tmp->type == ENV && tmp->next && tmp->next->state == ENVIROMENT)
+	tmp = *token;
+	while (tmp->next && tmp->next->type == WHITE_SPACE)
+		tmp2 = tmp->next;
+	remove_token(token, tmp);
+	tmp = tmp2;
+	data = ft_getenv(tmp->data, env);
+	free(tmp->data);
+	tmp->data = data;
+}
+
+void	expand_tokens(t_token **token, t_env *env)
+{
+    t_token	*tmp;
+
+    tmp = *token;
+    while (tmp)
+    {
+        if (tmp->type == ENV)
 		{
-			tmp2 = tmp->next;
-			remove_token(&token, tmp);
-			tmp = tmp2;
-			data = ft_getenv(tmp->data, env);
-			// free(tmp->data);
-			if (data)
-				tmp->data = data;
+			
+			if (tmp == (*token))
+				expand_env(token, env);
 			else
-				remove_token(&token, tmp);
+            	expand_env(&tmp, env);
 		}
-		tmp = tmp->next;
-	}
+        tmp = tmp->next;
+    }
+	print_tokens(*token);
 }
