@@ -56,3 +56,8 @@ int	execution(t_prompt *prompt, t_env **env)
 	// }
 	return (0);
 }
+
+//pipes
+//here_doc with pipes
+//redirections
+
