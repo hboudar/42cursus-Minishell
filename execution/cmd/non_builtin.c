@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/20 19:44:56 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/22 12:33:52 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,64 @@ static int	error(char *msg)
 	}
 }*/
 
+static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
+{
+    if (prompt->cmd->file->type == 1)
+        *fd1 = open(prompt->cmd->file->data, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    else if (prompt->cmd->file->type == 2)
+        *fd1 = open(prompt->cmd->file->data, O_CREAT | O_WRONLY | O_APPEND, 0644);
+    if (*fd1 == -1)
+    {
+        printf("Error: %s: %s\n", prompt->cmd->file->next->data, strerror(errno));
+        close(fd[0]);
+        close(fd[1]);
+        return (0);
+    }
+    if (dup2(*fd1, 1) == -1 || dup2(fd[0], 0) == -1)
+    {
+        close(fd[0]);
+        close(fd[1]);
+        close(*fd1);
+        perror("dup2");
+        return (0);
+    }
+    return (1);
+}
+
 static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
 {
-    if (prompt->cmd->file->type == IN)
+    if (*fd0 != 0)
+        close(*fd0);
+    *fd0 = open(prompt->cmd->file->data, O_RDONLY);
+    if (*fd0 == -1)
     {
-        *fd0 = open(prompt->cmd->file->file, O_RDONLY);
-        if (*fd0 == -1)
-        {
-            close(fd[0]);
-            close(fd[1]);
-            perror(prompt->cmd->file->file);
-            return (-1);
-        }
-        if (dup2(*fd0, 0) == -1)
-        {
-            close(fd[0]);
-            close(fd[1]);
-            close(*fd0);
-            perror("dup2");
-            return (-1);
-        }
+        close(fd[0]);
+        close(fd[1]);
+        perror(prompt->cmd->file->data);
+        return (0);
     }
-    return (0);
+    if (dup2(*fd0, 0) == -1 || dup2(fd[1], 1) == -1)
+    {
+        close(fd[0]);
+        close(fd[1]);
+        close(*fd0);
+        perror("dup2");
+        return (0);
+    }
+    close(fd[0]);
+    return (1);
+}
+
+static void ft_redirection(t_prompt *prompt, int *fd, int *fd0, int *fd1)
+{
+    while (prompt->cmd->file != NULL)
+    {
+        if (!prompt->cmd->file->type && !ft_inredirect(prompt, fd, fd0))
+            exit(1);
+        else if (prompt->cmd->file->type && !ft_outredirect(prompt, fd, fd1))
+            exit(1);
+        prompt->cmd->file = prompt->cmd->file->next;
+    }
 }
 
 static void	child_process(t_prompt *prompt, t_env *env, int *fd)
@@ -77,13 +113,8 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
     char   *path;
     char  **envp;
 
-    if (prompt->cmd->file)
-    {
-        if (ft_inredirect(prompt, fd, &fd0) == -1)
-            exit(1);
-        if (ft_outredirect(prompt, fd, &fd1) == -1)
-            exit(1);
-    }
+    fd0 = 0;
+    ft_redirection(prompt, fd, &fd0, &fd1);
     path = find_path(prompt->cmd->args, env);
     envp = env_to_envp(env, env);
     if (execve(path, prompt->cmd->args, envp) == -1)
