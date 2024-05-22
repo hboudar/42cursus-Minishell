@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/22 12:48:43 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:46:30 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,23 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
     return (1);
 }
 
-static void	here_doc2(t_prompt *prompt, int *fd)
+static void	here_doc2(t_prompt *prompt, int *fd, int i)
 {
 	char	*str;
     char    *limiter;
 
     close(fd[0]);
-    limiter = prompt->cmd->limiter[0];
+    limiter = prompt->cmd->limiter[i];
     signal(SIGINT, signal_handler);
     signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		str = readline("> ");
+        rl_clear_history();
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+        add_history(str);
 		if ((ft_strlen(str) == ft_strlen(limiter)
 			&& !ft_strncmp(str, limiter, ft_strlen(limiter))) || !str)
 		{
@@ -67,7 +72,7 @@ static void	here_doc2(t_prompt *prompt, int *fd)
     return ;
 }
 
-static void here_doc(t_prompt *prompt)
+static void here_doc(t_prompt *prompt, int i)
 {
     extern int g_caught;
     pid_t pid;
@@ -87,7 +92,7 @@ static void here_doc(t_prompt *prompt)
         return ;
     }
     if (pid == 0)
-        here_doc2(prompt, fd);
+        here_doc2(prompt, fd, i);
     else
     {
         waitpid(pid, &prompt->exit_state, 0);
@@ -98,16 +103,16 @@ static void here_doc(t_prompt *prompt)
 
 int    no_cmd(t_prompt *prompt)
 {
-    int i;
     int fd[2];
     int fd0;
     int fd1;
+    int i;
 
     (1) && (i = -1, fd0 = 0);
     if (prompt->cmd->type == HERE_DOC)
     {
         while (prompt->cmd->limiter[++i])
-            here_doc(prompt);
+            here_doc(prompt, i);
     }
     if (pipe(fd) == -1)
         return (perror("pipe failed"), 1);

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/22 12:33:52 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:20:16 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
 
 static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
 {
+    printf("time\n");
     if (*fd0 != 0)
         close(*fd0);
     *fd0 = open(prompt->cmd->file->data, O_RDONLY);
@@ -82,7 +83,7 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
         perror(prompt->cmd->file->data);
         return (0);
     }
-    if (dup2(*fd0, 0) == -1 || dup2(fd[1], 1) == -1)
+    if (dup2(*fd0, 0) == -1)
     {
         close(fd[0]);
         close(fd[1]);
