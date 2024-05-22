@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/22 16:28:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:23:26 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	fix_token(t_token **token)
 	while (tmp)
 	{
 		tmp2 = tmp->next;
-		if (tmp->type == WHITE_SPACE)
+		if (tmp->type == WHITE_SPACE || (!tmp->data && !tmp->next))
 			remove_token(token, tmp);
 		else if(tmp->type == WORD && tmp->next && tmp->next->type == WORD)
 		{
