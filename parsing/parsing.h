@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/21 15:55:22 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:18:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ typedef struct s_file
 {
 	char			*data;
 	int				type;
-	int				appendable;
 	struct s_file	*next;
 }	t_file;
 
@@ -182,6 +181,7 @@ void		ft_shell_lvl(t_env *env);
 void		set_state(t_token *token);
 void		state_type(t_token *tmp);
 void		parse_prompt(t_prompt **oldprmpt , char *line, t_env *env);
+void		print_files(t_file *file);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);

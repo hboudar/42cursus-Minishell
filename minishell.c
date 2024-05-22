@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/21 15:57:49 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:19:45 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int		g_caught = 0;
 
 void	handler(int signum)
 {
-	extern int	g_caught;
-
 	if (signum == SIGINT && g_caught == 0)
 	{
 		printf("\n");
