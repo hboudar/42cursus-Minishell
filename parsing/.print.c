@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/19 11:44:33 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:03:42 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,24 @@ void	print_prompt(t_prompt *prompt)
 	}
 	if (prompt->type == P_AND)
 	{
-		printf("entered and\n");
 		print_prompt(prompt->left);
 		printf(" && " );
 		print_prompt(prompt->right);
 	}
 	else if (prompt->type == P_OR)
 	{
-		printf("entered or\n");
 		print_prompt(prompt->left);
 		printf(" || ");
 		print_prompt(prompt->right);
 	}
 	else if (prompt->type == P_PIPE)
 	{
-		printf("entered pipe\n");
 		print_prompt(prompt->left);
 		printf(" | ");
 		print_prompt(prompt->right);
 	}
 	else if (prompt->type == P_CMD)
-	{
-		printf("entered cmd\n");
 		print_cmd(prompt->cmd);
-		printf("\n");
-	}
 }
 
 void print_tokens(t_token *token)
@@ -220,5 +213,20 @@ void	print_cmd(t_cmd *cmd)
 			printf("%s", cmd->args[i]);
 			i++;
 		}
+	}
+}
+
+void	print_files(t_file *file)
+{
+	while (file)
+	{
+		if (!file->type)
+			printf("infile: ");
+		else if (file->type == 1)
+			printf("outfile: ");
+		else if (file->type == 2)
+			printf("appendable: ");
+		printf("%d %s\n", file->type, file->data);
+		file = file->next;
 	}
 }

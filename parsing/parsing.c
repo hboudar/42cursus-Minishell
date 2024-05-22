@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/21 15:18:26 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:17:54 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_cmd	*parse_cmd(t_token *token, t_env *env)
 	fill_redirections(cmd, token);
 	remove_redirections(&token);
 	get_cmd(&cmd, token);
-	print_tokens(token);
 	free_token(token);
 	return (cmd);
 }
