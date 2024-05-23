@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/23 21:38:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:43:54 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,16 @@
 
 int		g_caught = 0;
 
-void	handler(int signum)
+void	handle_sigint(int signum)
 {
 	printf("g_caught = %d\n", g_caught);
-	if (signum == SIGINT && g_caught == 0)
+	if (signum == SIGINT)
 	{
-		printf("\n");
+		g_caught = 1;
+		printf("dkhel\n");
 		rl_clear_history();
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	else if (signum == SIGQUIT && g_caught == 1)
-	{
-		printf("Quit: 3\n");
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else if (signum == SIGINT && g_caught == 2)
-	{
-		g_caught = 0;
-		rl_on_new_line();
 		rl_redisplay();
 	}
 }
@@ -44,8 +33,8 @@ void	init_signals(void)
 	if (g_caught == 0)
 	{
 		rl_catch_signals = 0;
-		signal(SIGINT, &handler);
-		signal(SIGQUIT, &handler);
+		signal(SIGINT, &handle_sigint);
+		// signal(SIGQUIT, &handle_sigquit);
 	}
 	else
 		g_caught = 0;
