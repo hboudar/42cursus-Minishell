@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/22 16:18:24 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/22 23:35:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	expand_env(t_token **token, t_env *env)
 
 	i = 0;
 	tmp = *token;
+	if (!tmp->data)
+		return ;
 	while (tmp->next && tmp->next->type == WHITE_SPACE)
 		tmp2 = tmp->next;
 	remove_token(token, tmp);
@@ -60,7 +62,6 @@ void	expand_tokens(t_token **token, t_env *env)
     {
         if (tmp->type == ENV)
 		{
-			
 			if (tmp == (*token))
 				expand_env(token, env);
 			else
