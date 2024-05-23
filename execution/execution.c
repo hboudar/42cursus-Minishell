@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/18 18:44:40 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:47:16 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,3 @@ int	execution(t_prompt *prompt, t_env **env)
 	// }
 	return (0);
 }
-
-//pipes
-//here_doc with pipes
-//redirections
-
