@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/22 23:19:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:30:12 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ void	handler(int signum)
 		printf("Quit: 3\n");
 		rl_on_new_line();
 		rl_redisplay();
+	}
+	else if (signum == SIGINT && g_caught == 2)
+	{
+		g_caught = 0;
+		rl_on_new_line();
+		rl_redisplay();
+		exit(1);
 	}
 }
 
