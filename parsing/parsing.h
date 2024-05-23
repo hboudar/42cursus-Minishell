@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/22 23:18:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:32:32 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ int			was_syntax_error(t_prompt *prompt);
 char		*ft_getenv(char *name, t_env *env);
 char		*ft_remove_quotes(char *str);
 void		set_size(t_token *token);
+void		handler(int signum);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
 void		add_last(char ***file, char *data);
 void		tokenize_dquotes(char **line, int *i, t_token **token);
