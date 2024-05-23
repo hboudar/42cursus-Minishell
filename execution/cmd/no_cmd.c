@@ -6,11 +6,14 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/22 22:46:30 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:30:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+#include <signal.h>
+
+volatile sig_atomic_t interrupted = 0;
 
 static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
 {
@@ -42,15 +45,27 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
     return (1);
 }
 
+// Setup custom signal handlers
+void setup_signal_handlers(void (*int_handler)(int), void (*quit_handler)(int)) {
+    // rl_catch_signals = 0;
+    signal(SIGINT, int_handler);
+    signal(SIGQUIT, quit_handler);
+}
+
+// Restore default signal handlers
+void restore_default_signal_handlers() {
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+}
+
 static void	here_doc2(t_prompt *prompt, int *fd, int i)
 {
 	char	*str;
     char    *limiter;
 
     close(fd[0]);
+    setup_signal_handlers(handler, SIG_IGN);
     limiter = prompt->cmd->limiter[i];
-    signal(SIGINT, signal_handler);
-    signal(SIGQUIT, signal_handler);
 	while (1)
 	{
 		str = readline("> ");
@@ -69,7 +84,8 @@ static void	here_doc2(t_prompt *prompt, int *fd, int i)
 		free(str);
 		str = NULL;
 	}
-    return ;
+    restore_default_signal_handlers();
+    exit(0);
 }
 
 static void here_doc(t_prompt *prompt, int i)
@@ -83,6 +99,9 @@ static void here_doc(t_prompt *prompt, int i)
         printf("pipe error\n");
         return ;
     }
+    struct sigaction sa_ignore, sa_orig_int;
+    sa_ignore.sa_handler = SIG_IGN;
+    sigaction(SIGINT, &sa_ignore, &sa_orig_int);
     (1) && (g_caught = 2, pid = fork());
     if (pid == -1)
     {
