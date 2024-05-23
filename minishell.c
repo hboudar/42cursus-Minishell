@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/23 21:34:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:38:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		g_caught = 0;
 
 void	handler(int signum)
 {
+	printf("g_caught = %d\n", g_caught);
 	if (signum == SIGINT && g_caught == 0)
 	{
 		printf("\n");
