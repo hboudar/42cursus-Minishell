@@ -6,14 +6,12 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/23 21:30:55 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:39:20 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 #include <signal.h>
-
-volatile sig_atomic_t interrupted = 0;
 
 static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
 {
@@ -60,6 +58,7 @@ void restore_default_signal_handlers() {
 
 static void	here_doc2(t_prompt *prompt, int *fd, int i)
 {
+    extern int g_caught;
 	char	*str;
     char    *limiter;
 
@@ -75,8 +74,9 @@ static void	here_doc2(t_prompt *prompt, int *fd, int i)
 		rl_redisplay();
         add_history(str);
 		if ((ft_strlen(str) == ft_strlen(limiter)
-			&& !ft_strncmp(str, limiter, ft_strlen(limiter))) || !str)
+			&& !ft_strncmp(str, limiter, ft_strlen(limiter))) || !str || g_caught)
 		{
+            g_caught = 0;
 			free(str);
 			str = NULL;
             break ;
@@ -90,7 +90,6 @@ static void	here_doc2(t_prompt *prompt, int *fd, int i)
 
 static void here_doc(t_prompt *prompt, int i)
 {
-    extern int g_caught;
     pid_t pid;
     int fd[2];
 
@@ -102,7 +101,7 @@ static void here_doc(t_prompt *prompt, int i)
     struct sigaction sa_ignore, sa_orig_int;
     sa_ignore.sa_handler = SIG_IGN;
     sigaction(SIGINT, &sa_ignore, &sa_orig_int);
-    (1) && (g_caught = 2, pid = fork());
+    pid = fork();
     if (pid == -1)
     {
         printf("fork error\n");
