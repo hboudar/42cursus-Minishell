@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/23 21:41:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:35:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <curses.h>
 # include <limits.h>
 # include <stdbool.h>
+
+int			g_caught;
 
 enum e_prmpt_type
 {
@@ -140,6 +142,7 @@ int			count_files(char **file);
 int			was_syntax_error(t_prompt *prompt);
 char		*ft_getenv(char *name, t_env *env);
 char		*ft_remove_quotes(char *str);
+void		init_signals(void);
 void		set_size(t_token *token);
 void		handle_sigint(int signum);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
