@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/21 15:47:05 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:06:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ int	check_syntax(t_token *token)
 		if (token->type == REDIR_OUT && (!token->next || token->next->type != WORD))
 			return (1);
 		if (token->type == APPEND && (!token->next || token->next->type != WORD))
+			return (1);
+		if (token->type == REDIR_HERE_DOC
+			&& (!token->next || token->next->type != WORD))
 			return (1);
 		if (token->type == PIPE_TKN && (!token->next
 				|| token->next->type == PIPE_TKN || token->next->type == CLOSEPAR
