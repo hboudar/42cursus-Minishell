@@ -6,12 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/24 16:33:04 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:34:16 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
-#include <signal.h>
 
 static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
 {
