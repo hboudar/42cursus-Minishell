@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/24 16:02:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:33:04 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,42 +100,6 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
 //     }
 // }
 
-void restore_default_signal_handlers() {
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-}
-
-void sigint_handler_heredoc(int sig)
-{
-    extern int g_caught;
-    if (sig == SIGINT) {
-        printf("\nReceived SIGINT (Control-C)\n");
-        restore_default_signal_handlers();
-        g_caught = 1;
-        // rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-        exit(1);
-    }
-}
-
-// Custom signal handler for SIGINT
-void sigint_handler(int sig) {
-    extern int g_caught;
-    if (sig == SIGINT) {
-        printf("\nReceived SIGINT (Control-C)\n");
-        g_caught = 1;
-        // rl_replace_line("", 0); 
-        rl_on_new_line(); 
-        rl_redisplay();
-    }
-}
-
-void setup_signal_handlers(void (*int_handler)(int), void (*quit_handler)(int)) {
-    signal(SIGINT, int_handler);
-    signal(SIGQUIT, quit_handler);
-}
-
 
 void heredoc_mode() {
     extern int g_caught;
@@ -174,8 +138,7 @@ void heredoc_mode() {
     } else if (pid > 0) {
         int status;
         waitpid(pid, &status, 0);
-        setup_signal_handlers(sigint_handler, SIG_IGN);
-
+        init_signals();
 
     } else {
         // Fork failed
@@ -195,7 +158,10 @@ int    no_cmd(t_prompt *prompt)
     if (prompt->cmd->type == HERE_DOC)
     {
         while (prompt->cmd->limiter[++i])
+        {
             heredoc_mode();
+            // rl_catch_signals = 0;
+        }
             // here_doc(prompt, i);
     }
     if (pipe(fd) == -1)
