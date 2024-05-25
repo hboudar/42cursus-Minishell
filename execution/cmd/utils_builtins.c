@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/22 13:32:52 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/25 15:35:44 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	ft_builtin(t_prompt *prompt, t_env **env)
 	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done
 		return (ft_cd(prompt, *env));
 	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))//done
-		return (ft_pwd(prompt));
+		return (ft_pwd(prompt, *env));
 	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))//done
 		return (ft_export(prompt, *env));
 	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))//done

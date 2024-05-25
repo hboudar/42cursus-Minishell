@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/24 16:22:12 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/25 19:05:37 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 # define EXECUTION_H
 
 # include "../parsing/parsing.h"
+# include <signal.h>
+
+//error :
+
+int error(char *msg);
 
 //execution main :
 
@@ -22,12 +27,13 @@ int execution(t_prompt *prompt, t_env **env);
 
 //one_cmd :
 
+void    here_doc(t_prompt *prompt, int i, int *fd);
 int     no_cmd(t_prompt *prompt);
 int     is_builtin(t_prompt *prompt);
 int     execute_builtin(t_prompt *prompt, t_env **env);
 int     ft_echo(t_prompt *prompt, t_env *env);
 int     ft_cd(t_prompt *prompt, t_env *env);
-int     ft_pwd(t_prompt *prompt);
+int     ft_pwd(t_prompt *prompt, t_env *env);
 int     ft_export(t_prompt *prompt, t_env *env);
 void    add_env_equal(const char *str, t_env *env);
 void    add_env_plus(const char *str, t_env *env);

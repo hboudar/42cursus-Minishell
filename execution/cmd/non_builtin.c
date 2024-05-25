@@ -6,17 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/22 23:20:16 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/25 21:11:17 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
-
-static int	error(char *msg)
-{
-	perror(msg);
-	return (1);
-}
 
 /*void	first_process(char *av[], char *envp[], t_pipex *pi)
 {
@@ -116,6 +110,7 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
 
     fd0 = 0;
     ft_redirection(prompt, fd, &fd0, &fd1);
+    printf("%d\n", fd[0]);
     path = find_path(prompt->cmd->args, env);
     envp = env_to_envp(env, env);
     if (execve(path, prompt->cmd->args, envp) == -1)
@@ -129,11 +124,14 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
 
 int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
 {
-    int     status;
     int     fd[2];
+    int     i;
     pid_t	pid;
 
-    if (pipe(fd) == -1)
+    i = -1;
+    while (prompt->cmd->type == HERE_DOC &&  prompt->cmd->limiter[++i])
+        here_doc(prompt, i, fd);
+    if (prompt->cmd->type != HERE_DOC && pipe(fd) == -1)
         return (error("pipe failed"));
     pid = fork();
     if (pid == -1)
@@ -142,10 +140,9 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
         child_process(prompt, env, fd);
     else
     {
-        status = waitpid(pid, &prompt->exit_state, 0);
+        waitpid(pid, &prompt->exit_state, 0);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-        if (status == -1)
-            return (error("waitpid failed"));
+        (1) && (close(fd[0]) && close(fd[1]));
     }
     return (0);
 }

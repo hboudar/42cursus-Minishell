@@ -6,11 +6,17 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/22 22:47:16 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/25 18:54:47 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+int	error(char *msg)
+{
+	perror(msg);
+	return (1);
+}
 
 int	ft_cmd(t_prompt *prompt, t_env **env)
 {
