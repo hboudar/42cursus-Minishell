@@ -6,11 +6,12 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/24 16:34:16 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:10:50 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+#include <signal.h>
 
 static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
 {
@@ -105,20 +106,17 @@ void heredoc_mode() {
     struct sigaction sa_ignore, sa_orig_int;
     sa_ignore.sa_handler = SIG_IGN;
     sigaction(SIGINT, &sa_ignore, &sa_orig_int);
+    sigaction(SIGQUIT, &sa_ignore, &sa_orig_int);
+
 
     pid_t pid = fork();
-
     if (pid == 0) {
 
         char* heredoc_input;
 
         setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
-
-        printf("Entering heredoc mode. Type 'EOF' to end.\n");
-
         while ((heredoc_input = readline("heredoc> ")) != NULL) {
             if (g_caught) {
-                printf("Here\n");
                 free(heredoc_input);
                 g_caught = 0;
                 break;

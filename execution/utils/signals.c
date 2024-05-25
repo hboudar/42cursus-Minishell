@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:55:40 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/24 16:32:11 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/25 13:05:44 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ void sigint_handler_heredoc(int sig)
 {
     extern int g_caught;
     if (sig == SIGINT) {
-        printf("\nReceived SIGINT (Control-C)\n");
         restore_default_signal_handlers();
-        g_caught = 1;
+        rl_clear_history();
         rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();
+        g_caught = 1;
+        write(1, "\n", 1);
         exit(1);
     }
 }

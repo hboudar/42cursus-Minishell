@@ -6,9 +6,10 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/24 16:32:32 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/25 13:08:49 by aoulahra          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -38,6 +39,7 @@ void	init_signals(void)
 	}
 	else
 		g_caught = 0;
+		
 }
 
 int	check_env(char **envp)
