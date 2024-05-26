@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/23 21:41:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 10:56:59 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # include <curses.h>
 # include <limits.h>
 # include <stdbool.h>
+# include <signal.h>
+
+int	g_caught;
 
 enum e_prmpt_type
 {
