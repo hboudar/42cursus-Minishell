@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:55:40 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 12:00:19 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 12:13:45 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void sig_handler_child(int sig)
         rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();
-        write(1, "135  \n", 3);
+        write(1, "  \n", 3);
         exit(1);
     }
     else if (sig == SIGQUIT)

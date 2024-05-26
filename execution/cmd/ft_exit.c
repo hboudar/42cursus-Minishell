@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:18 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/08 10:39:21 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 12:21:39 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ int	ft_exit(t_prompt *prompt)
 		{
 			prompt->exit_state = (int)costum_atoi(prompt->cmd->args[1], prompt);
 			if (prompt->cmd->args[2] != NULL)
-			{
-				ft_putstr_fd("exit: too many arguments\n", 2);
-				return (1);
-			}
+				return (ft_putstr_fd("exit: too many arguments\n", 2), 1);
 			else
+			{
+				printf("exit\n");
 				exit(prompt->exit_state);
+			}
 		}
 	}
-	exit (0);
+	printf("exit\n");
+	exit (prompt->exit_state);
 }

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 11:37:46 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 12:16:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
 
 int    no_cmd(t_prompt *prompt)
 {
+    extern int g_caught;
     int fd[2];
     int fd0;
     int fd1;
