@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/24 16:03:18 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 12:22:05 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	parse_prompt(t_prompt **oldprmpt , char *line, t_env *env)
 	if (*oldprmpt)
 	{
 		prmpt->exit_state = (*oldprmpt)->exit_state;
+		printf("exit_state = %d\n", prmpt->exit_state);
 		free_prompt(oldprmpt);
 		*oldprmpt = prmpt;
 	}
