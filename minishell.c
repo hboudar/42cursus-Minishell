@@ -17,11 +17,10 @@ int		g_caught = 0;
 
 void	handle_sigint(int signum)
 {
-	printf("g_caught = %d\n", g_caught);
 	if (signum == SIGINT)
 	{
 		g_caught = 1;
-		printf("dkhel\n");
+		printf("\n");
 		rl_clear_history();
 		rl_on_new_line();
 		rl_replace_line("", 0);

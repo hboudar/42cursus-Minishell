@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/25 21:07:34 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 10:44:42 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,15 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
 
 int    no_cmd(t_prompt *prompt)
 {
+    extern int g_caught;
     int fd[2];
     int fd0;
     int fd1;
     int i;
 
-    (1) && (i = -1, fd0 = 0);
-    if (prompt->cmd->type == HERE_DOC)
-    {
-        while (prompt->cmd->limiter[++i])
-            here_doc(prompt, i, fd);
-    }
+    (1) && (i = -1, fd0 = 0, g_caught = 0);
+    while (!g_caught && prompt->cmd->type == HERE_DOC && prompt->cmd->limiter[++i])
+        here_doc(prompt, i, fd);
     if (prompt->cmd->type != HERE_DOC && pipe(fd) == -1)
         return (perror("pipe failed"), 1);
     while (prompt->cmd->file != NULL)

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/25 21:11:17 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 10:53:54 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
 
     fd0 = 0;
     ft_redirection(prompt, fd, &fd0, &fd1);
-    printf("%d\n", fd[0]);
     path = find_path(prompt->cmd->args, env);
     envp = env_to_envp(env, env);
     if (execve(path, prompt->cmd->args, envp) == -1)
@@ -124,25 +123,27 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
 
 int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
 {
+    extern int g_caught;
     int     fd[2];
     int     i;
     pid_t	pid;
 
-    i = -1;
-    while (prompt->cmd->type == HERE_DOC &&  prompt->cmd->limiter[++i])
+    (1) && (i = -1, g_caught = 0);
+    while (!g_caught && prompt->cmd->type == HERE_DOC && prompt->cmd->limiter[++i])
         here_doc(prompt, i, fd);
-    if (prompt->cmd->type != HERE_DOC && pipe(fd) == -1)
-        return (error("pipe failed"));
     pid = fork();
     if (pid == -1)
         return (error("fork failed"));
-    else if (pid == 0)
+    else if (!pid)
+    {
+        close(fd[1]);
         child_process(prompt, env, fd);
+    }
     else
     {
         waitpid(pid, &prompt->exit_state, 0);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-        (1) && (close(fd[0]) && close(fd[1]));
+        (prompt->cmd->limiter) && (close(fd[0]), close(fd[1]));
     }
     return (0);
 }
