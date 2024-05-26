@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:07:24 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 19:12:35 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 19:01:34 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,3 @@ char	*find_path(char **cmd, t_env *env)
     }
     return (free_array(path), cmd[0]);
 }
-
-//TODO:check leaks

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:18 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 12:21:39 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 18:39:32 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_exit(t_prompt *prompt)
 {
 	int	i;
 
-	if (prompt->cmd->args[1] != NULL)
+	if (prompt && prompt->cmd && prompt->cmd->args[1] != NULL)
 	{
 		i = 0;
 		while (ft_isdigit(prompt->cmd->args[1][i]))
@@ -73,5 +73,7 @@ int	ft_exit(t_prompt *prompt)
 		}
 	}
 	printf("exit\n");
+	if(!prompt)
+		exit(0);
 	exit (prompt->exit_state);
 }

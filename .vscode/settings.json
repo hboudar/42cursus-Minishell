@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "execution.h": "c",
+        "__tuple": "c",
+        "array": "c"
+    }
+}
