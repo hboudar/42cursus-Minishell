@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 10:56:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 12:07:59 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <signal.h>
-
-int	g_caught;
 
 enum e_prmpt_type
 {
@@ -87,7 +85,6 @@ enum e_print
 	ENV_PRINT,
 	EXP_PRINT,
 };
-
 
 typedef struct s_env
 {
@@ -184,7 +181,7 @@ void		print_cmd(t_cmd *cmd);
 void		ft_shell_lvl(t_env *env);
 void		set_state(t_token *token);
 void		state_type(t_token *tmp);
-void		parse_prompt(t_prompt **oldprmpt , char *line, t_env *env);
+void		parse_prompt(t_prompt **oldprmpt, char *line, t_env *env);
 void		print_files(t_file *file);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
