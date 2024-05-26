@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:14 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 23:04:44 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 19:13:34 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int ft_env(t_prompt *prompt, t_env *env)
 {
     char *path;
 
+    if (prompt->cmd->args[1] != NULL)
+    {
+        ft_putstr_fd("env: too many arguments\n", 2);
+        return (1);
+    }
     path = find_path(prompt->cmd->args, env);
     if (!path || !ft_strncmp(path, "env", 4))
     {
@@ -27,11 +32,7 @@ int ft_env(t_prompt *prompt, t_env *env)
     while (env)
     {
         if (env->value && (env->print == ENV_PRINT || env->print == PRINT))
-        {
-            ft_putstr_fd(env->key, 1);
-            ft_putstr_fd(env->value, 1);
-            ft_putstr_fd("\n", 1);
-        }
+            printf("%s%s\n", env->key, env->value);
         env = env->next;
     }
     return (0);

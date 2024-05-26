@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 11:52:35 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 18:38:29 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int     execute_nonebuiltin(t_prompt *prompt, t_env *env);
 
 //utils :
 
+int     ft_builtin(t_prompt *prompt, t_env **env);
 char	*find_path(char **cmd, t_env *env); //findning the path of the command
 char	**env_to_envp(t_env *env, t_env *env1); //converting the env to envp
 char   **free_envp(char **envp); //freeing the envp
