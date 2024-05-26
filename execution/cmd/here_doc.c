@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 11:59:53 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 12:16:31 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void ignore_signals(void)
 
 static void	here_doc2(t_prompt *prompt, int *fd, int i)
 {
+    extern int g_caught;
 	char	*str;
     char    *limiter;
 
@@ -46,6 +47,7 @@ static void	here_doc2(t_prompt *prompt, int *fd, int i)
 
 void here_doc(t_prompt *prompt, int i, int *fd)
 {
+    extern int g_caught;
     pid_t pid;
 
     ignore_signals();
