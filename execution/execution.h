@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/25 19:05:37 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 10:57:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # define EXECUTION_H
 
 # include "../parsing/parsing.h"
-# include <signal.h>
 
 //error :
 
