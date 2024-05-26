@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 10:52:50 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 11:59:53 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-static void ignore_signals()
+void ignore_signals(void)
 {
     struct sigaction sa_ignore;
     struct sigaction sa_orig_int;
@@ -24,7 +24,6 @@ static void ignore_signals()
 
 static void	here_doc2(t_prompt *prompt, int *fd, int i)
 {
-    extern int g_caught;
 	char	*str;
     char    *limiter;
 
@@ -42,13 +41,11 @@ static void	here_doc2(t_prompt *prompt, int *fd, int i)
         }
         free(str);
     }
-    printf("exit 0\n");
     exit(0);
 }
 
 void here_doc(t_prompt *prompt, int i, int *fd)
 {
-    extern int g_caught;
     pid_t pid;
 
     ignore_signals();
@@ -58,7 +55,7 @@ void here_doc(t_prompt *prompt, int i, int *fd)
         return ;
     }
     pid = fork();
-    if (pid == 0)
+    if (!pid)
         here_doc2(prompt, fd, i);
     else if (pid > 0)
     {

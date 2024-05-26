@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 10:53:54 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 12:00:48 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,12 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
     char   *path;
     char  **envp;
 
+    setup_signal_handlers(sig_handler_child, sig_handler_child);
     fd0 = 0;
     ft_redirection(prompt, fd, &fd0, &fd1);
     path = find_path(prompt->cmd->args, env);
     envp = env_to_envp(env, env);
+    dup2(fd[0], 0);
     if (execve(path, prompt->cmd->args, envp) == -1)
     {
         perror(prompt->cmd->args[0]);
@@ -128,22 +130,21 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
     int     i;
     pid_t	pid;
 
-    (1) && (i = -1, g_caught = 0);
+    (1) && (i = -1, g_caught = 0, fd[0] = 0, fd[1] = 1);
     while (!g_caught && prompt->cmd->type == HERE_DOC && prompt->cmd->limiter[++i])
         here_doc(prompt, i, fd);
+    ignore_signals();
     pid = fork();
     if (pid == -1)
         return (error("fork failed"));
     else if (!pid)
-    {
-        close(fd[1]);
         child_process(prompt, env, fd);
-    }
     else
     {
         waitpid(pid, &prompt->exit_state, 0);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-        (prompt->cmd->limiter) && (close(fd[0]), close(fd[1]));
+        (fd[0] != 0) && (close(fd[0]));
+        (fd[1] != 1) && (close(fd[1]));
     }
     return (0);
 }

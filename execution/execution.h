@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 10:57:35 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 11:52:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ char	**env_to_envp(t_env *env, t_env *env1); //converting the env to envp
 char   **free_envp(char **envp); //freeing the envp
 void    setup_signal_handlers(void (*int_handler)(int), void (*quit_handler)(int)); //setting up the signal handlers
 void    sigint_handler_heredoc(int sig); //signal handler for heredoc
-void    restore_default_signal_handlers(); //restoring the default signal handlers
-
+void    ignore_signals(void);
+void    sig_handler_child(int sig);
 #endif
