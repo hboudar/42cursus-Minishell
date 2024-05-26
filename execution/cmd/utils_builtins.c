@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 19:18:13 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 19:19:09 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
         close(fd[1]);
         return (0);
     }
-    printf("while\n");
+    printf("while :%d\n", *fd1);
     if (dup2(*fd1, 1) == -1)
     {
         close(fd[0]);
