@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 12:00:48 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 12:30:23 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,5 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
         (fd[0] != 0) && (close(fd[0]));
         (fd[1] != 1) && (close(fd[1]));
     }
-    return (0);
+    return (prompt->exit_state);
 }
