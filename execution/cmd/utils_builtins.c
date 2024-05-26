@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 19:19:09 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 19:56:56 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
         close(fd[1]);
         return (0);
     }
-    printf("while :%d\n", *fd1);
     if (dup2(*fd1, 1) == -1)
     {
         close(fd[0]);
@@ -36,6 +35,8 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
         perror("dup2");
         return (0);
     }
+    close(*fd1);
+    *fd1 = 1;
     return (1);
 }
 
@@ -90,7 +91,7 @@ int	execute_builtin(t_prompt *prompt, t_env **env)
 	int	fd1;
     int i;
 
-	(1) && (fd[0] = 0, fd[1] = 1, i = -1, g_caught = 0);
+	(1) && (i = -1, g_caught = 0);
     // while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
     //     here_doc(prompt, i, fd);
     if (g_caught)
@@ -104,7 +105,7 @@ int	execute_builtin(t_prompt *prompt, t_env **env)
         return (1);
     printf("a:here\n");
 	prompt->exit_state = ft_builtin(prompt, env);
-    (fd0 != 0) && (close(fd0), printf("close fd0\n"));
-    (fd1 != 1) && (close(fd1), printf("close fd1\n"));
+    (fd0 != 0) && (close(fd0));
+    (fd1 != 1) && (close(fd1));
 	return (prompt->exit_state);
 }
