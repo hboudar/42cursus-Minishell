@@ -6,11 +6,26 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 15:19:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 18:53:09 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
+{
+	t_token	*tmp2;
+
+	tmp2 = get_closepar(tmp);
+	remove_token(token, tmp);
+	tmp = tmp2->next;
+	remove_token(token, tmp2);
+	if (!check_and_or(tmp))
+	{
+		build_prompt(prmpt, token, env);
+		return ;
+	}
+}
 
 int	set_exit_state(t_prompt **oldprmpt, t_prompt *prmpt)
 {
@@ -51,21 +66,10 @@ t_token	*get_closepar(t_token *token)
 void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 {
 	t_token	*tmp;
-	t_token	*tmp2;
 
 	tmp = *token;
 	if (tmp && tmp->type == OPENPAR)
-	{
-		tmp2 = get_closepar(tmp);
-		remove_token(token, tmp);
-		tmp = tmp2->next;
-		remove_token(token, tmp2);
-		if (!check_and_or(tmp))
-		{
-			build_prompt(prmpt, token, env);
-			return ;
-		}
-	}
+		handle_par(prmpt, token, tmp, env); 
 	if (check_and_or(*token))
 	{
 		tmp = get_and_or(*token);
@@ -79,12 +83,7 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 		build_prompt(&(*prmpt)->right, &tmp->next, env);
 	}
 	else
-	{
-		(*prmpt)->type = P_CMD;
-		(*prmpt)->cmd = parse_cmd(*token, env);
-		(*prmpt)->left = NULL;
-		(*prmpt)->right = NULL;
-	}
+		parse_pipes(prmpt, token, env);
 }
 
 void	parse_prompt(t_prompt **oldprmpt , char *line, t_env *env)
