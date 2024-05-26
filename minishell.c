@@ -40,41 +40,14 @@ void	init_signals(void)
 		
 }
 
-int	check_env(char **envp)
+int	end_program(t_prompt *prompt)
 {
-	if (envp && !envp[0])
+	if (prompt && prompt->cmd)
 	{
-		printf("Error: empty enviroment\n");
-		return (1);
+		free_cmd(&prompt->cmd);
+		prompt->cmd = NULL;
 	}
-	return (0);
-}
-
-void	ft_shell_lvl(t_env *env)
-{
-	t_env *tmp;
-	char *str;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key, "SHLVL", 5))
-		{
-			str = ft_itoa(ft_atoi(tmp->value) + 1);
-			if (!str)
-				return (perror("E: ft_itoa in ft_shell_lvl"));
-			if (ft_strncmp(tmp->value, "999", 3) == 0)
-			{
-				free(str);
-				free(tmp->value);
-				return ;
-			}
-			free(tmp->value);
-			tmp->value = str;
-			break ;
-		}
-		tmp = tmp->next;
-	}
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -103,5 +76,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
-	ft_exit(prompt);
+	(end_program(prompt)) && (ft_exit(prompt));
 }

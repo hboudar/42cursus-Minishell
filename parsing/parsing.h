@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 12:07:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 19:18:30 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,10 @@ int			check_syntax_bonus(t_token *token);
 int			has_pipe(t_token *token);
 int			has_semicolon(char *line);
 int			count_files(char **file);
+int			check_env(char **envp);
 int			was_syntax_error(t_prompt *prompt);
-char		*ft_getenv(char *name, t_env *env);
 char		*ft_remove_quotes(char *str);
+char		*ft_getenv(char *name, t_env *env);
 void		set_size(t_token *token);
 void		handle_sigint(int signum);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
@@ -181,6 +182,8 @@ void		print_cmd(t_cmd *cmd);
 void		ft_shell_lvl(t_env *env);
 void		set_state(t_token *token);
 void		state_type(t_token *tmp);
+void		ft_shell_lvl(t_env *env);
+void		handle_pipe(t_prompt **prmpt, t_token **token, t_env *env);
 void		parse_prompt(t_prompt **oldprmpt, char *line, t_env *env);
 void		print_files(t_file *file);
 t_env		*ft_tabdup(char **args);
