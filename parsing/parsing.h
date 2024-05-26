@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 19:18:30 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 19:23:50 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,8 @@ void		ft_shell_lvl(t_env *env);
 void		set_state(t_token *token);
 void		state_type(t_token *tmp);
 void		ft_shell_lvl(t_env *env);
-void		handle_pipe(t_prompt **prmpt, t_token **token, t_env *env);
+void		build_prompt(t_prompt **prmpt, t_token **token, t_env *env);
+void		parse_pipes(t_prompt **prmpt, t_token **token, t_env *env);
 void		parse_prompt(t_prompt **oldprmpt, char *line, t_env *env);
 void		print_files(t_file *file);
 t_env		*ft_tabdup(char **args);

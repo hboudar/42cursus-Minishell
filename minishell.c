@@ -71,6 +71,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			parse_prompt(&prompt, line, env);
+			// print_prompt(prompt);
+			// printf("\n");
 			if (!was_syntax_error(prompt) && (prompt->type != P_CMD || prompt->cmd))
 				prompt->exit_state = execution(prompt, &env);
 		}

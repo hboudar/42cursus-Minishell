@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/22 23:03:42 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 19:47:11 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_prompt(t_prompt *prompt)
 {
 	if (!prompt)
 	{
-		printf("Empty prompt\n");
+		printf("Empty prompt ");
 		return ;
 	}
 	if (prompt->type == P_AND)

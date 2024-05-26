@@ -6,26 +6,12 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 18:53:09 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/26 19:24:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
-{
-	t_token	*tmp2;
-
-	tmp2 = get_closepar(tmp);
-	remove_token(token, tmp);
-	tmp = tmp2->next;
-	remove_token(token, tmp2);
-	if (!check_and_or(tmp))
-	{
-		build_prompt(prmpt, token, env);
-		return ;
-	}
-}
 
 int	set_exit_state(t_prompt **oldprmpt, t_prompt *prmpt)
 {
@@ -61,6 +47,21 @@ t_token	*get_closepar(t_token *token)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
+{
+	t_token	*tmp2;
+
+	tmp2 = get_closepar(tmp);
+	remove_token(token, tmp);
+	tmp = tmp2->next;
+	remove_token(token, tmp2);
+	if (!check_and_or(tmp))
+	{
+		build_prompt(prmpt, token, env);
+		return ;
+	}
 }
 
 void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
