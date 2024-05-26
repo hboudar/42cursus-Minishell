@@ -103,6 +103,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
-	printf("exit\n");
-	return (0);
+	ft_exit(prompt);
 }
