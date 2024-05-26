@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
 
 int		g_caught = 0;
@@ -34,7 +33,7 @@ void	init_signals(void)
 	{
 		rl_catch_signals = 0;
 		signal(SIGINT, &handle_sigint);
-		// signal(SIGQUIT, &handle_sigquit);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else
 		g_caught = 0;
@@ -104,5 +103,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
+	printf("exit\n");
 	return (0);
 }
