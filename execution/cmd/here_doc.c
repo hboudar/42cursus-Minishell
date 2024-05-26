@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 12:16:31 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 15:46:22 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	here_doc2(t_prompt *prompt, int *fd, int i)
             free(str);
             break;
         }
+        write(fd[1], str, ft_strlen(str));
+        write(fd[1], "\n", 1);
         free(str);
     }
     exit(0);
@@ -53,7 +55,7 @@ void here_doc(t_prompt *prompt, int i, int *fd)
     ignore_signals();
     if (pipe(fd) == -1)
     {
-        perror("pipe");
+        perror("pipe failed");
         return ;
     }
     pid = fork();
@@ -62,12 +64,14 @@ void here_doc(t_prompt *prompt, int i, int *fd)
     else if (pid > 0)
     {
         waitpid(pid, &prompt->exit_state, 0);
+        close(fd[1]);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
         g_caught = (prompt->exit_state == 1);
     }
     else
     {
-        perror("fork");
-        exit(EXIT_FAILURE);
+        perror("fork failed");
+        (1) && (close(fd[0]), close(fd[1]));
+        return ;
     }
 }

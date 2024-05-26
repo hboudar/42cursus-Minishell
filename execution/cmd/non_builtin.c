@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 12:30:23 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/26 16:00:16 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
         *fd1 = open(prompt->cmd->file->data, O_CREAT | O_WRONLY | O_TRUNC, 0644);
     else if (prompt->cmd->file->type == 2)
         *fd1 = open(prompt->cmd->file->data, O_CREAT | O_WRONLY | O_APPEND, 0644);
+    else if (prompt->cmd->file->type == 3)
+    {
+        dup2(fd[0], 0);
+        return (1);
+    }
     if (*fd1 == -1)
     {
         printf("Error: %s: %s\n", prompt->cmd->file->next->data, strerror(errno));
@@ -53,7 +58,7 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
         close(fd[1]);
         return (0);
     }
-    if (dup2(*fd1, 1) == -1 || dup2(fd[0], 0) == -1)
+    if (dup2(*fd1, 1) == -1)
     {
         close(fd[0]);
         close(fd[1]);
@@ -66,7 +71,6 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
 
 static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
 {
-    printf("time\n");
     if (*fd0 != 0)
         close(*fd0);
     *fd0 = open(prompt->cmd->file->data, O_RDONLY);
@@ -91,6 +95,8 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
 
 static void ft_redirection(t_prompt *prompt, int *fd, int *fd0, int *fd1)
 {
+    *fd0 = 0;
+    *fd1 = 1;
     while (prompt->cmd->file != NULL)
     {
         if (!prompt->cmd->file->type && !ft_inredirect(prompt, fd, fd0))
@@ -109,11 +115,9 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
     char  **envp;
 
     setup_signal_handlers(sig_handler_child, sig_handler_child);
-    fd0 = 0;
     ft_redirection(prompt, fd, &fd0, &fd1);
     path = find_path(prompt->cmd->args, env);
     envp = env_to_envp(env, env);
-    dup2(fd[0], 0);
     if (execve(path, prompt->cmd->args, envp) == -1)
     {
         perror(prompt->cmd->args[0]);
