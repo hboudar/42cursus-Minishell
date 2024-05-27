@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/27 20:00:54 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/27 20:09:41 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	execution(t_prompt *prompt, t_env **env)
 		return (ft_pipe(prompt, env));
 	else if (prompt->type == P_OR)
 	{
-		if (!execution(prompt->left, env))
+		if (execution(prompt->left, env))
 			execution(prompt->right, env);
 	}
 	else if (prompt->type == P_AND)
 	{
-		if (execution(prompt->left, env))
+		if (!execution(prompt->left, env))
 			execution(prompt->right, env);
 	}
 	return (0);
