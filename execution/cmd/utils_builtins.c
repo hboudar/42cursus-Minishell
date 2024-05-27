@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/27 10:17:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/27 11:09:48 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static int ft_redirection(t_prompt *prompt, t_env **env, int *fd)
     int	fd0;
 	int	fd1;
 
-    (1) && (real_in = dup(0), printf("real_in = %d\n", real_in));
-    (1) && (real_out = dup(1), printf("real_out = %d\n", real_out));
     (1) && (fd0 = 0, fd1 = 1);
+    real_in = dup(0);
+    real_out = dup(1);
     while (prompt->cmd->file != NULL)
     {
         if ((!prompt->cmd->file->type || prompt->cmd->file->type == 3)
