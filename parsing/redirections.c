@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 16:14:07 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:25:11 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	count_files(char **file)
 {
-    int	i;
+	int	i;
 
-    i = 0;
-    while (file[i])
-        i++;
-    return (i);
+	i = 0;
+	while (file[i])
+		i++;
+	return (i);
 }
 
 void	remove_redirections(t_token **token)

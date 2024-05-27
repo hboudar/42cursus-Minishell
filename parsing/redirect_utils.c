@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/22 23:17:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:26:20 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void    add_last(char ***file, char *data)
+void	add_last(char ***file, char *data)
 {
 	int		i;
 	char	**new;
@@ -40,30 +40,30 @@ void    add_last(char ***file, char *data)
 	*file = new;
 }
 
-t_file    *ft_newfile(char *data, int type)
+t_file	*ft_newfile(char *data, int type)
 {
-    t_file	*new;
+	t_file	*new;
 
-    new = (t_file *)malloc(sizeof(t_file));
-    new->data = data;
-    new->type = type;
-    new->next = NULL;
-    return (new);
+	new = (t_file *)malloc(sizeof(t_file));
+	new->data = data;
+	new->type = type;
+	new->next = NULL;
+	return (new);
 }
 
 void	ft_fileaddback(t_file **file, t_file *new)
 {
-    t_file	*tmp;
+	t_file	*tmp;
 
-    if (!*file)
-    {
-        *file = new;
-        return ;
-    }
-    tmp = *file;
-    while (tmp->next)
-        tmp = tmp->next;
-    tmp->next = new;
+	if (!*file)
+	{
+		*file = new;
+		return ;
+	}
+	tmp = *file;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
 }
 
 void	free_files(t_file *file)

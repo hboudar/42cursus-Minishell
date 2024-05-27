@@ -6,12 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 19:24:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:20:08 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
 
 int	set_exit_state(t_prompt **oldprmpt, t_prompt *prmpt)
 {
@@ -70,7 +69,7 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 
 	tmp = *token;
 	if (tmp && tmp->type == OPENPAR)
-		handle_par(prmpt, token, tmp, env); 
+		handle_par(prmpt, token, tmp, env);
 	if (check_and_or(*token))
 	{
 		tmp = get_and_or(*token);
@@ -87,7 +86,7 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 		parse_pipes(prmpt, token, env);
 }
 
-void	parse_prompt(t_prompt **oldprmpt , char *line, t_env *env)
+void	parse_prompt(t_prompt **oldprmpt, char *line, t_env *env)
 {
 	t_prompt	*prmpt;
 	t_token		*token;
@@ -111,6 +110,6 @@ void	parse_prompt(t_prompt **oldprmpt , char *line, t_env *env)
 		free_token(token);
 		return ;
 	}
-	build_prompt(&prmpt, &token, env);	
+	build_prompt(&prmpt, &token, env);
 	*oldprmpt = prmpt;
 }

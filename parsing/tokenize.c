@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:25:24 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/14 19:56:42 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:20:38 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	tokenize2(char **line, int *i, t_token **token)
 	}
 	else if ((*line)[*i] == '$')
 		tokenize_env(line, i, token);
-	else if((*line)[*i] == '(')
+	else if ((*line)[*i] == '(')
 		tokenize_par(line, i, token, OPENPAR);
-	else if((*line)[*i] == ')')
+	else if ((*line)[*i] == ')')
 		tokenize_par(line, i, token, CLOSEPAR);
 	else
 		tokenize_word(line, i, token);

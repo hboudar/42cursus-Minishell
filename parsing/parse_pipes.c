@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 20:01:03 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:17:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ void	add_token(t_token **token, t_token *pipeless)
 	tmp = *token;
 	if (!tmp)
 	{
-		*token = pipeless;
+		*token = malloc(sizeof(t_token));
+		(*token)->data = ft_strdup(pipeless->data);
+		(*token)->type = pipeless->type;
+		(*token)->state = pipeless->state;
+		(*token)->next = NULL;
 		return ;
 	}
 	while (tmp->next)
@@ -62,15 +66,14 @@ t_token	*remove_pipe(t_token *token)
 	t_token	*tmp2;
 	t_token	*pipeless;
 
-	pipeless = malloc(sizeof(t_token));
 	tmp = token;
+	pipeless = NULL;
 	while (tmp)
 	{
 		if (tmp->type == PIPE_TKN)
 		{
 			tmp2 = tmp->next;
 			remove_token(&token, tmp);
-            pipeless->next = NULL;
 			return (pipeless);
 		}
 		add_token(&pipeless, tmp);
@@ -84,7 +87,7 @@ void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
 	t_token	*tmp;
 	t_token	*pipeless;
 
-    // print_tokens(*token);
+	print_tokens(*token);
 	if (!check_pipe(*token))
 	{
 		(*prmpt)->left = NULL;

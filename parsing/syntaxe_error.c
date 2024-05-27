@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 12:35:50 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:24:38 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,10 @@ int	has_semicolon(char *line)
 	return (0);
 }
 
-// int	check_word(t_token *token)
-// {
-// 	while (token)
-// 	{
-// 		if (token->type == WORD && !ft_isalnum(token->data[0]))
-// 		{
-// 			printf("entered\n");
-// 			return (1);
-// 		}
-// 		token = token->next;
-// 	}
-// 	return (0);
-// }
-
 int	check_syntax_bonus(t_token *token)
 {
-	int i;
-	t_token *tmp;
+	int		i;
+	t_token	*tmp;
 
 	i = 0;
 	tmp = token;
@@ -83,31 +69,31 @@ int	check_syntax_bonus(t_token *token)
 	return (0);
 }
 
-int	check_syntax(t_token *token)
+int	check_syntax(t_token *tkn)
 {
-	while (token)
+	while (tkn)
 	{
-		if (token->type == REDIR_IN && (!token->next || token->next->type != WORD))
+		if (tkn->type == REDIR_IN && (!tkn->next || tkn->next->type != WORD))
 			return (1);
-		if (token->type == REDIR_OUT && (!token->next || token->next->type != WORD))
+		if (tkn->type == REDIR_OUT && (!tkn->next || tkn->next->type != WORD))
 			return (1);
-		if (token->type == APPEND && (!token->next || token->next->type != WORD))
+		if (tkn->type == APPEND && (!tkn->next || tkn->next->type != WORD))
 			return (1);
-		if (token->type == REDIR_HERE_DOC
-			&& (!token->next || token->next->type != WORD))
+		if (tkn->type == REDIR_HERE_DOC
+			&& (!tkn->next || tkn->next->type != WORD))
 			return (1);
-		if (token->type == PIPE_TKN && (!token->next
-				|| token->next->type == PIPE_TKN || token->next->type == CLOSEPAR
-				|| token->next->type == OR_TOKEN || token->next->type == AND_TOKEN))
+		if (tkn->type == PIPE_TKN && (!tkn->next
+				|| tkn->next->type == PIPE_TKN || tkn->next->type == CLOSEPAR
+				|| tkn->next->type == OR_TOKEN || tkn->next->type == AND_TOKEN))
 			return (1);
-		if (token->type == OR_TOKEN && (!token->next
-				|| token->next->type == PIPE_TKN || token->next->type == OR_TOKEN
-				|| token->next->type == AND_TOKEN))
+		if (tkn->type == OR_TOKEN && (!tkn->next
+				|| tkn->next->type == PIPE_TKN || tkn->next->type == OR_TOKEN
+				|| tkn->next->type == AND_TOKEN))
 			return (1);
-		if (token->type == AND_TOKEN && (!token->next || token->next->type == PIPE_TKN
-				|| token->next->type == OR_TOKEN || token->next->type == AND_TOKEN))
+		if (tkn->type == AND_TOKEN && (!tkn->next || tkn->next->type == PIPE_TKN
+				|| tkn->next->type == OR_TOKEN || tkn->next->type == AND_TOKEN))
 			return (1);
-		token = token->next;
+		tkn = tkn->next;
 	}
 	return (0);
 }

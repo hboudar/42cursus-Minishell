@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/21 15:54:15 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:26:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_cmd(t_cmd **cmd)
 	free_files((*cmd)->file);
 	(*cmd)->args = NULL;
 	(*cmd)->limiter = NULL;
-	(*cmd)->file = NULL;	
+	(*cmd)->file = NULL;
 	free(*cmd);
 	*cmd = NULL;
 }

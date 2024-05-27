@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 18:31:57 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:27:57 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	check_env(char **envp)
 
 void	ft_shell_lvl(t_env *env)
 {
-	t_env *tmp;
-	char *str;
+	char	*str;
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
@@ -92,18 +92,18 @@ void	expand_env(t_token **token, t_env *env)
 
 void	expand_tokens(t_token **token, t_env *env)
 {
-    t_token	*tmp;
+	t_token	*tmp;
 
-    tmp = *token;
-    while (tmp)
-    {
-        if (tmp->type == ENV)
+	tmp = *token;
+	while (tmp)
+	{
+		if (tmp->type == ENV)
 		{
 			if (tmp == (*token))
 				expand_env(token, env);
 			else
-            	expand_env(&tmp, env);
+				expand_env(&tmp, env);
 		}
-        tmp = tmp->next;
-    }
+		tmp = tmp->next;
+	}
 }
