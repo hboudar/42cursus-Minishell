@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/25 18:54:47 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/27 10:21:07 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,20 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
 	return (execute_nonebuiltin(prompt, *env));
 }
 
-// int ft_pipe(t_prompt *prompt, t_env **env)
-// {
-// 	if (prompt->type == P_CMD)
-// 		return (ft_cmd(prompt, env));
-// 	// else if (prompt->type == P_OR)
-// 	// {
-// 	// 	if (!execution(prompt->left, env))
-// 	// 		execution(prompt->right, env);
-// 	// }
-// 	// else if (prompt->type == P_AND)
-// 	// {
-// 	// 	if (execution(prompt->left, env))
-// 	// 		execution(prompt->right, env);
-// 	// }
-// 	return (0);
-// }
+int ft_pipe(t_prompt *prompt, t_env **env)
+{
+	(void)env;
+	(void)prompt;
+
+	return (0);
+}
 
 int	execution(t_prompt *prompt, t_env **env)
 {
 	if (prompt->type == P_CMD)
 		return (ft_cmd(prompt, env));
-	// else if (prompt->type == P_PIPE)
-	// 	return (ft_pipe(prompt, env));
+	else if (prompt->type == P_PIPE)
+		return (ft_pipe(prompt, env));
 	// else if (prompt->type == P_OR)
 	// {
 	// 	if (!execution(prompt->left, env))
