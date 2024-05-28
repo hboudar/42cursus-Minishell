@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 22:09:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/28 15:28:44 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,14 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
 
     setup_signal_handlers(sig_handler_child, sig_handler_child);
     ft_redirection(prompt, fd, &fd0, &fd1);
-    path = find_path(prompt->cmd->args, env);
+    if (prompt->cmd->args[0][0] == '/')
+        path = prompt->cmd->args[0];
+    else
+        path = find_path(prompt->cmd->args, env);
     envp = env_to_envp(env, env);
-    if (execve(path, prompt->cmd->args, envp) == -1)
-    {
-        perror(prompt->cmd->args[0]);
-        exit(127);
-    }
+    execve(path, prompt->cmd->args, envp);
+    perror(prompt->cmd->args[0]);
+    exit(127);
 }
 
 int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
