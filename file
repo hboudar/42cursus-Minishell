@@ -1,0 +1,13 @@
+Makefile
+execution
+file
+minishell
+minishell.c
+minishell.h
+minishell.o
+notes.r
+parsing
+requirements.png
+test.c
+to_do_last.txt
+utils

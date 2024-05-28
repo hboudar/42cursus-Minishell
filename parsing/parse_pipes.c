@@ -6,11 +6,27 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/27 20:08:47 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:45:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	end_token(t_token **token)
+{
+	t_token	*tmp;
+
+	tmp = *token;
+	while (tmp && tmp->next)
+	{
+		if (tmp->next->data == NULL)
+		{
+			remove_token(token, tmp->next);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+}
 
 int	check_pipe(t_token *token)
 {
@@ -40,56 +56,14 @@ t_token	*get_pipe(t_token *token)
 	return (NULL);
 }
 
-void	add_token(t_token **token, t_token *pipeless)
-{
-	t_token	*tmp;
-
-	tmp = *token;
-	if (!tmp)
-	{
-		*token = malloc(sizeof(t_token));
-		(*token)->data = ft_strdup(pipeless->data);
-		(*token)->type = pipeless->type;
-		(*token)->state = pipeless->state;
-		(*token)->next = NULL;
-		return ;
-	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = pipeless;
-	tmp->next->next = NULL;
-}
-
-t_token	*remove_pipe(t_token *token)
-{
-	t_token	*tmp;
-	t_token	*tmp2;
-	t_token	*pipeless;
-
-	tmp = token;
-	pipeless = NULL;
-	while (tmp)
-	{
-		if (tmp->type == PIPE_TKN)
-		{
-			tmp2 = tmp->next;
-			remove_token(&token, tmp);
-			return (pipeless);
-		}
-		add_token(&pipeless, tmp);
-		tmp = tmp->next;
-	}
-	return (pipeless);
-}
-
 void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
 {
 	t_token	*tmp;
-	t_token	*pipeless;
+	t_token	**pipeless;
 
 	if (!check_pipe(*token))
 	{
-		fix_token(token);
+		end_token(token);
 		set_size(*token);
 		set_state(*token);
 		(*prmpt)->left = NULL;
@@ -99,10 +73,10 @@ void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
 		return ;
 	}
 	tmp = get_pipe(*token);
-	pipeless = remove_pipe(*token);
+	pipeless = split_token(*token, tmp);
 	(*prmpt)->left = malloc(sizeof(t_prompt));
 	(*prmpt)->right = malloc(sizeof(t_prompt));
-	parse_pipes(&(*prmpt)->left, &pipeless, env);
+	parse_pipes(&(*prmpt)->left, pipeless, env);
 	parse_pipes(&(*prmpt)->right, &tmp, env);
 	(*prmpt)->type = P_PIPE;
 }
