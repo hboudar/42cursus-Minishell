@@ -1,3 +1,2 @@
-empty enviroment as in en -i at the start
-parse redirections
-fix dquotes and squotes join them before removing the spaces
+expand
+leaks
