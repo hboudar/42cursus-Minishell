@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/27 19:20:08 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:43:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,23 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
 	remove_token(token, tmp);
 	tmp = tmp2->next;
 	remove_token(token, tmp2);
+	tmp = *token;
 	if (!check_and_or(tmp))
 	{
 		build_prompt(prmpt, token, env);
 		return ;
+	}
+	else
+	{
+		tmp2 = get_and_or(tmp);
+		(*prmpt)->type = (tmp2->type == AND_TOKEN) * P_AND
+			+ (tmp2->type == OR_TOKEN) * P_OR;
+		(*prmpt)->left = (t_prompt *)malloc(sizeof(t_prompt));
+		ft_bzero((*prmpt)->left, sizeof(t_prompt));
+		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
+		ft_bzero((*prmpt)->right, sizeof(t_prompt));
+		build_prompt(&(*prmpt)->left, split_token(tmp, tmp2), env);
+		build_prompt(&(*prmpt)->right, &tmp2->next, env);
 	}
 }
 
@@ -70,9 +83,10 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 	tmp = *token;
 	if (tmp && tmp->type == OPENPAR)
 		handle_par(prmpt, token, tmp, env);
-	if (check_and_or(*token))
+	else if (check_and_or(*token))
 	{
-		tmp = get_and_or(*token);
+		tmp = *token;
+		tmp = get_and_or(tmp);
 		(*prmpt)->type = (tmp->type == AND_TOKEN) * P_AND
 			+ (tmp->type == OR_TOKEN) * P_OR;
 		(*prmpt)->left = (t_prompt *)malloc(sizeof(t_prompt));

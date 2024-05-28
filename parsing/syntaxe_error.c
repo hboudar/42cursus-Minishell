@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/27 19:24:38 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:40:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,26 @@ int	has_semicolon(char *line)
 	return (0);
 }
 
+int	check_par(t_token *token)
+{
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == OPENPAR)
+		{
+			tmp = get_closepar(tmp);
+			if (!tmp || (tmp->next && (tmp->next->type == WORD || tmp->next->type == OPENPAR))
+				|| (tmp->next && tmp->next->type == WHITE_SPACE && tmp->next->next
+					&& (tmp->next->next->type == WORD || tmp->next->next->type == OPENPAR)))
+				return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 int	check_syntax_bonus(t_token *token)
 {
 	int		i;
@@ -56,17 +76,17 @@ int	check_syntax_bonus(t_token *token)
 	if (i % 2 != 0)
 		return (1);
 	tmp = token;
-	while (token)
+	while (tmp)
 	{
-		if (token->type == OPENPAR && (!token->next
-				|| token->next->type == PIPE_TKN
-				|| token->next->type == OR_TOKEN
-				|| token->next->type == AND_TOKEN
-				|| token->next->type == CLOSEPAR))
+		if (tmp->type == OPENPAR && (!tmp->next
+				|| tmp->next->type == PIPE_TKN
+				|| tmp->next->type == OR_TOKEN
+				|| tmp->next->type == AND_TOKEN
+				|| tmp->next->type == CLOSEPAR))
 			return (1);
-		token = token->next;
+		tmp = tmp->next;
 	}
-	return (0);
+	return (check_par(token));
 }
 
 int	check_syntax(t_token *tkn)

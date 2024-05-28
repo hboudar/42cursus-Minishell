@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/26 19:23:50 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:37:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);
 t_file		*ft_newfile(char *data, int type);
+t_token		*get_closepar(t_token *token);
 t_token		*parse_token(char *line, t_env *env);
 t_token		*pipeless_token(t_token *token);
 t_token		*get_and_or(t_token *token);
