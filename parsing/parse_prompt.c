@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/29 14:36:57 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:10:10 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
 		ft_bzero((*prmpt)->left, sizeof(t_prompt));
 		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
 		ft_bzero((*prmpt)->right, sizeof(t_prompt));
-		split_token(*token, tmp2, tmp);
+		split_token(*token, tmp2, &tmp);
 		build_prompt(&(*prmpt)->left, &tmp, env);
 		build_prompt(&(*prmpt)->right, &tmp2->next, env);
 	}
