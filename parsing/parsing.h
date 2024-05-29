@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/28 21:37:40 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:47:56 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,10 +183,12 @@ void		ft_shell_lvl(t_env *env);
 void		set_state(t_token *token);
 void		state_type(t_token *tmp);
 void		ft_shell_lvl(t_env *env);
+void		print_files(t_file *file);
 void		build_prompt(t_prompt **prmpt, t_token **token, t_env *env);
 void		parse_pipes(t_prompt **prmpt, t_token **token, t_env *env);
 void		parse_prompt(t_prompt **oldprmpt, char *line, t_env *env);
-void		print_files(t_file *file);
+void		split_token(t_token *token, t_token *split, t_token **res);
+void		end_token(t_token **token);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token, t_env *env);
 size_t		ft_tablen(char **args);
@@ -195,6 +197,5 @@ t_token		*get_closepar(t_token *token);
 t_token		*parse_token(char *line, t_env *env);
 t_token		*pipeless_token(t_token *token);
 t_token		*get_and_or(t_token *token);
-t_token		**split_token(t_token *token, t_token *split);
 
 #endif

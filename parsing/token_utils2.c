@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:31:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/28 20:43:26 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:48:08 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,10 @@ void	remove_token(t_token **token, t_token *node)
 	}
 }
 
-t_token	**split_token(t_token *token, t_token *split)
+void	split_token(t_token *token, t_token *split, t_token **res)
 {
 	t_token	*tmp;
 	t_token	*new_token;
-	t_token	**res;
 
 	new_token = (t_token *)malloc(sizeof(t_token));
 	ft_bzero(new_token, sizeof(t_token));
@@ -55,8 +54,8 @@ t_token	**split_token(t_token *token, t_token *split)
 		tmp = tmp->next;
 		token = token->next;
 	}
-	res = &new_token;
-	return (res);
+	end_token(&new_token);
+	*res = new_token;
 }
 
 t_token	*pipeless_token(t_token *token)

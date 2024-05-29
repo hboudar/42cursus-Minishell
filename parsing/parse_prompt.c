@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/28 20:43:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:36:57 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
 		ft_bzero((*prmpt)->left, sizeof(t_prompt));
 		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
 		ft_bzero((*prmpt)->right, sizeof(t_prompt));
-		build_prompt(&(*prmpt)->left, split_token(tmp, tmp2), env);
+		split_token(*token, tmp2, tmp);
+		build_prompt(&(*prmpt)->left, &tmp, env);
 		build_prompt(&(*prmpt)->right, &tmp2->next, env);
 	}
 }
@@ -79,6 +80,7 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
 void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 {
 	t_token	*tmp;
+	t_token	*res;
 
 	tmp = *token;
 	if (tmp && tmp->type == OPENPAR)
@@ -93,7 +95,8 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 		ft_bzero((*prmpt)->left, sizeof(t_prompt));
 		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
 		ft_bzero((*prmpt)->right, sizeof(t_prompt));
-		build_prompt(&(*prmpt)->left, split_token(*token, tmp), env);
+		split_token(*token, tmp, &res);
+		build_prompt(&(*prmpt)->left, &res, env);
 		build_prompt(&(*prmpt)->right, &tmp->next, env);
 	}
 	else
