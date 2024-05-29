@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/27 10:17:56 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:08:04 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void here_doc(t_prompt *prompt, int i, int *fd)
     {
         waitpid(pid, &prompt->exit_state, 0);
         close(fd[1]);
-        close(fd[0]);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
         g_caught = (prompt->exit_state == 1);
     }
