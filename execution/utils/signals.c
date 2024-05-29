@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:55:40 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 19:00:45 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:06:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void sig_handler_child(int sig)
 {
-    printf("signal %d\n", sig);
-    if (sig == SIGINT) {
-        rl_clear_history();
+    extern int g_caught;
+
+    if (sig == SIGINT)
+    {
         rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();
@@ -25,11 +26,9 @@ void sig_handler_child(int sig)
     }
     else if (sig == SIGQUIT)
     {
-        rl_clear_history();
         rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();
-        printf("wash katprinti? \n");
         exit(131);
     }
 }
@@ -37,7 +36,6 @@ void sig_handler_child(int sig)
 void sigint_handler_heredoc(int sig)
 {
     if (sig == SIGINT) {
-        rl_clear_history();
         rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/18 23:56:15 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:21:53 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static bool    is_valid_name(const char *name)
 
 static void    ft_unsetenv(const char *name, t_env **env)
 {
+    int mode;
     t_env *tmp;
     t_env *prev;
 
@@ -37,7 +38,8 @@ static void    ft_unsetenv(const char *name, t_env **env)
     prev = NULL;
     while (tmp)
     {
-        if (!ft_strncmp(tmp->key, name, ft_strlen(name)))
+        mode = (ft_strchr(tmp->key, '=') != NULL);
+        if (!ft_strncmp(tmp->key, name, ft_strlen(name)) && ft_strlen(tmp->key) - mode == ft_strlen(name))
         {
             (tmp->key) && (free(tmp->key), tmp->key = NULL);
             (tmp->value) && (free(tmp->value), tmp->value = NULL);

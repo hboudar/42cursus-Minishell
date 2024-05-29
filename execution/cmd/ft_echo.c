@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:10 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/11 21:54:45 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:38:50 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int check_options(char *str)
     int i;
 
     if (str[0] != '-')
+        return (0);
+    else if (str[1] == '\0')
         return (0);
     i = 1;
     while (str[i])
@@ -66,5 +68,6 @@ int ft_echo(t_prompt *prompt, t_env *env)
         ft_print(prompt, option);
     }
     else
-        ft_putstr_fd("\n", 1); return (0);
+        ft_putstr_fd("\n", 1);
+    return (0);
 }

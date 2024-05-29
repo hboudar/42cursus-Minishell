@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 17:05:03 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/28 22:42:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int    no_cmd(t_prompt *prompt)
     (1) && (i = -1, g_caught = 0);
     while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
         here_doc(prompt, i, fd);
+    if (g_caught)
+        g_caught = 0;
     if (prompt->cmd->type != HERE_DOC && pipe(fd) == -1)
         return (perror("pipe failed"), 1);
     while (prompt->cmd->file != NULL)

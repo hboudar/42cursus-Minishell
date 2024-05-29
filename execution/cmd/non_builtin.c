@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/28 15:28:44 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:02:03 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
         close(fd[0]);
         close(fd[1]);
         close(*fd1);
-        perror("dup2");
+        perror("dup2 in out");
         return (0);
     }
     return (1);
@@ -60,7 +60,7 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
         close(fd[0]);
         close(fd[1]);
         close(*fd0);
-        perror("dup2");
+        perror("dup2 in in");
         return (0);
     }
     return (1);
@@ -104,8 +104,8 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
 {
     extern int g_caught;
     int     fd[2];
-    int     i;
     pid_t	pid;
+    int     i;
 
     (1) && (i = -1, g_caught = 0, fd[0] = 0, fd[1] = 1);
     while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
