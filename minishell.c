@@ -20,7 +20,6 @@ void	handle_sigint(int signum)
 	{
 		g_caught = 1;
 		printf("\n");
-		rl_clear_history();
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
