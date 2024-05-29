@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/29 14:53:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:46:24 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,17 @@ int	check_par(t_token *token)
 		if (tmp->type == OPENPAR)
 		{
 			tmp = get_closepar(tmp);
-			if (!tmp || (tmp->next && (tmp->next->type == WORD || tmp->next->type == OPENPAR))
-				|| (tmp->next && tmp->next->type == WHITE_SPACE && tmp->next->next
-					&& (tmp->next->next->type == WORD || tmp->next->next->type == OPENPAR)))
+			if (!tmp || (tmp->next
+					&& (tmp->next->type == WORD || tmp->next->type == OPENPAR))
+				|| (tmp->next
+					&& tmp->next->type == WHITE_SPACE && tmp->next->next
+					&& (tmp->next->next->type == WORD
+						|| tmp->next->next->type == OPENPAR)))
 				return (1);
 		}
 		tmp = tmp->next;
 	}
-	return (0);
+	return (check_quotes(token));
 }
 
 int	check_syntax_bonus(t_token *token)
