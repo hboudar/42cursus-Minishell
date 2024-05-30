@@ -6,11 +6,17 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:55:40 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 12:06:15 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 19:28:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+
+int	error(char *msg)
+{
+	perror(msg);
+	return (1);
+}
 
 void sig_handler_child(int sig)
 {

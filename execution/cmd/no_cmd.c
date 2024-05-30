@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:13:54 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/28 22:42:55 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 23:37:43 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
+static int  no_outredirect(t_prompt *prompt, int *fd, int *fd1)
 {
     if (prompt->cmd->file->type == 1)
         *fd1 = open(prompt->cmd->file->data, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -29,7 +29,7 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
     return (1);
 }
 
-static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
+static int	no_inredirect(t_prompt *prompt, int *fd, int *fd0)
 {
     *fd0 = open(prompt->cmd->file->data, O_RDONLY);
     if (*fd0 == -1)
@@ -60,9 +60,9 @@ int    no_cmd(t_prompt *prompt)
         return (perror("pipe failed"), 1);
     while (prompt->cmd->file != NULL)
     {
-        if (!prompt->cmd->file->type && !ft_inredirect(prompt, fd, &fd0))
+        if (!prompt->cmd->file->type && !no_inredirect(prompt, fd, &fd0))
             return (1);
-        else if (prompt->cmd->file->type && !ft_outredirect(prompt, fd, &fd1))
+        else if (prompt->cmd->file->type && !no_outredirect(prompt, fd, &fd1))
             return (1);
         prompt->cmd->file = prompt->cmd->file->next;
     }
