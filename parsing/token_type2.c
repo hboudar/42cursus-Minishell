@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:43:45 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 15:13:55 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:29:45 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ void	tokenize_here_doc(char **line, int *i, t_token **token)
 	(*token)->next = (t_token *)malloc(sizeof(t_token));
 	(*token) = (*token)->next;
 	ft_bzero(*token, sizeof(t_token));
+	(*token)->state = LIMITER;
 }
 
 void	tokenize_env(char **line, int *i, t_token **token)
 {
 	(*token)->size = 1;
 	(*token)->type = ENV;
-	(*token)->state = GENERAL;
+	if ((*token)->state != LIMITER)
+		(*token)->state = GENERAL;
 	*line = *line + 1;
 	get_expand(line, *token);
 	(*token)->data = ft_strjoin("$", *(*token)->expand);

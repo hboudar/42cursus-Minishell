@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:08:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 14:25:44 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:29:16 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,18 @@ void	tokenize_whitespace(char **line, int *i, t_token **token)
 		(*i)++;
 	(*token)->size = 1;
 	(*token)->type = WHITE_SPACE;
-	(*token)->state = GENERAL;
 	*line = *line + *i;
 	*i = 0;
 	(*token)->next = (t_token *)malloc(sizeof(t_token));
+	ft_bzero((*token)->next, sizeof(t_token));
+	if ((*token)->state == LIMITER)
+	{
+		(*token)->state = GENERAL;
+		(*token)->next->state = LIMITER;
+	}
+	else
+		(*token)->next->state = GENERAL;
 	(*token) = (*token)->next;
-	ft_bzero(*token, sizeof(t_token));
 }
 
 void	tokenize_dquotes(char **line, int *i, t_token **token)

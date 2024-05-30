@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 19:01:13 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:21:07 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	expand_tokens(t_token **token, t_env *env)
 	tmp = *token;
 	while (tmp)
 	{
-		if (tmp->expand)
+		if (tmp->expand && tmp->state != LIMITER)
 			expand_env(token, tmp, env);
 		tmp = tmp->next;
 	}
@@ -107,7 +107,7 @@ void	expand_tokens(t_token **token, t_env *env)
 	while (tmp)
 	{
 		if (tmp->expanded)
-			add_token(token, tmp);
+			add_token(tmp);
 		tmp = tmp->next;
 	}
 }
