@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_utils.c                                    :+:      :+:    :+:   */
+/*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/26 18:34:26 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 18:38:14 by hboudar          ###   ########.fr       */
+/*   Created: 2024/05/29 19:26:19 by hboudar           #+#    #+#             */
+/*   Updated: 2024/05/29 19:27:11 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,14 @@ int	is_builtin(t_prompt *prompt)
 			|| !ft_strncmp(prompt->cmd->args[0], "unset", 6)
 			|| !ft_strncmp(prompt->cmd->args[0], "env", 4)
 			|| !ft_strncmp(prompt->cmd->args[0], "exit", 5)));
+}
+
+
+int	ft_cmd(t_prompt *prompt, t_env **env)
+{
+    if (prompt->cmd->args == NULL)
+		return (no_cmd(prompt));
+	else if (is_builtin(prompt))
+		return (execute_builtin(prompt, env));
+	return (execute_nonebuiltin(prompt, *env));
 }

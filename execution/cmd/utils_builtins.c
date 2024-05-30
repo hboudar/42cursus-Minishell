@@ -6,14 +6,14 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 08:46:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/28 16:39:46 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/29 23:37:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
 
-static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
+static int  builtin_outredirect(t_prompt *prompt, int *fd, int *fd1)
 {
     if (prompt->cmd->file->type == 1)
         *fd1 = open(prompt->cmd->file->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -37,7 +37,7 @@ static int  ft_outredirect(t_prompt *prompt, int *fd, int *fd1)
     return (1);
 }
 
-static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
+static int	builtin_inredirect(t_prompt *prompt, int *fd, int *fd0)
 {
     if (!prompt->cmd->file->type)
     {
@@ -54,7 +54,7 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
     return (1);
 }
 
-static int ft_redirection(t_prompt *prompt, t_env **env, int *fd)
+static int builtin_redirection(t_prompt *prompt, t_env **env, int *fd)
 {
     int	real_in;
 	int	real_out;
@@ -67,9 +67,9 @@ static int ft_redirection(t_prompt *prompt, t_env **env, int *fd)
     while (prompt->cmd->file != NULL)
     {
         if ((!prompt->cmd->file->type || prompt->cmd->file->type == 3)
-            && !ft_inredirect(prompt, fd, &fd0))
+            && !builtin_inredirect(prompt, fd, &fd0))
             return (1);
-        else if (prompt->cmd->file->type && !ft_outredirect(prompt, fd, &fd1))
+        else if (prompt->cmd->file->type && !builtin_outredirect(prompt, fd, &fd1))
             return (1);
         prompt->cmd->file = prompt->cmd->file->next;
     }
@@ -96,7 +96,7 @@ int	execute_builtin(t_prompt *prompt, t_env **env)
         close(fd[0]);
         return (1);
     }
-    if (ft_redirection(prompt, env, fd))
+    if (builtin_redirection(prompt, env, fd))
         return (1);
 	return (prompt->exit_state);
 }
