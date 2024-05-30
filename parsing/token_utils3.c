@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:00:37 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 20:34:18 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:36:23 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	add_token(t_token **token, t_token *new_token)
+void	add_token(t_token *new_token)
 {
 	int		i;
 	char	**tmp;
