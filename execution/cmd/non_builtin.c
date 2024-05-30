@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 23:36:15 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/30 20:30:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@ static int  non_outredirect(t_prompt *prompt, int *fd, int *fd1)
     {
         printf("Error: %s: %s\n", prompt->cmd->file->next->data, strerror(errno));
         close(fd[0]);
-        close(fd[1]);
         return (0);
     }
     if (dup2(*fd1, 1) == -1)
     {
         close(fd[0]);
-        close(fd[1]);
         close(*fd1);
         perror("dup2 in out");
         return (0);
@@ -43,22 +41,17 @@ static int	non_inredirect(t_prompt *prompt, int *fd, int *fd0)
         (*fd0 != 0) && (close(*fd0));
         *fd0 = open(prompt->cmd->file->data, O_RDONLY);
     }
-    else
-    {
-        if (dup2(fd[0], *fd0) == -1)
+    else if (dup2(fd[0], *fd0) == -1)
             return (printf("failed dup2"),0);
-    }
     if (*fd0 == -1)
     {
         close(fd[0]);
-        close(fd[1]);
         perror(prompt->cmd->file->data);
         return (0);
     }
     if (dup2(*fd0, 0) == -1)
     {
         close(fd[0]);
-        close(fd[1]);
         close(*fd0);
         perror("dup2 in in");
         return (0);
@@ -66,16 +59,18 @@ static int	non_inredirect(t_prompt *prompt, int *fd, int *fd0)
     return (1);
 }
 
-static void non_redirection(t_prompt *prompt, int *fd, int *fd0, int *fd1)
+static void non_redirection(t_prompt *prompt, int *fd)
 {
-    *fd0 = 0;
-    *fd1 = 1;
+    int fd0;
+    int fd1;
+
+    (1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
     while (prompt->cmd->file != NULL)
     {
         if ((!prompt->cmd->file->type || prompt->cmd->file->type == 3)
-            && !non_inredirect(prompt, fd, fd0))
+            && !non_inredirect(prompt, fd, &fd0))
             exit(1);
-        else if (prompt->cmd->file->type && !non_outredirect(prompt, fd, fd1))
+        else if (prompt->cmd->file->type && !non_outredirect(prompt, fd, &fd1))
             exit(1);
         prompt->cmd->file = prompt->cmd->file->next;
     }
@@ -83,13 +78,11 @@ static void non_redirection(t_prompt *prompt, int *fd, int *fd0, int *fd1)
 
 static void	child_process(t_prompt *prompt, t_env *env, int *fd)
 {
-    int   fd0;
-    int   fd1;
     char   *path;
     char  **envp;
 
     setup_signal_handlers(sig_handler_child, sig_handler_child);
-    non_redirection(prompt, fd, &fd0, &fd1);
+    non_redirection(prompt, fd);
     if (prompt->cmd->args[0][0] == '/')
         path = prompt->cmd->args[0];
     else

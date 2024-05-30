@@ -6,46 +6,60 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:26:19 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 19:27:11 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/30 20:17:33 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int	ft_builtin(t_prompt *prompt, t_env **env)
+int    no_cmd(t_prompt *prompt, t_env **env)
 {
-	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))//done
-		return (ft_echo(prompt, *env));
-	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))//done
-		return (ft_cd(prompt, *env));
-	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))//done
-		return (ft_pwd(prompt, *env));
-	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))//done
-		return (ft_export(prompt, *env));
-	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))//done
-		return (ft_unset(prompt, env));
-	else if (!ft_strncmp(prompt->cmd->args[0], "env", 4))//done
-		return (ft_env(prompt, *env));
-	return (ft_exit(prompt));
+    int real_in;
+    int real_out;
+    extern int g_caught;
+    int fd[2];
+    int i;
+
+    real_in = dup(0);
+    real_out = dup(1);
+    (1) && (i = -1, fd[0] = 0, fd[1] = 1, g_caught = 0);
+    while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
+        here_doc(prompt, i, fd);
+    if (fd[0] != 0)
+        close(fd[0]);
+    if (g_caught)
+    {
+        g_caught = 0;
+        return (1);
+    }
+    redirection(prompt, env);
+    (1) && (dup2(real_in, 0), dup2(real_out, 1));
+    (1) && (close(real_in), close(real_out));
+    return (prompt->exit_state);
 }
 
-int	is_builtin(t_prompt *prompt)
+int	execute_builtin(t_prompt *prompt, t_env **env)
 {
-	return ((!ft_strncmp(prompt->cmd->args[0], "echo", 5)
-			|| !ft_strncmp(prompt->cmd->args[0], "cd", 3)
-			|| !ft_strncmp(prompt->cmd->args[0], "pwd", 4)
-			|| !ft_strncmp(prompt->cmd->args[0], "export", 7)
-			|| !ft_strncmp(prompt->cmd->args[0], "unset", 6)
-			|| !ft_strncmp(prompt->cmd->args[0], "env", 4)
-			|| !ft_strncmp(prompt->cmd->args[0], "exit", 5)));
-}
-
-
-int	ft_cmd(t_prompt *prompt, t_env **env)
-{
-    if (prompt->cmd->args == NULL)
-		return (no_cmd(prompt));
-	else if (is_builtin(prompt))
-		return (execute_builtin(prompt, env));
-	return (execute_nonebuiltin(prompt, *env));
+    extern int g_caught;
+    int	real_in;
+	int	real_out;
+    int	fd[2];
+    int i;
+    
+    real_in = dup(0);
+    real_out = dup(1);
+	(1) && (i = -1, fd[0] = 0, fd[1] = 1, g_caught = 0);
+    while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
+        here_doc(prompt, i, fd);
+    if (fd[0] != 0)
+        close(fd[0]);
+    if (g_caught)
+    {
+        g_caught = 0;
+        return (1);
+    }
+    redirection(prompt, env);
+    (1) && (dup2(real_in, 0), close(real_in));
+    (1) && (dup2(real_out, 1), close(real_out));
+	return (prompt->exit_state);
 }
