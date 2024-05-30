@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/29 12:47:56 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:47:50 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_cmd
 typedef struct s_prompt
 {
 	t_cmd				*cmd;
+	int					subshell;
+	t_file				*file;
 	int					exit_state;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
@@ -131,6 +133,7 @@ typedef struct s_token
 
 int			ft_iswhitespace(char *str);
 int			check_and_or(t_token *token);
+int			check_quote(t_token *token);
 int			has_pipe(t_token *token);
 int			check_syntax(t_token *token);
 int			check_syntax_bonus(t_token *token);
