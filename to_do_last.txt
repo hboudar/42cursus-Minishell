@@ -1,33 +1,4 @@
+subshells
+infiles and outfiles and heredoc in prompts
 expand
 leaks
-
-
-void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
-{
-	t_token	*tmp;
-	t_token	*pipeless;
-
-	print_tokens(*token);
-	if (!check_pipe(*token))
-	{
-		printf("no pipe\n");
-		end_token(token);
-		set_size(*token);
-		set_state(*token);
-		(*prmpt)->left = NULL;
-		(*prmpt)->right = NULL;
-		(*prmpt)->type = P_CMD;
-		(*prmpt)->cmd = parse_cmd(*token, env);
-		return ;
-	}
-	tmp = get_pipe(token);
-	split_token(*token, tmp, &pipeless);
-	print_tokens(pipeless);
-	(*prmpt)->left = malloc(sizeof(t_prompt));
-	ft_bzero((*prmpt)->left, sizeof(t_prompt));
-	(*prmpt)->right = malloc(sizeof(t_prompt));
-	ft_bzero((*prmpt)->right, sizeof(t_prompt));
-	parse_pipes(&(*prmpt)->left, &pipeless, env);
-	parse_pipes(&(*prmpt)->right, &tmp, env);
-	(*prmpt)->type = P_PIPE;
-}

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/27 20:18:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:32:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,28 @@
 int	check_quotes(char *line)
 {
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
 	while (line[i])
 	{
-		if (line[i] == '\"' || line[i] == '\'')
-			count++;
+		if (line[i] == '\"')
+		{
+			i++;
+			while (line[i] && line[i] != '\"')
+				i++;
+			if (!line[i])
+				return (1);
+		}
+		else if (line[i] == '\'')
+		{
+			i++;
+			while (line[i] && line[i] != '\'')
+				i++;
+			if (!line[i])
+				return (1);
+		}
 		i++;
 	}
-	if (count % 2 != 0)
-		return (1);
 	return (0);
 }
 
@@ -78,9 +88,11 @@ t_token	*parse_token(char *line, t_env *env)
 	t_token	*tmp;
 	t_token	*token;
 
+	(void)env;
 	i = 0;
 	if (has_semicolon(line) || check_quotes(line))
 	{
+		printf("here\n");
 		printf("Syntax error\n");
 		return (NULL);
 	}
@@ -89,7 +101,9 @@ t_token	*parse_token(char *line, t_env *env)
 	tmp = token;
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
-	expand_tokens(&token, env);
+	split_expand(token);
+	// expand_tokens(&token, env);
+	// print_expandables(token);
 	fix_token(&token);
 	set_size(token);
 	set_state(token);

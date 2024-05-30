@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:08:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/19 20:02:11 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:25:44 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	tokenize_whitespace(char **line, int *i, t_token **token)
 {
 	(*token)->data = ft_strdup(" ");
-	while ((*line)[*i] == ' ')
+	while (ft_is_whitespace((*line)[*i]))
 		(*i)++;
 	(*token)->size = 1;
 	(*token)->type = WHITE_SPACE;
@@ -38,7 +38,7 @@ void	tokenize_dquotes(char **line, int *i, t_token **token)
 			(*i)++;
 		(*token)->data = ft_substr(*line, 1, *i - 1);
 	}
-	get_token_type(*token);
+	(*token)->type = WORD;
 	(*token)->state = IN_DQUOTES;
 	*line = *line + *i + 1;
 	*i = 0;
@@ -58,7 +58,7 @@ void	tokenize_squotes(char **line, int *i, t_token **token)
 			(*i)++;
 		(*token)->data = ft_substr(*line, 1, *i - 1);
 	}
-	get_token_type(*token);
+	(*token)->type = WORD;
 	(*token)->state = IN_SQUOTES;
 	*line = *line + *i + 1;
 	*i = 0;

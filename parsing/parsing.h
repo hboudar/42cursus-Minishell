@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/29 15:47:50 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:25:23 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ typedef struct s_prompt
 {
 	t_cmd				*cmd;
 	int					subshell;
-	t_file				*file;
 	int					exit_state;
+	t_file				*file;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
 	struct s_prompt		*right;
@@ -124,6 +124,7 @@ typedef struct s_prompt
 typedef struct s_token
 {
 	char			*data;
+	char			**expand;
 	int				size;
 	int				skip_space;
 	enum e_type		type;
@@ -133,7 +134,6 @@ typedef struct s_token
 
 int			ft_iswhitespace(char *str);
 int			check_and_or(t_token *token);
-int			check_quote(t_token *token);
 int			has_pipe(t_token *token);
 int			check_syntax(t_token *token);
 int			check_syntax_bonus(t_token *token);
@@ -145,11 +145,13 @@ int			was_syntax_error(t_prompt *prompt);
 char		*ft_remove_quotes(char *str);
 char		*ft_getenv(char *name, t_env *env);
 void		set_size(t_token *token);
+void		split_expand(t_token *token);
+void		get_expand(char **line, t_token *token);
+void		print_expandables(t_token *token);
 void		handle_sigint(int signum);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
 void		add_last(char ***file, char *data);
 void		tokenize_dquotes(char **line, int *i, t_token **token);
-void		expand_env(t_token **token, t_env *env);
 void		tokenize_squotes(char **line, int *i, t_token **token);
 void		tokenize_pipe(char **line, int *i, t_token **token);
 void		get_cmd(t_cmd **cmd, t_token *token);

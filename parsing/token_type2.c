@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:43:45 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/19 19:47:50 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:13:55 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ void	tokenize_here_doc(char **line, int *i, t_token **token)
 
 void	tokenize_env(char **line, int *i, t_token **token)
 {
-	(*token)->data = ft_strdup("$");
 	(*token)->size = 1;
 	(*token)->type = ENV;
 	(*token)->state = GENERAL;
 	*line = *line + 1;
+	get_expand(line, *token);
+	(*token)->data = ft_strjoin("$", *(*token)->expand);
 	*i = 0;
 	(*token)->next = (t_token *)malloc(sizeof(t_token));
 	(*token) = (*token)->next;
@@ -69,7 +70,7 @@ void	tokenize_word(char **line, int *i, t_token **token)
 	int	j;
 
 	j = 0;
-	while ((*line)[j] && (*line)[j] != ' ' && (*line)[j] != '|'
+	while ((*line)[j] && !ft_is_whitespace((*line)[j]) && (*line)[j] != '|'
 			&& (*line)[j] != '<' && (*line)[j] != '>'
 			&& (*line)[j] != '&' && (*line)[j] != '\''
 			&& (*line)[j] != '\"' && (*line)[j] != '('
