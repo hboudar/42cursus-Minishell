@@ -5,8 +5,9 @@ SRC		=	minishell.c parsing/parsing.c parsing/prompt_utils.c parsing/token_utils.
 			parsing/.print.c parsing/parse_token.c parsing/syntaxe_error.c parsing/token_utils2.c \
 			execution/execution.c execution/cmd/ft_env.c execution/cmd/ft_exit.c execution/cmd/ft_export.c execution/cmd/ft_pwd.c \
 			execution/cmd/ft_export2.c execution/cmd/ft_unset.c execution/cmd/ft_cd.c execution/cmd/ft_echo.c execution/cmd/non_builtin.c \
-			execution/cmd/utils_builtins.c execution/cmd/no_cmd.c execution/utils/env_to_envp.c execution/utils/find_path.c execution/utils/signals.c \
-			execution/cmd/here_doc.c execution/cmd/ft_cmd.c execution/cmds/pipe/ft_pipe.c  execution/cmds/And/ft_and.c execution/cmds/Or/ft_or.c 
+			execution/utils/env_to_envp.c execution/utils/find_path.c execution/utils/signals.c \
+			execution/cmd/here_doc.c execution/cmd/ft_cmd.c execution/cmds/pipe/ft_pipe.c  execution/cmds/And/ft_and.c execution/cmds/Or/ft_or.c  \
+			execution/cmd/redirection.c execution/utils/builtin.c
 
 OBJ		= $(SRC:.c=.o)
 HEADER	= execution.h
