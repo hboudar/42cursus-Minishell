@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 15:25:23 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:52:48 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,13 +141,12 @@ int			has_pipe(t_token *token);
 int			has_semicolon(char *line);
 int			count_files(char **file);
 int			check_env(char **envp);
+int			is_empty(char **expand, int size);
 int			was_syntax_error(t_prompt *prompt);
 char		*ft_remove_quotes(char *str);
-char		*ft_getenv(char *name, t_env *env);
 void		set_size(t_token *token);
 void		split_expand(t_token *token);
 void		get_expand(char **line, t_token *token);
-void		print_expandables(t_token *token);
 void		handle_sigint(int signum);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
 void		add_last(char ***file, char *data);
@@ -189,6 +188,7 @@ void		set_state(t_token *token);
 void		state_type(t_token *tmp);
 void		ft_shell_lvl(t_env *env);
 void		print_files(t_file *file);
+void		expand_data(t_token *to_expand, int size, int j, int k);
 void		build_prompt(t_prompt **prmpt, t_token **token, t_env *env);
 void		parse_pipes(t_prompt **prmpt, t_token **token, t_env *env);
 void		parse_prompt(t_prompt **oldprmpt, char *line, t_env *env);

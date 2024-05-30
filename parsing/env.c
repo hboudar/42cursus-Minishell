@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 15:25:35 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:56:55 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,55 @@ void	ft_shell_lvl(t_env *env)
 	}
 }
 
-// void	expand_env(t_token **token, t_token *expand, t_env *env)
-// {
-	
-// }
+char	*get_env_value(char **tmp, t_env *env)
+{
+	t_env	*tmp_env;
 
-// void	expand_tokens(t_token **token, t_env *env)
-// {
-// 	t_token	*tmp;
+	tmp_env = env;
+	while (tmp_env)
+	{
+		if (!ft_strncmp(tmp_env->key, *tmp, ft_strlen(tmp_env->key) - 1)
+			&& ft_strlen(tmp_env->key) == ft_strlen(*tmp) + 1)
+				return (ft_strdup(tmp_env->value));
+		tmp_env = tmp_env->next;
+	}
+	return (NULL);
+}
 
-// 	tmp = *token;
-// 	while (tmp)
-// 	{
-// 		if (tmp->expand)
-// 			expand_env(token, tmp, env);
-// 		tmp = tmp->next;
-// 	}
-// }
+void	expand_env(t_token **token, t_token *to_expand, t_env *env)
+{
+	int		i;
+	char	**tmp;
+	char	*value;
+
+	tmp = to_expand->expand;
+	i = 0;
+	while (*tmp)
+	{
+		i++;
+		value = get_env_value(tmp, env);
+		free(*tmp);
+		if (!value)
+			*tmp = NULL;
+		else
+			*tmp = value;
+		tmp++;
+	}
+	if (is_empty(to_expand->expand, i) == i)
+		remove_token(token, to_expand);
+	else
+		expand_data(to_expand, i, 0, 0);
+}
+
+void	expand_tokens(t_token **token, t_env *env)
+{
+	t_token	*tmp;
+
+	tmp = *token;
+	while (tmp)
+	{
+		if (tmp->expand)
+			expand_env(token, tmp, env);
+		tmp = tmp->next;
+	}
+}
