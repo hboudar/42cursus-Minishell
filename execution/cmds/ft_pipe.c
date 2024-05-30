@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 20:34:21 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/30 20:36:25 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../execution.h"
+#include "../execution.h"
 
 int ft_pipe(t_prompt *prompt, t_env **env)
 {
