@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:10:07 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 16:56:55 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:01:13 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_env_value(char **tmp, t_env *env)
 	{
 		if (!ft_strncmp(tmp_env->key, *tmp, ft_strlen(tmp_env->key) - 1)
 			&& ft_strlen(tmp_env->key) == ft_strlen(*tmp) + 1)
-				return (ft_strdup(tmp_env->value));
+			return (ft_strdup(tmp_env->value));
 		tmp_env = tmp_env->next;
 	}
 	return (NULL);
@@ -86,7 +86,10 @@ void	expand_env(t_token **token, t_token *to_expand, t_env *env)
 	if (is_empty(to_expand->expand, i) == i)
 		remove_token(token, to_expand);
 	else
+	{
 		expand_data(to_expand, i, 0, 0);
+		(*token)->expanded = 1;
+	}
 }
 
 void	expand_tokens(t_token **token, t_env *env)
@@ -98,6 +101,13 @@ void	expand_tokens(t_token **token, t_env *env)
 	{
 		if (tmp->expand)
 			expand_env(token, tmp, env);
+		tmp = tmp->next;
+	}
+	tmp = *token;
+	while (tmp)
+	{
+		if (tmp->expanded)
+			add_token(token, tmp);
 		tmp = tmp->next;
 	}
 }

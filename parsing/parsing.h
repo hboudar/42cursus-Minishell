@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 16:52:48 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:33:18 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ typedef struct s_token
 	char			*data;
 	char			**expand;
 	int				size;
-	int				skip_space;
+	int				expanded;
 	enum e_type		type;
 	enum e_state	state;
 	struct s_token	*next;
@@ -159,6 +159,7 @@ void		tokenize_append(char **line, int *i, t_token **token);
 void		free_cmd(t_cmd **cmd);
 void		free_token(t_token *token);
 void		print_cmd(t_cmd *cmd);
+void		add_token(t_token **token, t_token *new_token);
 void		expand_tokens(t_token **token, t_env *env);
 void		fill_redirections(t_cmd *cmd, t_token *token);
 void		tokenize_redir_out(char **line, int *i, t_token **token);
