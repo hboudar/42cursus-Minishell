@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/18 18:22:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:16:27 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_env	*ft_tabdup(char **args)
 		tmp = tmp->next;
 	}
 	tmp->key = ft_strdup("OLDPWD");
-	tmp->print = EXP_PRINT;
+	tmp->value = NULL;
 	tmp->next = NULL;
 	set_type_env(newenv);
 	ft_shell_lvl(newenv);

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:25:24 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/27 19:20:38 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:28:51 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	tokenize2(char **line, int *i, t_token **token)
 
 void	tokenize(char **line, int *i, t_token **token)
 {
-	if ((*line)[*i] == ' ')
+	if (ft_is_whitespace((*line)[*i]))
 		tokenize_whitespace(line, i, token);
 	else if ((*line)[*i] == '\"')
 		tokenize_dquotes(line, i, token);
