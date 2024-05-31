@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 12:08:04 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/05/30 20:38:34 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	here_doc2(t_prompt *prompt, int *fd, int i)
     while (1)
     {
         str = readline("> ");
+        //expanding the variables
         if (g_caught || (!ft_strncmp(str, limiter, ft_strlen(limiter))
             && ft_strlen(str) == ft_strlen(limiter)) || !str)
         {
