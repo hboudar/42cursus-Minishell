@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 16:01:05 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:25:01 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ t_token	*parse_token(char *line, t_env *env)
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
 	split_expand(token);
-	// expand_tokens(&token, env);
 	fix_token(&token);
 	set_size(token);
 	return (token);

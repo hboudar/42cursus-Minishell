@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 16:56:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:01:01 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	parse_prompt(t_prompt **oldprmpt, char *line, t_env *env)
 		printf("Syntax error\n");
 		prmpt->exit_state = 300;
 		*oldprmpt = prmpt;
-		free_token(token);
+		free_token(&token);
 		return ;
 	}
 	build_prompt(&prmpt, &token, env);

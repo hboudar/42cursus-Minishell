@@ -14,6 +14,23 @@
 
 int		g_caught = 0;
 
+int	prep_execution(t_prompt *prompt, t_env **env)
+{
+	// int	std_in;
+	// int	std_out;
+	int	exit_state;
+
+	// std_in = dup(0);
+	// std_out = dup(1);
+	exit_state = execution(prompt, env);
+	// exit_state = execution(prompt, env, std_in, std_out);
+	// dup2(std_in, 0);
+	// dup2(std_out, 1);
+	// close(std_in);
+	// close(std_out);
+	return (exit_state);
+}
+
 int	end_program(t_prompt *prompt)
 {
 	if (prompt && prompt->cmd)
@@ -45,9 +62,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			parse_prompt(&prompt, line, env);
-			print_prompt(prompt);
 			if (!was_syntax_error(prompt) && (prompt->type != P_CMD || prompt->cmd))
-				prompt->exit_state = execution(prompt, &env);
+				prompt->exit_state = prep_execution(prompt, &env);
 		}
 		free(line);
 	}

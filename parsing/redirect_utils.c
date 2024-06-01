@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/31 18:51:32 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:56:03 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	add_last(char ***file, char *data)
 	}
 	new[i] = ft_strdup(data);
 	new[i + 1] = NULL;
-	free_tab(*file);
+	free_tab(file);
 	*file = new;
 }
 

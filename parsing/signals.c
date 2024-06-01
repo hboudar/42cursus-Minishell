@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:50:51 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 15:51:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:24:48 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_sigint(int signum)
 {
-    extern int g_caught;
+	extern int	g_caught;
 
 	if (signum == SIGINT)
 	{
@@ -28,7 +28,7 @@ void	handle_sigint(int signum)
 
 void	init_signals(void)
 {
-    extern int g_caught;
+	extern int	g_caught;
 
 	if (g_caught == 0)
 	{
@@ -37,5 +37,5 @@ void	init_signals(void)
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else
-		g_caught = 0;	
+		g_caught = 0;
 }
