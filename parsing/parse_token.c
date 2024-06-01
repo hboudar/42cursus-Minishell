@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 18:57:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:01:05 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,6 @@ int	check_quotes(char *line)
 		i++;
 	}
 	return (0);
-}
-
-void	state_type(t_token *tmp)
-{
-	if (tmp->type == REDIR_IN)
-		tmp->next->state = INFILE;
-	else if (tmp->type == REDIR_OUT)
-		tmp->next->state = OUTFILE;
-	else if (tmp->type == ENV)
-		tmp->next->state = ENVIROMENT;
-	else if (tmp->type == SQUOTES && tmp->state == IN_SQUOTES)
-		tmp->next->state = GENERAL;
-	else if (tmp->state == IN_DQUOTES)
-		tmp->next->state = IN_DQUOTES;
-	else if (tmp->state == IN_SQUOTES)
-		tmp->next->state = IN_SQUOTES;
-	else if (tmp->type == REDIR_HERE_DOC)
-		tmp->next->state = LIMITER;
-	else
-		tmp->next->state = GENERAL;
 }
 
 void	fix_token(t_token **token)
@@ -101,9 +81,8 @@ t_token	*parse_token(char *line, t_env *env)
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
 	split_expand(token);
-	expand_tokens(&token, env);
+	// expand_tokens(&token, env);
 	fix_token(&token);
 	set_size(token);
-	set_state(token);
 	return (token);
 }

@@ -6,11 +6,29 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 15:36:38 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:57:45 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	print_expand(t_token *token)
+{
+	t_token	*tmp;
+	int		i;
+
+	tmp = token;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->expand && tmp->expand[i])
+		{
+			printf("expand[%d] = %s\n", i, tmp->expand[i]);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
 
 void	print_prompt(t_prompt *prompt)
 {
@@ -79,44 +97,31 @@ void print_tokens(t_token *token)
 			printf("|    ENVIROMENT");
 			break;
 		case 2:
-			printf("|    INFILE");
-			break;
-		case 3:
-			printf("|    OUTFILE");
-			break;
-		case 4:
 			printf("|    IN_SQUOTE");
 			break;
-		case 5:
+		case 3:
 			printf("|    IN_DQUOTE");
 			break;
-		case 6:
+		case 4:
 			printf("|    LIMITER");
 			break;
 		}
 		switch (tmp->state)
 		{
 		case 0:
-			space_left = 14 - 8;
+			printf("|    GENERAL");
 			break;
-		
 		case 1:
-			space_left = 14 - 11;
+			printf("|    ENVIROMENT");
 			break;
 		case 2:
-			space_left = 14 - 7;
+			printf("|    IN_SQUOTE");
 			break;
 		case 3:
-			space_left = 14 - 8;
+			printf("|    IN_DQUOTE");
 			break;
 		case 4:
-			space_left = 14 - 10;
-			break;
-		case 5:
-			space_left = 14 - 10;
-			break;
-		case 6:
-			space_left = 14 - 7;
+			printf("|    LIMITER");
 			break;
 		}
 		while (i < space_left)
@@ -201,7 +206,9 @@ void	print_env(t_env *env)
 
 void	print_cmd(t_cmd *cmd)
 {
-	if (!cmd || !cmd->args || !cmd->args[0])
+	t_expand	*tmp;
+
+	if (!cmd || !cmd->args)
 		printf("Empty command\n");
 	else
 	{
@@ -210,8 +217,15 @@ void	print_cmd(t_cmd *cmd)
 		i = 0;
 		while (cmd->args[i])
 		{
-			printf("%s", cmd->args[i]);
+			printf("%s ", cmd->args[i]);
 			i++;
+		}
+		printf("\n");
+		tmp = cmd->expand;
+		while (tmp)
+		{
+			printf("expand[%d] = %s quotes : %d\n", tmp->index, tmp->data, tmp->quotes);
+			tmp = tmp->next;
 		}
 	}
 }

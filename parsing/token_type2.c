@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:43:45 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 21:29:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:20:23 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,7 @@ void	tokenize_word(char **line, int *i, t_token **token)
 	int	j;
 
 	j = 0;
-	while ((*line)[j] && !ft_is_whitespace((*line)[j]) && (*line)[j] != '|'
-			&& (*line)[j] != '<' && (*line)[j] != '>'
-			&& (*line)[j] != '&' && (*line)[j] != '\''
-			&& (*line)[j] != '\"' && (*line)[j] != '('
-			&& (*line)[j] != ')')
+	while (ft_isword((*line)[j]))
 		j++;
 	(*token)->data = ft_substr(*line, 0, j);
 	(*token)->size = j;

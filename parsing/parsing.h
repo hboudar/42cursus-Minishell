@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 20:36:36 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:01:22 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ enum e_state
 {
 	GENERAL,
 	ENVIROMENT,
-	INFILE,
-	OUTFILE,
 	IN_SQUOTES,
 	IN_DQUOTES,
 	LIMITER,
@@ -101,20 +99,29 @@ typedef struct s_file
 	struct s_file	*next;
 }	t_file;
 
+typedef struct s_expand
+{
+	char			*data;
+	int				index;
+	int				quotes;
+	struct s_expand	*next;
+}	t_expand;
+
 typedef struct s_cmd
 {
-	char			**args;
 	int				size;
-	t_file			*file;
+	char			**args;
 	char			**limiter;
+	t_file			*file;
+	t_expand		*expand;
 	enum e_cmd_type	type;
 }		t_cmd;
 
 typedef struct s_prompt
 {
-	t_cmd				*cmd;
 	int					subshell;
 	int					exit_state;
+	t_cmd				*cmd;
 	t_file				*file;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
@@ -144,6 +151,8 @@ int			check_env(char **envp);
 int			is_empty(char **expand, int size);
 int			was_syntax_error(t_prompt *prompt);
 char		*ft_remove_quotes(char *str);
+void		init_signals(void);
+void		handle_sigint(int signum);
 void		set_size(t_token *token);
 void		split_expand(t_token *token);
 void		get_expand(char **line, t_token *token);
@@ -159,6 +168,7 @@ void		tokenize_append(char **line, int *i, t_token **token);
 void		free_cmd(t_cmd **cmd);
 void		free_token(t_token *token);
 void		print_cmd(t_cmd *cmd);
+void		print_expand(t_token *token);
 void		add_token(t_token *new_token);
 void		expand_tokens(t_token **token, t_env *env);
 void		fill_redirections(t_cmd *cmd, t_token *token);
@@ -185,8 +195,6 @@ void		remove_redirections(t_token **token);
 void		print_env(t_env *env);
 void		print_cmd(t_cmd *cmd);
 void		ft_shell_lvl(t_env *env);
-void		set_state(t_token *token);
-void		state_type(t_token *tmp);
 void		ft_shell_lvl(t_env *env);
 void		print_files(t_file *file);
 void		expand_data(t_token *to_expand, int size, int j, int k);

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/29 15:11:37 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:02:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
 	if (!check_pipe(*token))
 	{
 		set_size(*token);
-		set_state(*token);
 		(*prmpt)->left = NULL;
 		(*prmpt)->right = NULL;
 		(*prmpt)->type = P_CMD;

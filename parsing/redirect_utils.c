@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/27 19:26:20 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:51:32 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	add_last(char ***file, char *data)
 	if (!*file)
 	{
 		new = (char **)malloc(sizeof(char *) * 2);
-		new[0] = data;
+		new[0] = ft_strdup(data);
 		new[1] = NULL;
 		*file = new;
 		return ;
@@ -34,7 +34,7 @@ void	add_last(char ***file, char *data)
 		new[i] = ft_strdup((*file)[i]);
 		i++;
 	}
-	new[i] = data;
+	new[i] = ft_strdup(data);
 	new[i + 1] = NULL;
 	free_tab(*file);
 	*file = new;
