@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/30 20:12:18 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/02 11:40:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 //execution main :
 
-int execution(t_prompt *prompt, t_env **env);
+int	execution(t_prompt *prompt, t_env **env, int std_out, int std_in);
 int	ft_cmd(t_prompt *prompt, t_env **env);
 int ft_pipe(t_prompt *prompt, t_env **env);
 int	ft_or(t_prompt *prompt, t_env **env);
