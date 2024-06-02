@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/30 20:34:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/01 00:08:26 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,18 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
 	return (execute_nonebuiltin(prompt, *env));
 }
 
-
-
-int	execution(t_prompt *prompt, t_env **env)
+int	execution(t_prompt *prompt, t_env **env, int std_out, int std_in)
 {
 	if (prompt->type == P_CMD)
-		return (ft_cmd(prompt, env));
+		prompt->exit_state = ft_cmd(prompt, env);
 	else if (prompt->type == P_PIPE)
-		return (ft_pipe(prompt, env));
+		prompt->exit_state = ft_pipe(prompt, env);
 	else if (prompt->type == P_OR)
-		return (ft_or(prompt, env));
+		prompt->exit_state = ft_or(prompt, env);
 	else if (prompt->type == P_AND)
-		return (ft_and(prompt, env));
-	return (0);
+		prompt->exit_state = ft_and(prompt, env);
+	return (prompt->exit_state);
 }
+
+//in execution include expanding
+//in here_doc include expanding
