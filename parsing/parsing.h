@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 21:20:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:25:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ typedef struct s_env
 
 typedef struct s_file
 {
-	char			*data;
 	int				type;
+	char			*data;
 	struct s_file	*next;
 }	t_file;
 
@@ -109,7 +109,6 @@ typedef struct s_expand
 
 typedef struct s_cmd
 {
-	int				size;
 	char			**args;
 	char			**limiter;
 	t_file			*file;
@@ -121,6 +120,7 @@ typedef struct s_prompt
 {
 	int					subshell;
 	int					exit_state;
+	char				**limiter;
 	t_cmd				*cmd;
 	t_file				*file;
 	enum e_prmpt_type	type;
@@ -130,10 +130,9 @@ typedef struct s_prompt
 
 typedef struct s_token
 {
+	int				size;
 	char			*data;
 	char			**expand;
-	int				size;
-	int				expanded;
 	enum e_type		type;
 	enum e_state	state;
 	struct s_token	*next;
@@ -152,6 +151,7 @@ int			was_syntax_error(t_prompt *prompt);
 char		*ft_remove_quotes(char *str);
 char		*get_expanded_value(char **data, t_env *env);
 void		init_signals(void);
+void		free_token_limit(t_token **token, t_token *limit);
 void		expand_cmd(t_cmd *cmd, t_env *env);
 void		handle_sigint(int signum);
 void		set_size(t_token *token);
@@ -168,7 +168,6 @@ void		free_tab(char ***args);
 void		tokenize_append(char **line, int *i, t_token **token);
 void		free_cmd(t_cmd **cmd);
 void		print_cmd(t_cmd *cmd);
-void		print_expand(t_token *token);
 void		add_token(t_token *new_token);
 void		fill_redirections(t_cmd *cmd, t_token *token);
 void		tokenize_redir_out(char **line, int *i, t_token **token);
@@ -196,17 +195,17 @@ void		print_cmd(t_cmd *cmd);
 void		ft_shell_lvl(t_env *env);
 void		ft_shell_lvl(t_env *env);
 void		print_files(t_file *file);
-void		build_prompt(t_prompt **prmpt, t_token **token, t_env *env);
-void		parse_pipes(t_prompt **prmpt, t_token **token, t_env *env);
-void		parse_prompt(t_prompt **oldprmpt, char *line, t_env *env);
+void		build_prompt(t_prompt **prmpt, t_token **token);
+void		parse_pipes(t_prompt **prmpt, t_token **token);
+void		parse_prompt(t_prompt **oldprmpt, char *line);
 void		split_token(t_token *token, t_token *split, t_token **res);
 void		end_token(t_token **token);
 t_env		*ft_tabdup(char **args);
-t_cmd		*parse_cmd(t_token	*token, t_env *env);
+t_cmd		*parse_cmd(t_token	*token);
 size_t		ft_tablen(char **args);
 t_file		*ft_newfile(char *data, int type);
 t_token		*get_closepar(t_token *token);
-t_token		*parse_token(char *line, t_env *env);
+t_token		*parse_token(char *line);
 t_token		*pipeless_token(t_token *token);
 t_token		*get_and_or(t_token *token);
 

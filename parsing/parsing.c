@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 21:38:35 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:15:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,12 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 		args[j] = NULL;
 	(*cmd)->type = HERE_DOC * ((*cmd)->limiter != NULL);
 	(*cmd)->args = args;
-	(*cmd)->size = j;
 }
 
-t_cmd	*parse_cmd(t_token *token, t_env *env)
+t_cmd	*parse_cmd(t_token *token)
 {
 	t_cmd	*cmd;
 
-	(void)env;
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	ft_bzero(cmd, sizeof(t_cmd));
 	fill_redirections(cmd, token);

@@ -22,6 +22,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 
 	// std_in = dup(0);
 	// std_out = dup(1);
+	// expand_cmd(prompt->cmd, *env); call this function to expand
 	exit_state = execution(prompt, env);
 	// exit_state = execution(prompt, env, std_in, std_out);
 	// dup2(std_in, 0);
@@ -61,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			parse_prompt(&prompt, line, env);
+			parse_prompt(&prompt, line);
 			if (!was_syntax_error(prompt) && (prompt->type != P_CMD || prompt->cmd))
 				prompt->exit_state = prep_execution(prompt, &env);
 		}

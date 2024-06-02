@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:20:59 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 21:20:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:22:24 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	get_expand(char **line, t_token *token)
 	tmp = ft_substr(*line, 0, i);
 	*line = *line + i;
 	add_last(&token->expand, tmp);
+	free(tmp);
 }
 
 void	split_expand(t_token *token)

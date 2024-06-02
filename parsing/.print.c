@@ -6,29 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 15:57:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:24:22 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-void	print_expand(t_token *token)
-{
-	t_token	*tmp;
-	int		i;
-
-	tmp = token;
-	while (tmp)
-	{
-		i = 0;
-		while (tmp->expand && tmp->expand[i])
-		{
-			printf("expand[%d] = %s\n", i, tmp->expand[i]);
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
 
 void	print_prompt(t_prompt *prompt)
 {

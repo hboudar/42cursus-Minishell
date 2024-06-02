@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 20:25:01 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:01:44 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	check_quotes(char *line)
 
 void	fix_token(t_token **token)
 {
+	char	*data;
 	t_token	*tmp;
 	t_token	*tmp2;
 
@@ -54,7 +55,9 @@ void	fix_token(t_token **token)
 			remove_token(token, tmp);
 		else if (tmp->type == WORD && tmp->next && tmp->next->type == WORD)
 		{
-			tmp->data = ft_strjoin(tmp->data, tmp->next->data);
+			data = tmp->data;
+			tmp->data = ft_strjoin(data, tmp->next->data);
+			free(data);
 			remove_token(token, tmp->next);
 			tmp2 = tmp;
 		}
@@ -62,13 +65,12 @@ void	fix_token(t_token **token)
 	}
 }
 
-t_token	*parse_token(char *line, t_env *env)
+t_token	*parse_token(char *line)
 {
 	int		i;
 	t_token	*tmp;
 	t_token	*token;
 
-	(void)env;
 	i = 0;
 	if (has_semicolon(line) || check_quotes(line))
 	{
