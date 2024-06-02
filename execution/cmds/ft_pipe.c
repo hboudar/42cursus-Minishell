@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/02 15:44:11 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/02 15:47:05 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	do_cmd(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
 	return (0);
 }
 
-int	do_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
-{
+// int	do_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
+// {
 	
-}
+// }
 
 int ft_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
 {
