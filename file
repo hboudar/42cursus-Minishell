@@ -1,0 +1,14 @@
+total 224
+drwxr-xr-x  13 hboudar  candidate    442 Jun  2 11:55 .
+drwxr-xr-x   8 hboudar  candidate    272 Jun  2 11:32 ..
+drwxr-xr-x  15 hboudar  candidate    510 Jun  2 11:43 .git
+-rw-r--r--   1 hboudar  candidate   1548 Jun  2 11:38 Makefile
+drwxr-xr-x   8 hboudar  candidate    272 Jun  2 11:54 execution
+-rw-r--r--   1 hboudar  candidate      0 Jun  2 11:56 file
+-rwxr-xr-x   1 hboudar  candidate  90936 Jun  2 11:54 minishell
+-rw-r--r--   1 hboudar  candidate   2018 Jun  2 11:42 minishell.c
+-rw-r--r--   1 hboudar  candidate   1004 May 30 19:01 minishell.h
+-rw-r--r--   1 hboudar  candidate   2140 Jun  2 11:54 minishell.o
+drwxr-xr-x  41 hboudar  candidate   1394 Jun  2 11:54 parsing
+-rw-r--r--   1 hboudar  candidate     89 Jun  2 11:38 to_do_last.txt
+drwxr-xr-x  77 hboudar  candidate   2618 Jun  2 11:54 utils
