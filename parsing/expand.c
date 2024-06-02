@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:20:59 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 14:25:24 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:37:11 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	remplace_args(t_cmd *cmd, t_expand *expand, char **tmp, int i)
 	new_data = malloc(sizeof(char *) * (len + ft_tablen(tmp)));
 	j = -1;
 	while (++j < i)
-		new_data[j] = cmd->args[j];
+		new_data[j] = ft_strdup(cmd->args[j]);
 	j = -1;
 	while (tmp[++j])
 		new_data[i + j] = ft_strdup(tmp[j]);
-	while (cmd->args[i])
+	while (cmd->args[i + 1])
 	{
-		new_data[i + j] = cmd->args[i];
+		new_data[i + j] = ft_strdup(cmd->args[i + 1]);
 		i++;
 	}
 	new_data[i + j] = NULL;
@@ -60,13 +60,18 @@ void	add_and_split(t_cmd *cmd, t_expand *expand, t_env *env)
 {
 	int		i;
 	int		len;
-	char	**tmp;
 	char	*value;
+	char	**tmp;
 
 	i = expand->index;
 	value = get_expanded_value(&expand->data, env);
 	tmp = ft_split_expand(value);
 	len = ft_tablen(tmp);
+	if (!value || len == 1)
+	{
+		remove_arg(cmd, expand->index, value);
+		return ;
+	}
 	if (len > 1)
 		remplace_args(cmd, expand, tmp, i);
 	free_tab(&tmp);

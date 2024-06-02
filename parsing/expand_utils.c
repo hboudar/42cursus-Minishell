@@ -6,11 +6,36 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:21:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 14:20:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:32:48 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	remove_arg(t_cmd *cmd, int i, char *to_add)
+{
+	int		j;
+	int		len;
+	char	**new_data;
+
+	j = -1;
+	len = (to_add != NULL);
+	new_data = malloc(sizeof(char *) * (ft_tablen(cmd->args) + len));
+	ft_bzero(new_data, sizeof(char *) * (ft_tablen(cmd->args) + len));
+	while (++j < i)
+		new_data[j] = ft_strdup(cmd->args[j]);
+	if (len)
+		new_data[j] = ft_strdup(to_add);
+	j++;
+	while (cmd->args[j])
+	{
+		new_data[j - (len == 0)] = ft_strdup(cmd->args[j]);
+		j++;
+	}
+	new_data[j - (len == 0)] = NULL;
+	free_tab(&cmd->args);
+	cmd->args = new_data;
+}
 
 int	ft_count_expand(char *str)
 {
