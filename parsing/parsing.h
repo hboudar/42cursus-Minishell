@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 15:22:07 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:45:05 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void		init_signals(void);
 void		remove_arg(t_cmd *cmd, int i, char *to_add);
 void		add_and_split(t_cmd *cmd, t_expand *expand, t_env *env);
 void		free_token_limit(t_token **token, t_token *limit);
-void		expand_cmd(t_cmd *cmd, t_env *env);
+void		expand_cmd(t_prompt *prmpt, t_env *env);
 void		handle_sigint(int signum);
 void		set_size(t_token *token);
 void		split_expand(t_token *token);

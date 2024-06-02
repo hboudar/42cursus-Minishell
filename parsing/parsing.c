@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 14:52:26 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:44:31 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,27 @@ char	*get_new_data(char *args, t_expand *expand, int index, t_env *env, int len)
 	return (new_data);
 }
 
-void	expand_cmd(t_cmd *cmd, t_env *env)
+void	expand_cmd(t_prompt *prmpt, t_env *env)
 {
 	int			i;
 	char		*tmp;
+	t_cmd		*cmd;
 	t_expand	*expand;
 
+	cmd = prmpt->cmd;
 	if (!cmd->expand)
 		return ;
 	expand = cmd->expand;
 	while (expand)
 	{
 		i = cmd->expand->index;
-		if (expand->quotes)
+		if (!ft_strncmp(expand->data, "?", 2))
+		{
+			tmp = ft_itoa(prmpt->exit_state);
+			remove_arg(cmd, i, tmp);
+			free(tmp);
+		}
+		else if (expand->quotes)
 		{
 			tmp = get_new_data(cmd->args[i], expand, i, env, 0);
 			free(cmd->args[i]);
