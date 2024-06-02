@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/02 13:26:13 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/02 14:48:16 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ int	do_cmd(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
 		dup2(fd[0], *fd_in);
 		close(fd[0]);
 	}
+	return (0);
 }
 
-int	do_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
-{
+// int	do_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
+// {
 	
-}
+// }
 
 int ft_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
 {
