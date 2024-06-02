@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 11:15:36 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:25:33 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	expand_cmd(t_cmd *cmd, t_env *env)
 			free(cmd->args[i]);
 			cmd->args[i] = tmp;
 		}
-		// else
-		// 	add_and_split(cmd, expand, env);
+		else
+			add_and_split(cmd, expand, env);
 		expand = expand->next;
 	}
 }

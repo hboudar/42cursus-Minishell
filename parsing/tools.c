@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 16:42:43 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 12:29:33 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_tablen(char **args)
 {
 	int	i;
 
+	if (!args)
+		return (0);
 	i = 0;
 	while (args[i])
 		i++;

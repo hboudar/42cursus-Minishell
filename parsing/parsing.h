@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 11:25:36 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:25:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,9 @@ int			check_env(char **envp);
 int			was_syntax_error(t_prompt *prompt);
 char		*ft_remove_quotes(char *str);
 char		*get_expanded_value(char **data, t_env *env);
+char		**ft_split_expand(char *str);
 void		init_signals(void);
+void		add_and_split(t_cmd *cmd, t_expand *expand, t_env *env);
 void		free_token_limit(t_token **token, t_token *limit);
 void		expand_cmd(t_cmd *cmd, t_env *env);
 void		handle_sigint(int signum);
