@@ -16,19 +16,18 @@ int		g_caught = 0;
 
 int	prep_execution(t_prompt *prompt, t_env **env)
 {
-	// int	std_in;
-	// int	std_out;
+	int	std_in;
+	int	std_out;
 	int	exit_state;
 
-	// std_in = dup(0);
-	// std_out = dup(1);
+	std_in = dup(0);
+	std_out = dup(1);
 	// expand_cmd(prompt->cmd, *env); call this function to expand
-	exit_state = execution(prompt, env);
-	// exit_state = execution(prompt, env, std_in, std_out);
-	// dup2(std_in, 0);
-	// dup2(std_out, 1);
-	// close(std_in);
-	// close(std_out);
+	exit_state = execution(prompt, env, std_in, std_out);
+	dup2(std_in, 0);
+	dup2(std_out, 1);
+	close(std_in);
+	close(std_out);
 	return (exit_state);
 }
 
