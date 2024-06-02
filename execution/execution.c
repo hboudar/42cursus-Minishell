@@ -6,26 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/02 13:18:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/02 15:42:26 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-
-int	ft_cmd(t_prompt *prompt, t_env **env)
-{
-	expand_cmd(prompt->cmd, *env);
-	if (!prompt->cmd)
-	{
-		perror("malloc");
-		return (1);
-	}
-    if (!prompt->cmd->args)
-		return (no_cmd(prompt, env));
-	else if (is_builtin(prompt))
-		return (execute_builtin(prompt, env));
-	return (execute_nonebuiltin(prompt, *env));
-}
 
 int	execution(t_prompt *prompt, t_env **env, int std_out, int std_in)
 {
