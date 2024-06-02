@@ -6,11 +6,27 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:31:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/29 12:48:08 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 10:39:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	free_token_limit(t_token **token, t_token *limit)
+{
+	t_token	*tmp;
+	t_token	*tmp2;
+
+	tmp = *token;
+	while (tmp && tmp != limit)
+	{
+		tmp2 = tmp->next;
+		free(tmp->data);
+		free(tmp);
+		tmp = tmp2;
+	}
+	*token = limit;
+}
 
 void	remove_token(t_token **token, t_token *node)
 {
@@ -81,20 +97,6 @@ t_token	*pipeless_token(t_token *token)
 	}
 	new_token->size = i;
 	return (new_token);
-}
-
-void	set_state(t_token	*token)
-{
-	t_token	*tmp;
-
-	tmp = token;
-	if (!tmp)
-		return ;
-	while (tmp->next)
-	{
-		state_type(tmp);
-		tmp = tmp->next;
-	}
 }
 
 void	set_size(t_token *token)

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/29 15:11:37 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:00:20 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_token	*get_pipe(t_token **token)
 	return (NULL);
 }
 
-void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
+void	parse_pipes(t_prompt **prmpt, t_token **token)
 {
 	t_token	*tmp;
 	t_token	*pipeless;
@@ -69,11 +69,10 @@ void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
 	if (!check_pipe(*token))
 	{
 		set_size(*token);
-		set_state(*token);
 		(*prmpt)->left = NULL;
 		(*prmpt)->right = NULL;
 		(*prmpt)->type = P_CMD;
-		(*prmpt)->cmd = parse_cmd(*token, env);
+		(*prmpt)->cmd = parse_cmd(*token);
 		return ;
 	}
 	tmp = get_pipe(token);
@@ -82,7 +81,8 @@ void	parse_pipes(t_prompt **prmpt, t_token **token, t_env *env)
 	ft_bzero((*prmpt)->left, sizeof(t_prompt));
 	(*prmpt)->right = malloc(sizeof(t_prompt));
 	ft_bzero((*prmpt)->right, sizeof(t_prompt));
-	parse_pipes(&(*prmpt)->left, &pipeless, env);
-	parse_pipes(&(*prmpt)->right, &tmp, env);
+	parse_pipes(&(*prmpt)->left, &pipeless);
+	parse_pipes(&(*prmpt)->right, &tmp);
+	free_token_limit(token, tmp);
 	(*prmpt)->type = P_PIPE;
 }

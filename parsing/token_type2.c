@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:43:45 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 21:29:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 10:58:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	tokenize_redir_in(char **line, int *i, t_token **token)
 {
 	(*token)->data = ft_strdup("<");
-	(*token)->size = 1;
 	(*token)->type = REDIR_IN;
 	(*token)->state = GENERAL;
 	*line = *line + 1;
@@ -28,7 +27,6 @@ void	tokenize_redir_in(char **line, int *i, t_token **token)
 void	tokenize_redir_out(char **line, int *i, t_token **token)
 {
 	(*token)->data = ft_strdup(">");
-	(*token)->size = 1;
 	(*token)->type = REDIR_OUT;
 	(*token)->state = GENERAL;
 	*line = *line + 1;
@@ -41,7 +39,6 @@ void	tokenize_redir_out(char **line, int *i, t_token **token)
 void	tokenize_here_doc(char **line, int *i, t_token **token)
 {
 	(*token)->data = ft_strdup("<<");
-	(*token)->size = 2;
 	(*token)->type = REDIR_HERE_DOC;
 	(*token)->state = GENERAL;
 	*line = *line + 2;
@@ -54,7 +51,6 @@ void	tokenize_here_doc(char **line, int *i, t_token **token)
 
 void	tokenize_env(char **line, int *i, t_token **token)
 {
-	(*token)->size = 1;
 	(*token)->type = ENV;
 	if ((*token)->state != LIMITER)
 		(*token)->state = GENERAL;
@@ -72,16 +68,10 @@ void	tokenize_word(char **line, int *i, t_token **token)
 	int	j;
 
 	j = 0;
-	while ((*line)[j] && !ft_is_whitespace((*line)[j]) && (*line)[j] != '|'
-			&& (*line)[j] != '<' && (*line)[j] != '>'
-			&& (*line)[j] != '&' && (*line)[j] != '\''
-			&& (*line)[j] != '\"' && (*line)[j] != '('
-			&& (*line)[j] != ')')
+	while (ft_isword((*line)[j]))
 		j++;
 	(*token)->data = ft_substr(*line, 0, j);
-	(*token)->size = j;
-	get_token_type(*token);
-	(*token)->state = GENERAL;
+	(*token)->type = WORD;
 	*line = *line + j;
 	*i = 0;
 	(*token)->next = (t_token *)malloc(sizeof(t_token));

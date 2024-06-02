@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:25:47 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 18:52:16 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:59:37 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,17 @@ void	get_token_state(t_token *token)
 		token->state = GENERAL;
 }
 
-void	free_token(t_token *token)
+void	free_token(t_token **token)
 {
 	t_token	*tmp;
 
-	while (token)
+	while (*token)
 	{
-		tmp = token;
-		token = token->next;
-		if (tmp->data)
-		{
-			free(tmp->data);
-			tmp->data = NULL;
-		}
-		free_tab(tmp->expand);
+		tmp = *token;
+		*token = (*token)->next;
+		free(tmp->data);
+		free_tab(&tmp->expand);
 		free(tmp);
 	}
+	*token = NULL;
 }

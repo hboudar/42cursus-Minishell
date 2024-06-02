@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 12:16:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:42:43 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ size_t	ft_tablen(char **args)
 	return (i);
 }
 
-void	free_tab(char **args)
+void	free_tab(char ***args)
 {
 	int	i;
 
 	i = 0;
-	if (!args)
+	if (!*args)
 		return ;
-	while (args[i])
+	while ((*args)[i])
 	{
-		free(args[i]);
+		free((*args)[i]);
 		i++;
 	}
-	free(args);
-	args = NULL;
+	free(*args);
+	*args = NULL;
 }
 
 void	set_type_env(t_env *env)

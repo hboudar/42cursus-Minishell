@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 16:56:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:01:37 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*get_closepar(t_token *token)
 	return (NULL);
 }
 
-void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
+void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 {
 	t_token	*tmp2;
 
@@ -59,7 +59,7 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
 	tmp = *token;
 	if (!check_and_or(tmp))
 	{
-		build_prompt(prmpt, token, env);
+		build_prompt(prmpt, token);
 		return ;
 	}
 	else
@@ -72,19 +72,19 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_env *env)
 		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
 		ft_bzero((*prmpt)->right, sizeof(t_prompt));
 		split_token(*token, tmp2, &tmp);
-		build_prompt(&(*prmpt)->left, &tmp, env);
-		build_prompt(&(*prmpt)->right, &tmp2->next, env);
+		build_prompt(&(*prmpt)->left, &tmp);
+		build_prompt(&(*prmpt)->right, &tmp2->next);
 	}
 }
 
-void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
+void	build_prompt(t_prompt **prmpt, t_token **token)
 {
 	t_token	*tmp;
 	t_token	*res;
 
 	tmp = *token;
 	if (tmp && tmp->type == OPENPAR)
-		handle_par(prmpt, token, tmp, env);
+		handle_par(prmpt, token, tmp);
 	else if (check_and_or(*token))
 	{
 		tmp = *token;
@@ -96,21 +96,21 @@ void	build_prompt(t_prompt **prmpt, t_token **token, t_env *env)
 		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
 		ft_bzero((*prmpt)->right, sizeof(t_prompt));
 		split_token(*token, tmp, &res);
-		build_prompt(&(*prmpt)->left, &res, env);
-		build_prompt(&(*prmpt)->right, &tmp->next, env);
+		build_prompt(&(*prmpt)->left, &res);
+		build_prompt(&(*prmpt)->right, &tmp->next);
 	}
 	else
-		parse_pipes(prmpt, token, env);
+		parse_pipes(prmpt, token);
 }
 
-void	parse_prompt(t_prompt **oldprmpt, char *line, t_env *env)
+void	parse_prompt(t_prompt **oldprmpt, char *line)
 {
 	t_prompt	*prmpt;
 	t_token		*token;
 
 	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
 	ft_bzero(prmpt, sizeof(t_prompt));
-	token = parse_token(line, env);
+	token = parse_token(line);
 	if (!token && set_exit_state(oldprmpt, prmpt))
 		return ;
 	if (*oldprmpt)
@@ -124,9 +124,9 @@ void	parse_prompt(t_prompt **oldprmpt, char *line, t_env *env)
 		printf("Syntax error\n");
 		prmpt->exit_state = 300;
 		*oldprmpt = prmpt;
-		free_token(token);
+		free_token(&token);
 		return ;
 	}
-	build_prompt(&prmpt, &token, env);
+	build_prompt(&prmpt, &token);
 	*oldprmpt = prmpt;
 }

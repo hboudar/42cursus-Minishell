@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 18:57:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:01:44 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,9 @@ int	check_quotes(char *line)
 	return (0);
 }
 
-void	state_type(t_token *tmp)
-{
-	if (tmp->type == REDIR_IN)
-		tmp->next->state = INFILE;
-	else if (tmp->type == REDIR_OUT)
-		tmp->next->state = OUTFILE;
-	else if (tmp->type == ENV)
-		tmp->next->state = ENVIROMENT;
-	else if (tmp->type == SQUOTES && tmp->state == IN_SQUOTES)
-		tmp->next->state = GENERAL;
-	else if (tmp->state == IN_DQUOTES)
-		tmp->next->state = IN_DQUOTES;
-	else if (tmp->state == IN_SQUOTES)
-		tmp->next->state = IN_SQUOTES;
-	else if (tmp->type == REDIR_HERE_DOC)
-		tmp->next->state = LIMITER;
-	else
-		tmp->next->state = GENERAL;
-}
-
 void	fix_token(t_token **token)
 {
+	char	*data;
 	t_token	*tmp;
 	t_token	*tmp2;
 
@@ -74,7 +55,9 @@ void	fix_token(t_token **token)
 			remove_token(token, tmp);
 		else if (tmp->type == WORD && tmp->next && tmp->next->type == WORD)
 		{
-			tmp->data = ft_strjoin(tmp->data, tmp->next->data);
+			data = tmp->data;
+			tmp->data = ft_strjoin(data, tmp->next->data);
+			free(data);
 			remove_token(token, tmp->next);
 			tmp2 = tmp;
 		}
@@ -82,13 +65,12 @@ void	fix_token(t_token **token)
 	}
 }
 
-t_token	*parse_token(char *line, t_env *env)
+t_token	*parse_token(char *line)
 {
 	int		i;
 	t_token	*tmp;
 	t_token	*token;
 
-	(void)env;
 	i = 0;
 	if (has_semicolon(line) || check_quotes(line))
 	{
@@ -101,9 +83,7 @@ t_token	*parse_token(char *line, t_env *env)
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
 	split_expand(token);
-	expand_tokens(&token, env);
 	fix_token(&token);
 	set_size(token);
-	set_state(token);
 	return (token);
 }

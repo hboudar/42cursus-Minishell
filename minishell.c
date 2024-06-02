@@ -14,29 +14,22 @@
 
 int		g_caught = 0;
 
-void	handle_sigint(int signum)
+int	prep_execution(t_prompt *prompt, t_env **env)
 {
-	if (signum == SIGINT)
-	{
-		g_caught = 1;
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
+	// int	std_in;
+	// int	std_out;
+	int	exit_state;
 
-void	init_signals(void)
-{
-	if (g_caught == 0)
-	{
-		rl_catch_signals = 0;
-		signal(SIGINT, &handle_sigint);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else
-		g_caught = 0;
-		
+	// std_in = dup(0);
+	// std_out = dup(1);
+	// expand_cmd(prompt->cmd, *env); call this function to expand
+	exit_state = execution(prompt, env);
+	// exit_state = execution(prompt, env, std_in, std_out);
+	// dup2(std_in, 0);
+	// dup2(std_out, 1);
+	// close(std_in);
+	// close(std_out);
+	return (exit_state);
 }
 
 int	end_program(t_prompt *prompt)
@@ -69,9 +62,9 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			parse_prompt(&prompt, line, env);
+			parse_prompt(&prompt, line);
 			if (!was_syntax_error(prompt) && (prompt->type != P_CMD || prompt->cmd))
-				prompt->exit_state = execution(prompt, &env);
+				prompt->exit_state = prep_execution(prompt, &env);
 		}
 		free(line);
 	}

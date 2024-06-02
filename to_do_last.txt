@@ -1,4 +1,3 @@
 subshells
 infiles and outfiles and heredoc in prompts
-expand on export
-leaks
+expand on execution without quotes
