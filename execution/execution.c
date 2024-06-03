@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/02 15:42:26 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/03 13:21:34 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,3 @@ int	execution(t_prompt *prompt, t_env **env, int std_out, int std_in)
 		prompt->exit_state = ft_and(prompt, env, &std_out, &std_in);
 	return (prompt->exit_state);
 }
-
-//in execution include expanding
-//in here_doc include expanding
