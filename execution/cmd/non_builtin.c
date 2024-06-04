@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/04 16:46:26 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 21:21:03 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
     pid_t	    pid;
     int         i;
 
+    printf("EXECUTE NONEBUILTIN\n");
     (1) && (i = -1, g_caught = 0, fd[0] = 0, fd[1] = 1);
     while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
         here_doc(prompt, i, fd);
