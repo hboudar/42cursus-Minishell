@@ -6,11 +6,38 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 11:24:22 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:24:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	print_expand(t_expand *expand)
+{
+	while (expand)
+	{
+		printf("expand[%d] = %s quotes : %d\n", expand->index, expand->data, expand->quotes);
+		expand = expand->next;
+	}
+}
+
+void	print_expand_token(t_token *token)
+{
+	int	i;
+	char	**expand;
+
+	while (token)
+	{
+		i = 0;
+		expand = token->expand;
+		while (expand && expand[i])
+		{
+			printf("%s\n", expand[i]);
+			i++;
+		}
+		token = token->next;
+	}
+}
 
 void	print_prompt(t_prompt *prompt)
 {
@@ -70,24 +97,6 @@ void print_tokens(t_token *token)
 			i++;
 		}
 		i = 0;
-		switch (tmp->state)
-		{
-		case 0:
-			printf("|    GENERAL");
-			break;
-		case 1:
-			printf("|    ENVIROMENT");
-			break;
-		case 2:
-			printf("|    IN_SQUOTE");
-			break;
-		case 3:
-			printf("|    IN_DQUOTE");
-			break;
-		case 4:
-			printf("|    LIMITER");
-			break;
-		}
 		switch (tmp->state)
 		{
 		case 0:

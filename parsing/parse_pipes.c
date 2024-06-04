@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 11:00:20 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:45:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	parse_pipes(t_prompt **prmpt, t_token **token)
 	(*prmpt)->right = malloc(sizeof(t_prompt));
 	ft_bzero((*prmpt)->right, sizeof(t_prompt));
 	parse_pipes(&(*prmpt)->left, &pipeless);
-	parse_pipes(&(*prmpt)->right, &tmp);
 	free_token_limit(token, tmp);
+	parse_pipes(&(*prmpt)->right, &tmp);
 	(*prmpt)->type = P_PIPE;
 }

@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:20:59 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 15:37:11 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:29:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	remplace_args(t_cmd *cmd, t_expand *expand, char **tmp, int i)
+void	replace_args(t_cmd *cmd, t_expand *expand, char **tmp, int i)
 {
 	int			j;
 	int			len;
@@ -70,10 +70,15 @@ void	add_and_split(t_cmd *cmd, t_expand *expand, t_env *env)
 	if (!value || len == 1)
 	{
 		remove_arg(cmd, expand->index, value);
+		while (expand->next)
+		{
+			expand->index -= (len == 0);
+			expand = expand->next;
+		}
 		return ;
 	}
 	if (len > 1)
-		remplace_args(cmd, expand, tmp, i);
+		replace_args(cmd, expand, tmp, i);
 	free_tab(&tmp);
 }
 

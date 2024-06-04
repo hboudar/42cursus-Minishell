@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 15:45:05 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:23:54 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,8 @@ void		parse_pipes(t_prompt **prmpt, t_token **token);
 void		parse_prompt(t_prompt **oldprmpt, char *line);
 void		split_token(t_token *token, t_token *split, t_token **res);
 void		end_token(t_token **token);
+void		print_expand(t_expand *expand);
+void		print_expand_token(t_token *token);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token);
 size_t		ft_tablen(char **args);

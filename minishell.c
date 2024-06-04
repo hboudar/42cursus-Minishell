@@ -22,7 +22,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 
 	std_in = dup(0);
 	std_out = dup(1);
-	exit_state = execution(prompt, env, std_out, std_in);
+	exit_state = execution(prompt, env, 1, 0);
 	dup2(std_in, 0);
 	dup2(std_out, 1);
 	close(std_in);
