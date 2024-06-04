@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/04 21:42:47 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 22:11:51 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	execution(t_prompt *prompt, t_env **env, int std_in)
 		prompt->exit_state = ft_cmd(prompt, env);
 	else if (prompt->type == P_PIPE)
 	{
-		printf("FT_PIPE\n");
 		prompt->exit_state = ft_pipe(prompt, env, std_in);
 	}
 	else if (prompt->type == P_OR)

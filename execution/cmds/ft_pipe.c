@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/04 21:48:43 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 23:41:42 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	do_left(t_prompt *prompt, t_env **env)
 	}
 }
 
-void	do_right(t_prompt *prompt, t_env **env)
+int	do_right(t_prompt *prompt, t_env **env)
 {
 	pid_t	pid;
 
@@ -67,24 +67,21 @@ void	do_right(t_prompt *prompt, t_env **env)
 		waitpid(pid, &prompt->exit_state, 0);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
 	}
+	return (prompt->exit_state);
 }
 
 int	ft_pipe(t_prompt *prompt, t_env **env, int std_in)
 {
 	if (prompt->left->type == P_CMD)
-	{
-		printf("FT_PIPE LEFT\n");
 		do_left(prompt->left, env);
-	}
 	else if (prompt->left->type == P_PIPE)
 		ft_pipe(prompt->left, env, std_in);
 	if (prompt->right->type == P_CMD)
 	{
-		printf("FT_PIPE RIGHT\n");
-		do_right(prompt->right, env);
+		prompt->exit_state = do_right(prompt->right, env);
 		dup2(std_in, 0);
 	}
 	else if (prompt->right->type == P_PIPE)
 		ft_pipe(prompt->right, env, std_in);
-	return (0);
+	return (prompt->exit_state);
 }
