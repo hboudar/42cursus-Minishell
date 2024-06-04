@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:26:19 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/02 15:43:09 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:33:32 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	execute_builtin(t_prompt *prompt, t_env **env)
     extern int g_caught;
     int	fd[2];
     int i;
-    
+
 	(1) && (i = -1, fd[0] = 0, fd[1] = 1, g_caught = 0);
     while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
         here_doc(prompt, i, fd);

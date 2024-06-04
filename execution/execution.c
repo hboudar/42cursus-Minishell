@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/03 13:21:34 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:41:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,24 @@
 int	execution(t_prompt *prompt, t_env **env, int std_out, int std_in)
 {
 	if (prompt->type == P_CMD)
+	{
+		printf("P_CMD\n");
 		prompt->exit_state = ft_cmd(prompt, env);
+	}
 	else if (prompt->type == P_PIPE)
-		prompt->exit_state = ft_pipe(prompt, env, &std_out, &std_in);
+	{
+		// printf("P_PIPE\n");	
+		prompt->exit_state = ft_pipe(prompt, env, std_out, std_in);
+	}
 	else if (prompt->type == P_OR)
-		prompt->exit_state = ft_or(prompt, env, &std_out, &std_in);
+	{
+		// printf("P_OR\n");
+		prompt->exit_state = ft_or(prompt, env, std_out, std_in);
+	}
 	else if (prompt->type == P_AND)
-		prompt->exit_state = ft_and(prompt, env, &std_out, &std_in);
+	{
+		printf("P_AND\n");
+		prompt->exit_state = ft_and(prompt, env, std_out, std_in);
+	}
 	return (prompt->exit_state);
 }

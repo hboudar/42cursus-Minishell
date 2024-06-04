@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/04 14:48:11 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:22:38 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_child(t_prompt *prompt, t_env **env)
 	exit(127);
 }
 
-void	do_left(t_prompt *prompt, t_env **env)
+void	do_left(t_prompt *prompt, t_env **env, int fd_out, int fd_in)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -41,14 +41,14 @@ void	do_left(t_prompt *prompt, t_env **env)
 		error("fork");
 	if (pid == 0)
 	{
-		(1) && (dup2(fd[1], 1), close(fd[0]));
+		(1) && (dup2(fd[1], fd_out), close(fd[0]));
 		ft_child(prompt, env);
 	}
 	else
 	{
 		waitpid(pid, &prompt->exit_state, 0);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-		(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
+		(1) && (dup2(fd[0], fd_in), close(fd[0]), close(fd[1]));
 	}
 }
 
@@ -69,10 +69,10 @@ void	do_right(t_prompt *prompt, t_env **env)
 	}
 }
 
-int	ft_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
+int	ft_pipe(t_prompt *prompt, t_env **env, int fd_out, int fd_in)
 {
 	if (prompt->left->type == P_CMD)
-		do_left(prompt->left, env);
+		do_left(prompt->left, env, fd_out, fd_in);
 	// else if (prompt->left->type == P_PIPE)
 	// 	ft_pipe(prompt->left, env);
 	if (prompt->right->type == P_CMD)
