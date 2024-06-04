@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/04 14:46:24 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:48:11 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	do_right(t_prompt *prompt, t_env **env)
 
 int	ft_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
 {
-	(void)fd_out;
-	(void)fd_in;
 	if (prompt->left->type == P_CMD)
 		do_left(prompt->left, env);
 	// else if (prompt->left->type == P_PIPE)
