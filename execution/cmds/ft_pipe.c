@@ -6,136 +6,80 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/03 15:53:17 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:46:24 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-// void	do_left_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
-// {
-// 	int fd[2];
-// 	pid_t pid;
-// 	if (pipe(fd) == -1)
-// 		return (error("pipe"));
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (error("fork"));
-// 	if (pid == 0)
-// 	{
-// 		close(fd[0]);
-// 		dup2(fd[1], *fd_out);
-// 		close(fd[1]);
-// 		return (ft_pipe(prompt->left, env, fd_out, fd_in));
-// 	}
-// 	else
-// 	{
-// 		close(fd[1]);
-// 		dup2(fd[0], *fd_in);
-// 		close(fd[0]);
-// 	}
-// }
-// void	do_right_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
-// {
-// 	int fd[2];
-// 	pid_t pid;
-// 	if (pipe(fd) == -1)
-// 		return (error("pipe"));
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (error("fork"));
-// 	if (pid == 0)
-// 	{
-// 		close(fd[0]);
-// 		dup2(fd[1], *fd_out);
-// 		close(fd[1]);
-// 		return (ft_pipe(prompt->right, env, fd_out, fd_in));
-// 	}
-// 	else
-// 	{
-// 		close(fd[1]);
-// 		dup2(fd[0], *fd_in);
-// 		close(fd[0]);
-// 	}
-// }
+void	ft_child(t_prompt *prompt, t_env **env)
+{
+	char	**envp;
+	char	*path;
+
+	setup_signal_handlers(sig_handler_child, sig_handler_child);
+	if (ft_strchr(prompt->cmd->args[0], '/') != NULL)
+		path = prompt->cmd->args[0];
+	else
+		path = find_path(prompt->cmd->args, *env);
+	envp = env_to_envp(*env, *env);
+	execve(path, prompt->cmd->args, envp);
+	perror(prompt->cmd->args[0]);
+	exit(127);
+}
+
+void	do_left(t_prompt *prompt, t_env **env)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	ignore_signals();
+	if (pipe(fd) == -1)
+		error("pipe");
+	pid = fork();
+	if (pid == -1)
+		error("fork");
+	if (pid == 0)
+	{
+		(1) && (dup2(fd[1], 1), close(fd[0]));
+		ft_child(prompt, env);
+	}
+	else
+	{
+		waitpid(pid, &prompt->exit_state, 0);
+		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+		(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
+	}
+}
+
+void	do_right(t_prompt *prompt, t_env **env)
+{
+	pid_t	pid;
+
+	ignore_signals();
+	pid = fork();
+	if (pid == -1)
+		error("fork");
+	if (pid == 0)
+		ft_child(prompt, env);
+	else
+	{
+		waitpid(pid, &prompt->exit_state, 0);
+		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+	}
+}
 
 int	ft_pipe(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
 {
-	// int fd[2];
-	// pid_t pid;
-
-	(void)prompt;
-	(void)env;
 	(void)fd_out;
 	(void)fd_in;
-	// if (prompt->type == P_PIPE)
-	// {
-	// 	if (pipe(fd) == -1)
-	// 		return (error("pipe"));
-	// 	pid = fork();
-	// 	if (pid == -1)
-	// 		return (error("fork"));
-	// 	if (pid == 0)
-	// 	{
-	// 		close(fd[0]);
-	// 		dup2(fd[1], *fd_out);
-	// 		close(fd[1]);
-	// 		return (ft_pipe(prompt->left, env, fd_out, fd_in));
-	// 	}
-	// 	else
-	// 	{
-	// 		close(fd[1]);
-	// 		dup2(fd[0], *fd_in);
-	// 		close(fd[0]);
-	// 		return (ft_pipe(prompt->right, env, fd_out, fd_in));
-	// 	}
-	// }
+	if (prompt->left->type == P_CMD)
+		do_left(prompt->left, env);
+	// else if (prompt->left->type == P_PIPE)
+	// 	ft_pipe(prompt->left, env);
+	if (prompt->right->type == P_CMD)
+		do_right(prompt->right, env);
+	// else if (prompt->right->type == P_PIPE)
+	// 	ft_pipe(prompt->right, env);
 	return (0);
 }
-
-
-/*if (pipe(fd) == -1)
-			return (error("pipe"));
-		pid = fork();
-		if (pid == -1)
-			return (error("fork"));
-		if (pid == 0)
-		{
-			close(fd[0]);
-			dup2(fd[1], *fd_out);
-			close(fd[1]);
-			return (ft_pipe(prompt->left, env, fd_out, fd_in));
-		}
-		else
-		{
-			close(fd[1]);
-			dup2(fd[0], *fd_in);
-			close(fd[0]);
-			return (ft_pipe(prompt->right, env, fd_out, fd_in));
-		}
-	}*/
-
-// int	do_cmd(t_prompt *prompt, t_env **env, int *fd_out, int *fd_in)
-// {
-// 	pid_t pid;
-// 	int fd[2];
-// 	if (pipe(fd) == -1)
-// 		return (error("pipe"));
-// 	pid = fork();
-// 	if (pid == -1)
-// 		return (error("fork"));
-// 	if (pid == 0)
-// 	{
-// 		close(fd[0]);
-// 		dup2(fd[1], *fd_out);
-// 		close(fd[1]);
-// 		exit(ft_cmd(prompt, env));
-// 	}
-// 	else
-// 	{
-// 		close(fd[1]);
-// 		dup2(fd[0], *fd_in);
-// 		close(fd[0]);
-// 	}
-// 	return (0);
-// }
