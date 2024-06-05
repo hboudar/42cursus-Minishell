@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/04 15:23:54 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:58:28 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,19 @@ typedef struct s_expand
 	struct s_expand	*next;
 }	t_expand;
 
+typedef struct s_data
+{
+	char			*arg;
+	int				joinable;
+	enum e_type		type;
+	struct s_data	*next;
+}	t_data;
+
 typedef struct s_cmd
 {
 	char			**args;
 	char			**limiter;
+	t_data			*data;
 	t_file			*file;
 	t_expand		*expand;
 	enum e_cmd_type	type;
@@ -131,6 +140,7 @@ typedef struct s_prompt
 typedef struct s_token
 {
 	int				size;
+	int				joinable;
 	char			*data;
 	char			**expand;
 	enum e_type		type;
@@ -151,7 +161,9 @@ int			was_syntax_error(t_prompt *prompt);
 char		*ft_remove_quotes(char *str);
 char		*get_expanded_value(char **data, t_env *env);
 char		**ft_split_expand(char *str);
-void		init_signals(void);
+void		print_redirections(t_cmd *cmd);
+void		replace_exit_state(t_prompt *prompt, t_data *data);
+void		init_signals(t_prompt *prompt);
 void		remove_arg(t_cmd *cmd, int i, char *to_add);
 void		add_and_split(t_cmd *cmd, t_expand *expand, t_env *env);
 void		free_token_limit(t_token **token, t_token *limit);
@@ -205,6 +217,8 @@ void		split_token(t_token *token, t_token *split, t_token **res);
 void		end_token(t_token **token);
 void		print_expand(t_expand *expand);
 void		print_expand_token(t_token *token);
+void		get_args(t_cmd *cmd);
+void		get_cmd(t_cmd **cmd, t_token *token);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	*token);
 size_t		ft_tablen(char **args);

@@ -17,12 +17,16 @@ int		g_caught = 0;
 int	prep_execution(t_prompt *prompt, t_env **env)
 {
 	int	std_in;
+	int	std_out;
 	int	exit_state;
 
 	std_in = dup(0);
+	std_out = dup(1);
 	exit_state = execution(prompt, env, std_in);
 	dup2(std_in, 0);
+	dup2(std_out, 1);
 	close(std_in);
+	close(std_out);
 	return (exit_state);
 }
 
@@ -49,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	prompt = NULL;
 	while (1)
 	{
-		init_signals();
+		init_signals(prompt);
 		line = readline("\033[1;34m➜ minishell \033[0m");
 		if (!line)
 			break ;
