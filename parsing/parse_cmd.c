@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:36:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/05 19:57:59 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/05 20:27:18 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,10 @@ void	fill_args(t_cmd *cmd, int i)
 		i++;
 	}
 	new_data[i] = NULL;
-	cmd->args = new_data;
-	i = 0;
-	while(new_data[i])
-	{
-		printf("args[%d] = %s\n", i, new_data[i]);
-		i++;
-	}
+	if (!new_data[0])
+		cmd->args = NULL;
+	else
+		cmd->args = new_data;
 }
 
 void	get_cmd(t_cmd **cmd, t_token *token)
