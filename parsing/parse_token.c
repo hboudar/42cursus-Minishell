@@ -6,18 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/04 15:44:52 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:59:16 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-int	ft_is_joinable(t_token *token)
-{
-	if ((token->type == WORD || token->type == ENV) && token->state == GENERAL)
-		return (1);
-	return (0);
-}
 
 int	check_quotes(char *line)
 {
@@ -49,7 +42,6 @@ int	check_quotes(char *line)
 
 void	fix_token(t_token **token)
 {
-	char	*data;
 	t_token	*tmp;
 	t_token	*tmp2;
 
@@ -58,15 +50,15 @@ void	fix_token(t_token **token)
 	while (tmp)
 	{
 		tmp2 = tmp->next;
+		if (tmp->expand)
+			tmp->type = ENV;
 		if (tmp->type == WHITE_SPACE || (!tmp->data && !tmp->next))
 			remove_token(token, tmp);
-		else if ((tmp->type == WORD || tmp->type == ENV) && tmp->next && ft_is_joinable(tmp->next))
+		else if ((tmp->type == WORD || tmp->type == ENV))
 		{
-			data = tmp->data;
-			tmp->data = ft_strjoin(data, tmp->next->data);
-			free(data);
-			remove_token(token, tmp->next);
-			tmp2 = tmp;
+			if (tmp->next && (tmp->next->type == WORD
+					|| tmp->next->type == ENV))
+				tmp->next->joinable = 1;
 		}
 		tmp = tmp2;
 	}
@@ -91,8 +83,6 @@ t_token	*parse_token(char *line)
 		tokenize(&line, &i, &tmp);
 	split_expand(token);
 	fix_token(&token);
-	// print_tokens(token);
-	// print_expand_token(token);
 	set_size(token);
 	return (token);
 }

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:21:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 15:32:48 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:20:20 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_count_expand(char *str)
 				i++;
 		}
 	}
-return (count);
+	return (count);
 }
 
 char	**ft_split_expand(char *str)
@@ -65,8 +65,8 @@ char	**ft_split_expand(char *str)
 	int		k;
 	char	**newtab;
 
-    if (!str)
-        return (NULL);
+	if (!str)
+		return (NULL);
 	newtab = malloc(sizeof(char *) * (ft_count_expand(str) + 1));
 	i = 0;
 	j = 0;

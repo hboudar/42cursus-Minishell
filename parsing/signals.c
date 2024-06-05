@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:50:51 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 20:24:48 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:13:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_sigint(int signum)
 	}
 }
 
-void	init_signals(void)
+void	init_signals(t_prompt *prompt)
 {
 	extern int	g_caught;
 
@@ -37,5 +37,9 @@ void	init_signals(void)
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else
+	{
+		if (prompt)
+			prompt->exit_state = 1;
 		g_caught = 0;
+	}
 }

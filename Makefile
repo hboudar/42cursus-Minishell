@@ -1,5 +1,5 @@
 SRC		=	minishell.c parsing/parsing.c parsing/prompt_utils.c parsing/token_utils.c parsing/token_utils3.c \
-			parsing/tools.c parsing/env.c parsing/token_type.c parsing/expand.c \
+			parsing/tools.c parsing/env.c parsing/token_type.c parsing/expand.c parsing/parse_cmd.c \
 			parsing/token_type2.c parsing/tokenize.c parsing/parse_prompt.c parsing/signals.c \
 			parsing/redirections.c parsing/redirect_utils.c parsing/parse_pipes.c parsing/expand_utils.c \
 			parsing/.print.c parsing/parse_token.c parsing/syntaxe_error.c parsing/token_utils2.c \
