@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:26:19 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/05 20:25:26 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/05 20:30:25 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
 		return (1);
 	}
     (1) && (i = -1, fd[0] = 0, fd[1] = 1, g_caught = 0);
-    while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
+    while (prompt->cmd->limiter && !g_caught && prompt->cmd->limiter[++i])
         here_doc(prompt, i, fd);
     if (!prompt->cmd->args)
 		return (no_cmd(prompt, env, fd));
