@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/04 21:43:03 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:47:27 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	ft_and(t_prompt *prompt, t_env **env, int fd_in);
 
 //one_cmd / no_cmd:
 
-int     no_cmd(t_prompt *prompt, t_env **env);
-int     execute_builtin(t_prompt *prompt, t_env **env);
-int     execute_nonebuiltin(t_prompt *prompt, t_env *env);
+int     no_cmd(t_prompt *prompt, t_env **env, int *fd);
+int     execute_builtin(t_prompt *prompt, t_env **env, int *fd);
+int     execute_nonebuiltin(t_prompt *prompt, t_env *env, int *fd);
 void    redirection(t_prompt *prompt, t_env **env);
 int     ft_echo(t_prompt *prompt, t_env *env);
 int     ft_cd(t_prompt *prompt, t_env *env);
