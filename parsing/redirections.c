@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 11:04:41 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:21:27 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,33 @@ void	fill_redirections(t_cmd *cmd, t_token *token)
 		{
 			ft_fileaddback(&(cmd->file), ft_newfile(NULL, 3));
 			add_last(&cmd->limiter, token->next->data);
+			token = token->next;
+		}
+		token = token->next;
+	}
+}
+
+void	fill_redirections_subshell(t_prompt *prmpt, t_token *token)
+{
+	while (token)
+	{
+		if (token->type == REDIR_IN)
+		{
+			ft_fileaddback(&(prmpt->file),
+				ft_newfile(ft_strdup(token->next->data), 0));
+			token = token->next;
+		}
+		else if (token->type == REDIR_OUT || token->type == APPEND)
+		{
+			ft_fileaddback(&(prmpt->file),
+				ft_newfile(ft_strdup(token->next->data),
+					1 + (token->type == APPEND)));
+			token = token->next;
+		}
+		else if (token->type == REDIR_HERE_DOC)
+		{
+			ft_fileaddback(&(prmpt->file), ft_newfile(NULL, 3));
+			add_last(&prmpt->limiter, token->next->data);
 			token = token->next;
 		}
 		token = token->next;

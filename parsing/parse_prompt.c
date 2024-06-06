@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 11:01:37 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:27:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,22 @@ t_token	*get_closepar(t_token *token)
 	return (NULL);
 }
 
-void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
+void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_token *tmp2)
 {
-	t_token	*tmp2;
-
 	tmp2 = get_closepar(tmp);
 	remove_token(token, tmp);
 	tmp = tmp2->next;
 	remove_token(token, tmp2);
-	tmp = *token;
+	(1) && (tmp2 = tmp, tmp = *token);
 	if (!check_and_or(tmp))
 	{
+		(*prmpt)->subshell = 1;
 		build_prompt(prmpt, token);
-		return ;
 	}
 	else
 	{
+		(*prmpt)->subshell = 1;
+		fill_redirections_subshell(*prmpt, tmp2);
 		tmp2 = get_and_or(tmp);
 		(*prmpt)->type = (tmp2->type == AND_TOKEN) * P_AND
 			+ (tmp2->type == OR_TOKEN) * P_OR;
@@ -84,7 +84,7 @@ void	build_prompt(t_prompt **prmpt, t_token **token)
 
 	tmp = *token;
 	if (tmp && tmp->type == OPENPAR)
-		handle_par(prmpt, token, tmp);
+		handle_par(prmpt, token, tmp, NULL);
 	else if (check_and_or(*token))
 	{
 		tmp = *token;
