@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:50:51 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:37:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:18:01 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ void	init_signals(t_prompt *prompt)
 	{
 		if (prompt)
 			prompt->exit_state = 1;
-		g_caught = 0;
 	}
 }
