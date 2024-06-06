@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:18 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 18:39:32 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/06 19:14:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@ static unsigned char	costum_atoi(const char *s, t_prompt *prompt)
 	return ((unsigned char)(n * sign));
 }
 
+static void	ft_exit_2(t_prompt *prompt)
+{
+	extern int	g_caught;
+
+	printf("exit\n");
+	if(!prompt)
+		exit(g_caught);
+	exit (prompt->exit_state);
+}
+
 int	ft_exit(t_prompt *prompt)
 {
 	int	i;
@@ -72,8 +82,6 @@ int	ft_exit(t_prompt *prompt)
 			}
 		}
 	}
-	printf("exit\n");
-	if(!prompt)
-		exit(0);
-	exit (prompt->exit_state);
+	else
+		ft_exit_2(prompt);
 }

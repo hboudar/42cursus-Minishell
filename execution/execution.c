@@ -6,11 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/06 15:44:23 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/06 19:10:04 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+//update underscore in env
 
 int	execution(t_prompt *prompt, t_env **env, int std_in)
 {
