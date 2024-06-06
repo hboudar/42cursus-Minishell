@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:20:59 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/05 19:45:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:11:33 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	split_expand(t_token *token)
 			}
 		}
 		else if (token->type == ENV)
-			add_last(&token->expand, ft_strdup(token->data));
+			add_last(&token->expand, token->data);
 		token = token->next;
 	}
 }

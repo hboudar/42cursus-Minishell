@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/05 19:58:28 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:15:12 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void		expand_cmd(t_prompt *prmpt, t_env *env);
 void		handle_sigint(int signum);
 void		set_size(t_token *token);
 void		split_expand(t_token *token);
+void		fill_expand(t_cmd *cmd, t_token *token);
 void		get_expand(char **line, t_token *token);
 void		handle_sigint(int signum);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
@@ -205,6 +206,7 @@ void		free_prompt(t_prompt **prompt);
 void		free_cmd(t_cmd **cmd);
 void		free_files(t_file *file);
 void		remove_redirections(t_token **token);
+void		fill_redirections_subshell(t_prompt *prmpt, t_token *token);
 void		print_env(t_env *env);
 void		print_cmd(t_cmd *cmd);
 void		ft_shell_lvl(t_env *env);
@@ -213,6 +215,7 @@ void		print_files(t_file *file);
 void		build_prompt(t_prompt **prmpt, t_token **token);
 void		parse_pipes(t_prompt **prmpt, t_token **token);
 void		parse_prompt(t_prompt **oldprmpt, char *line);
+char		**ft_dupexpand(char **expand);
 void		split_token(t_token *token, t_token *split, t_token **res);
 void		end_token(t_token **token);
 void		print_expand(t_expand *expand);
@@ -220,7 +223,7 @@ void		print_expand_token(t_token *token);
 void		get_args(t_cmd *cmd);
 void		get_cmd(t_cmd **cmd, t_token *token);
 t_env		*ft_tabdup(char **args);
-t_cmd		*parse_cmd(t_token	*token);
+t_cmd		*parse_cmd(t_token	**token);
 size_t		ft_tablen(char **args);
 t_file		*ft_newfile(char *data, int type);
 t_token		*get_closepar(t_token *token);

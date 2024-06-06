@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/05 20:03:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:03:41 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,18 +126,4 @@ void	expand_cmd(t_prompt *prmpt, t_env *env)
 		(expand) && (expand = expand->next);
 	}
 	get_args(prmpt->cmd);
-}
-
-t_cmd	*parse_cmd(t_token *token)
-{
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	ft_bzero(cmd, sizeof(t_cmd));
-	fill_redirections(cmd, token);
-	remove_redirections(&token);
-	get_cmd(&cmd, token);
-	fill_expand(cmd, token);
-	free_token(&token);
-	return (cmd);
 }
