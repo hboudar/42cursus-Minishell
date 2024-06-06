@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:05:18 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:06:58 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	parse_prompt(t_prompt **oldprmpt, char *line)
 {
 	t_prompt	*prmpt;
 	t_token		*token;
+	extern int	g_caught;
 
 	prmpt = (t_prompt *)malloc(sizeof(t_prompt));
 	ft_bzero(prmpt, sizeof(t_prompt));
@@ -113,7 +114,7 @@ void	parse_prompt(t_prompt **oldprmpt, char *line)
 		return ;
 	if (*oldprmpt)
 	{
-		prmpt->exit_state = (*oldprmpt)->exit_state;
+		prmpt->exit_state = ((*oldprmpt)->exit_state) * (1 - g_caught);
 		free_prompt(oldprmpt);
 		*oldprmpt = prmpt;
 	}

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:20:59 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 13:11:33 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:47:16 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	add_and_split(t_cmd *cmd, t_expand *expand, t_env *env)
 {
 	int		i;
 	int		len;
-	char	*value;
 	char	**tmp;
+	char	*value;
 
 	i = expand->index;
 	value = get_expanded_value(&expand->data, env);

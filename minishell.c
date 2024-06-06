@@ -37,6 +37,7 @@ int	end_program(t_prompt *prompt)
 		free_cmd(&prompt->cmd);
 		prompt->cmd = NULL;
 	}
+	init_signals(prompt);
 	return (1);
 }
 
