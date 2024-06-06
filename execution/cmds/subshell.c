@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/31 18:58:47 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/06 15:50:38 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int		subshell(t_prompt *prompt, t_env **env)
     while (prompt->cmd->type == HERE_DOC && !g_caught && prompt->cmd->limiter[++i])
         here_doc(prompt, i, fd);
     if (g_caught)
+    {
+        g_caught = 0;
         return (1);
-    ignore_signals();
-    subshell_redirection(prompt, env);
+    }
+    redirection_before_subshell(prompt, env, fd);
 
- 
     if (prompt->type == P_PIPE)
         subshell_pipe(prompt, env);
     else if (prompt->type == P_OR)

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/05 20:21:11 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/06 15:44:23 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	execution(t_prompt *prompt, t_env **env, int std_in)
 {
+	// if (prompt->subshell && prompt->type != P_CMD)
+	// 	return (subshell(prompt, env));
 	if (prompt->type == P_CMD)
 		prompt->exit_state = ft_cmd(prompt, env);
 	else if (prompt->type == P_PIPE)
