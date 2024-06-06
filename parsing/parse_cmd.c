@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:36:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 13:06:35 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:12:31 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,16 @@ void	get_args(t_cmd *cmd)
 	fill_args(cmd, i);
 }
 
-t_cmd	*parse_cmd(t_token *token)
+t_cmd	*parse_cmd(t_token **token)
 {
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	ft_bzero(cmd, sizeof(t_cmd));
-	fill_redirections(cmd, token);
-	remove_redirections(&token);
-	get_cmd(&cmd, token);
-	fill_expand(cmd, token);
-	free_token(&token);
+	fill_redirections(cmd, *token);
+	remove_redirections(token);
+	get_cmd(&cmd, *token);
+	fill_expand(cmd, *token);
+	free_token(token);
 	return (cmd);
 }

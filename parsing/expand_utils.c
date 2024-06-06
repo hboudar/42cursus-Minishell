@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:21:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/04 16:20:20 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:14:41 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,23 @@ char	**ft_split_expand(char *str)
 		}
 	}
 	newtab[j] = NULL;
+	return (newtab);
+}
+
+char	**ft_dupexpand(char **expand)
+{
+	int		i;
+	char	**newtab;
+
+	if (!expand)
+		return (NULL);
+	newtab = malloc(sizeof(char *) * (ft_tablen(expand) + 1));
+	i = 0;
+	while (expand[i])
+	{
+		newtab[i] = ft_strdup(expand[i]);
+		i++;
+	}
+	newtab[i] = NULL;
 	return (newtab);
 }

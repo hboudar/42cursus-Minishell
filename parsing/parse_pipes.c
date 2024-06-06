@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/04 15:45:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:10:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	parse_pipes(t_prompt **prmpt, t_token **token)
 		(*prmpt)->left = NULL;
 		(*prmpt)->right = NULL;
 		(*prmpt)->type = P_CMD;
-		(*prmpt)->cmd = parse_cmd(*token);
+		(*prmpt)->cmd = parse_cmd(token);
 		return ;
 	}
 	tmp = get_pipe(token);

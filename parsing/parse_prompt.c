@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 15:27:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:05:18 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,13 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_token *tmp2)
 	tmp = tmp2->next;
 	remove_token(token, tmp2);
 	(1) && (tmp2 = tmp, tmp = *token);
+	(*prmpt)->subshell = 1;
 	if (!check_and_or(tmp))
-	{
-		(*prmpt)->subshell = 1;
 		build_prompt(prmpt, token);
-	}
 	else
 	{
-		(*prmpt)->subshell = 1;
 		fill_redirections_subshell(*prmpt, tmp2);
+		remove_redirections(&tmp2);
 		tmp2 = get_and_or(tmp);
 		(*prmpt)->type = (tmp2->type == AND_TOKEN) * P_AND
 			+ (tmp2->type == OR_TOKEN) * P_OR;
