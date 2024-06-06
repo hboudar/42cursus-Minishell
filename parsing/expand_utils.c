@@ -6,11 +6,21 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:21:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:14:41 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/06 19:07:19 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+// void	expand_here_doc(char *str, t_env *env)
+// {
+// 	t_data	*data;
+// 	t_token	*token;
+
+// 	token = parse_token(str);
+// 	expand_token(token, env);
+// 	data = token_to_data(token);
+// }
 
 void	remove_arg(t_cmd *cmd, int i, char *to_add)
 {
