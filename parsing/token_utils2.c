@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:31:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:14:06 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/08 00:48:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	split_token(t_token *token, t_token *split, t_token **res)
 	new_token = (t_token *)malloc(sizeof(t_token));
 	ft_bzero(new_token, sizeof(t_token));
 	tmp = new_token;
-	while (token != split)
+	while (token && token != split)
 	{
 		tmp->data = ft_strdup(token->data);
 		tmp->expand = ft_dupexpand(token->expand);

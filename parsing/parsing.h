@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/07 10:11:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/08 00:23:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ void		set_size(t_token *token);
 void		split_expand(t_token *token);
 void		fill_expand(t_cmd *cmd, t_token *token);
 void		get_expand(char **line, t_token *token);
+void		remove_redirections_subshell(t_token **token);
+void		handle_subshells(t_prompt **prmpt, t_token **token, t_token *limit);
 void		handle_sigint(int signum);
 void		tokenize_whitespace(char **line, int *i, t_token **token);
 void		add_last(char ***file, char *data);

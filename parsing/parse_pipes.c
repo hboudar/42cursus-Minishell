@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 16:10:00 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/08 00:36:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	end_token(t_token **token)
 	tmp = *token;
 	while (tmp && tmp->next)
 	{
-		if (tmp->next->data == NULL)
+		if (tmp->next->data == NULL && !tmp->next->next)
 		{
-			remove_token(token, tmp->next);
+			free(tmp->next);
+			tmp->next = NULL;
 			break ;
 		}
 		tmp = tmp->next;
