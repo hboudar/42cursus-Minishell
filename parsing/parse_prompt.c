@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 19:06:58 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:41:08 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ void	build_prompt(t_prompt **prmpt, t_token **token)
 		ft_bzero((*prmpt)->right, sizeof(t_prompt));
 		split_token(*token, tmp, &res);
 		build_prompt(&(*prmpt)->left, &res);
-		build_prompt(&(*prmpt)->right, &tmp->next);
+		tmp = tmp->next;
+		free_token_limit(token, tmp);
+		build_prompt(&(*prmpt)->right, &tmp);
 	}
 	else
 		parse_pipes(prmpt, token);
