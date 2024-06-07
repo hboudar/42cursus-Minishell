@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:00:37 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 20:36:23 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:11:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,30 @@ void	add_token(t_token *new_token)
 		}
 		i++;
 	}
+}
+
+void	tokenize_semicolon(char **line, int *i, t_token **token)
+{
+	(*token)->data = ft_strdup(";");
+	(*token)->size = 1;
+	(*token)->type = SEMI_COLON;
+	(*token)->state = GENERAL;
+	*line = *line + 1;
+	*i = 0;
+	(*token)->next = (t_token *)malloc(sizeof(t_token));
+	(*token) = (*token)->next;
+	ft_bzero(*token, sizeof(t_token));
+}
+
+void	tokenize_error(char **line, int *i, t_token **token)
+{
+	(*token)->data = ft_strdup("&");
+	(*token)->size = 1;
+	(*token)->type = ERROR;
+	(*token)->state = GENERAL;
+	*line = *line + 1;
+	*i = 0;
+	(*token)->next = (t_token *)malloc(sizeof(t_token));
+	(*token) = (*token)->next;
+	ft_bzero(*token, sizeof(t_token));
 }

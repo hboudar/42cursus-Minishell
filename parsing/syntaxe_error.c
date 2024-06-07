@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/30 18:01:42 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:07:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@ int	was_syntax_error(t_prompt *prompt)
 		return (1);
 	if (prompt->right && was_syntax_error(prompt->right))
 		return (1);
-	return (0);
-}
-
-int	has_semicolon(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == ';')
-			return (1);
-		i++;
-	}
 	return (0);
 }
 
