@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 19:06:58 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/08 00:49:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,31 +48,27 @@ t_token	*get_closepar(t_token *token)
 	return (NULL);
 }
 
-void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp, t_token *tmp2)
+void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 {
+	t_token *tmp2;
+
 	tmp2 = get_closepar(tmp);
 	remove_token(token, tmp);
 	tmp = tmp2->next;
 	remove_token(token, tmp2);
-	(1) && (tmp2 = tmp, tmp = *token);
-	(*prmpt)->subshell = 1;
-	if (!check_and_or(tmp))
-		build_prompt(prmpt, token);
-	else
+	tmp2 = *token;
+	while (tmp2 && tmp2->next != tmp)
+		tmp2 = tmp2->next;
+	tmp = *token;
+	if (!check_and_or(tmp2))
 	{
-		fill_redirections_subshell(*prmpt, tmp2);
-		remove_redirections(&tmp2);
-		tmp2 = get_and_or(tmp);
-		(*prmpt)->type = (tmp2->type == AND_TOKEN) * P_AND
-			+ (tmp2->type == OR_TOKEN) * P_OR;
-		(*prmpt)->left = (t_prompt *)malloc(sizeof(t_prompt));
-		ft_bzero((*prmpt)->left, sizeof(t_prompt));
-		(*prmpt)->right = (t_prompt *)malloc(sizeof(t_prompt));
-		ft_bzero((*prmpt)->right, sizeof(t_prompt));
-		split_token(*token, tmp2, &tmp);
-		build_prompt(&(*prmpt)->left, &tmp);
-		build_prompt(&(*prmpt)->right, &tmp2->next);
+		(*prmpt)->subshell = 1;
+		fill_redirections_subshell(*prmpt, tmp2->next);
+		remove_redirections(&tmp2->next);
+		build_prompt(prmpt, token);
 	}
+	else
+		handle_subshells(prmpt, token, tmp2->next); 
 }
 
 void	build_prompt(t_prompt **prmpt, t_token **token)
@@ -82,7 +78,7 @@ void	build_prompt(t_prompt **prmpt, t_token **token)
 
 	tmp = *token;
 	if (tmp && tmp->type == OPENPAR)
-		handle_par(prmpt, token, tmp, NULL);
+		handle_par(prmpt, token, tmp);
 	else if (check_and_or(*token))
 	{
 		tmp = *token;
@@ -95,7 +91,9 @@ void	build_prompt(t_prompt **prmpt, t_token **token)
 		ft_bzero((*prmpt)->right, sizeof(t_prompt));
 		split_token(*token, tmp, &res);
 		build_prompt(&(*prmpt)->left, &res);
-		build_prompt(&(*prmpt)->right, &tmp->next);
+		tmp = tmp->next;
+		free_token_limit(token, tmp);
+		build_prompt(&(*prmpt)->right, &tmp);
 	}
 	else
 		parse_pipes(prmpt, token);

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 13:21:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/08 00:51:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	count_files(char **file)
 void	remove_redirections(t_token **token)
 {
 	t_token	*tmp;
+	t_token	*tmp2;
 
 	tmp = *token;
 	while (tmp)
@@ -32,9 +33,11 @@ void	remove_redirections(t_token **token)
 		if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT
 			|| tmp->type == APPEND || tmp->type == REDIR_HERE_DOC)
 		{
-			remove_token(token, tmp->next);
+			tmp2 = tmp->next;
+			remove_token(token, tmp2);
+			tmp2 = tmp->next;
 			remove_token(token, tmp);
-			tmp = *token;
+			tmp = tmp2;
 		}
 		else if (tmp)
 			tmp = tmp->next;

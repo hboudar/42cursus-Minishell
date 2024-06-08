@@ -6,11 +6,39 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/05 10:59:16 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:11:43 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	has_error(t_token *token)
+{
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == ERROR)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+int	has_semicolon(t_token *token)
+{
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == SEMI_COLON)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	check_quotes(char *line)
 {
@@ -71,7 +99,7 @@ t_token	*parse_token(char *line)
 	t_token	*token;
 
 	i = 0;
-	if (has_semicolon(line) || check_quotes(line))
+	if (check_quotes(line))
 	{
 		printf("Syntax error\n");
 		return (NULL);
@@ -81,6 +109,12 @@ t_token	*parse_token(char *line)
 	tmp = token;
 	while ((size_t)i < ft_strlen(line))
 		tokenize(&line, &i, &tmp);
+	if (has_error(token) || has_semicolon(token))
+	{
+		printf("Syntax error\n");
+		free_token(&token);
+		return (NULL);
+	}
 	split_expand(token);
 	fix_token(&token);
 	set_size(token);

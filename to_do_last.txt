@@ -1,3 +1,4 @@
-subshells
-infiles and outfiles and heredoc in prompts
-expand with double quotes
+split expand for double quotes
+star *
+protect mallocs
+check all leaks
