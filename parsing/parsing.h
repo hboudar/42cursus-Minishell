@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 00:23:04 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 00:30:08 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_data
 	char			*arg;
 	int				joinable;
 	enum e_type		type;
+	enum e_state	state;
 	struct s_data	*next;
 }	t_data;
 
@@ -159,6 +160,7 @@ int			has_pipe(t_token *token);
 int			count_files(char **file);
 int			check_env(char **envp);
 int			was_syntax_error(t_prompt *prompt);
+int			remove_data(t_prompt *prmpt, t_data **data, int join);
 char		*ft_remove_quotes(char *str);
 char		*get_expanded_value(char **data, t_env *env);
 char		**ft_split_expand(char *str);
@@ -187,7 +189,9 @@ void		free_tab(char ***args);
 void		tokenize_append(char **line, int *i, t_token **token);
 void		free_cmd(t_cmd **cmd);
 void		print_cmd(t_cmd *cmd);
+void		split_expanded(t_prompt *prmpt, t_data **data, char *expanded);
 void		add_token(t_token *new_token);
+void		add_data(t_data **org, t_data **data, char **new_data, int join);
 void		fill_redirections(t_cmd *cmd, t_token *token);
 void		tokenize_redir_out(char **line, int *i, t_token **token);
 void		tokenize_redir_in(char **line, int *i, t_token **token);

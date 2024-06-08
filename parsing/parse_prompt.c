@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 00:49:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:47:03 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_token	*get_closepar(t_token *token)
 
 void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 {
-	t_token *tmp2;
+	t_token	*tmp2;
 
 	tmp2 = get_closepar(tmp);
 	remove_token(token, tmp);
@@ -68,7 +68,7 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 		build_prompt(prmpt, token);
 	}
 	else
-		handle_subshells(prmpt, token, tmp2->next); 
+		handle_subshells(prmpt, token, tmp2->next);
 }
 
 void	build_prompt(t_prompt **prmpt, t_token **token)

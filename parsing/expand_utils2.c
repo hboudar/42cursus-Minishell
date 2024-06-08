@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   expand_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 13:03:41 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/08 22:11:56 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ void	set_data_type(t_data *data)
 {
 	char	*tmp;
 
+	if (!data)
+		return ;
 	tmp = data->arg;
-	while (*tmp)
+	while (tmp && *tmp)
 	{
 		if (*tmp == '$')
 			break ;
@@ -111,17 +113,16 @@ void	expand_cmd(t_prompt *prmpt, t_env *env)
 	{
 		while (data)
 		{
-			while (data->type == ENV && ft_strncmp(data->arg, "$?", 3))
+			while (data && data->type == ENV && ft_strncmp(data->arg, "$?", 3))
 			{
 				tmp = get_new_data(data->arg, expand, 0, env);
-				free(data->arg);
-				data->arg = tmp;
+				split_expanded(prmpt, &data, tmp);
 				set_data_type(data);
 				expand = expand->next;
 			}
-			if (data->type == ENV && !ft_strncmp("$?", data->arg, 3))
+			if (data && data->type == ENV && !ft_strncmp("$?", data->arg, 3))
 				replace_exit_state(prmpt, data);
-			data = data->next;
+			(data) && (data = data->next);
 		}
 		(expand) && (expand = expand->next);
 	}

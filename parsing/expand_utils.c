@@ -6,21 +6,32 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:21:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 19:07:19 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 00:29:26 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-// void	expand_here_doc(char *str, t_env *env)
-// {
-// 	t_data	*data;
-// 	t_token	*token;
+void	split_expanded(t_prompt *prmpt, t_data **data, char *expanded)
+{
+	int		join;
+	char	**new_data;
 
-// 	token = parse_token(str);
-// 	expand_token(token, env);
-// 	data = token_to_data(token);
-// }
+	if ((*data)->state == GENERAL)
+	{
+		new_data = ft_split_expand(expanded);
+		join = (new_data[0] != NULL);
+		join = remove_data(prmpt, data, join);
+		add_data(&prmpt->cmd->data, data, new_data, join);
+		free_tab(&new_data);
+		free(expanded);
+	}
+	else
+	{
+		free((*data)->arg);
+		(*data)->arg = expanded;
+	}
+}
 
 void	remove_arg(t_cmd *cmd, int i, char *to_add)
 {

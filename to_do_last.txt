@@ -1,4 +1,3 @@
-split expand for double quotes
-star *
+expand * for current working directory only
 protect mallocs
 check all leaks

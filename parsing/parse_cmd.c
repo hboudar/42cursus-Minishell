@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:36:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 00:51:51 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 00:30:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	fill_args(t_cmd *cmd, int i)
 		i++;
 	}
 	new_data[i] = NULL;
-	if (!new_data[0])
+	if (!new_data[0][0])
 	{
 		cmd->args = NULL;
-		free(new_data);
+		free_tab(&new_data);
 	}
 	else
 		cmd->args = new_data;
@@ -51,12 +51,10 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 {
 	int		i;
 	t_data	*data;
-	t_token	*tmp;
 
-	tmp = token;
 	i = 0;
 	data = NULL;
-	while (tmp)
+	while (token)
 	{
 		if (data)
 		{
@@ -69,10 +67,11 @@ void	get_cmd(t_cmd **cmd, t_token *token)
 			(*cmd)->data = data;
 		}
 		ft_bzero(data, sizeof(t_data));
-		data->arg = ft_strdup(tmp->data);
-		data->joinable = tmp->joinable;
-		data->type = tmp->type;
-		tmp = tmp->next;
+		data->arg = ft_strdup(token->data);
+		data->joinable = token->joinable;
+		data->type = token->type;
+		data->state = token->state;
+		token = token->next;
 	}
 }
 
