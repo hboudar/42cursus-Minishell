@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:34:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 23:38:58 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/07 00:07:26 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_inredirect(t_prompt *prompt, int *fd, int *fd0)
     return (1);
 }
 
-int    subshell_redirection(t_prompt *prompt, t_env **env)
+int    subshell_redirection(t_prompt *prompt, t_env **env, int *fd)
 {
     int fd_in;
     int in;

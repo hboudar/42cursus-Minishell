@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/05 18:47:27 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/07 00:07:39 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 //execution main :
 
 int	execution(t_prompt *prompt, t_env **env, int std_in);
+int subshell(t_prompt *prompt, t_env **env);
 int	ft_cmd(t_prompt *prompt, t_env **env);
 int ft_pipe(t_prompt *prompt, t_env **env, int fd_in);
 int	ft_or(t_prompt *prompt, t_env **env, int fd_in);
@@ -54,6 +55,6 @@ void    sigint_handler_heredoc(int sig); //signal handler for heredoc
 void    ignore_signals(void); //ignoring signals
 void    sig_handler_child(int sig); //signal handler for child
 
-int     subshell_redirection(t_prompt *prompt, t_env **env);
+int     subshell_redirection(t_prompt *prompt, t_env **env, int *fd);
 
 #endif
