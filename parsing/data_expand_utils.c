@@ -6,11 +6,26 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 18:48:28 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 00:27:55 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 03:27:23 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	get_args_count(t_data *data)
+{
+	int		i;
+	t_data	*tmp;
+
+	i = 0;
+	tmp = data;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
 
 int	handle_first_arg(t_data **org, char **new_data, t_data **data, int join)
 {

@@ -1,3 +1,5 @@
+expand here_doc
+ambiguous rediredct
 expand * for current working directory only
 protect mallocs
 check all leaks

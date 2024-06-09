@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:36:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 00:30:36 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 03:26:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	get_args(t_cmd *cmd)
 	int		i;
 	char	*tmp;
 	t_data	*data;
+	t_data	*tmp_data;
 
 	data = cmd->data;
 	while (data)
@@ -89,18 +90,15 @@ void	get_args(t_cmd *cmd)
 			tmp = data->arg;
 			data->arg = ft_strjoin(data->arg, data->next->arg);
 			free(tmp);
+			tmp_data = data->next;
 			data->next = data->next->next;
+			free(tmp_data->arg);
+			free(tmp_data);
 		}
 		else
 			data = data->next;
 	}
-	data = cmd->data;
-	i = 0;
-	while (data)
-	{
-		i++;
-		data = data->next;
-	}
+	i = get_args_count(cmd->data);
 	fill_args(cmd, i);
 }
 
