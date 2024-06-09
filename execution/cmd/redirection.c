@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 17:03:53 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:08:22 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../execution.h"
 

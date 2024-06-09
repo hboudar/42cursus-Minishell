@@ -1,4 +1,2 @@
-&
-; btween quotes should work 
 update underscore in env
-(ls && ls) : segfault : cuz :  printf("{%u}\n", prompt->cmd->type);
+A$
