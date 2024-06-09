@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 03:27:11 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 03:33:46 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_env
 typedef struct s_file
 {
 	int				type;
+	int				quotes;
 	char			*data;
 	struct s_file	*next;
 }	t_file;
@@ -235,7 +236,7 @@ void		get_cmd(t_cmd **cmd, t_token *token);
 t_env		*ft_tabdup(char **args);
 t_cmd		*parse_cmd(t_token	**token);
 size_t		ft_tablen(char **args);
-t_file		*ft_newfile(char *data, int type);
+t_file		*ft_newfile(char *data, int type, enum e_state state);
 t_token		*get_closepar(t_token *token);
 t_token		*parse_token(char *line);
 t_token		*pipeless_token(t_token *token);
