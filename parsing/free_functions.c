@@ -6,11 +6,24 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:00:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/06 13:13:42 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:56:06 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	free_limiter(t_limiter **limiter)
+{
+	t_limiter	*tmp;
+
+	while (*limiter)
+	{
+		tmp = *limiter;
+		*limiter = (*limiter)->next;
+		free(tmp->limit);
+		free(tmp);
+	}
+}
 
 void	free_data(t_data **data)
 {
@@ -46,7 +59,7 @@ void	free_cmd(t_cmd **cmd)
 	if (!*cmd)
 		return ;
 	free_tab(&(*cmd)->args);
-	free_tab(&(*cmd)->limiter);
+	free_limiter(&(*cmd)->limiter);
 	free_files((*cmd)->file);
 	free_expand(&(*cmd)->expand);
 	free_data(&(*cmd)->data);

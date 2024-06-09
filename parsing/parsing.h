@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 19:27:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:54:17 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <signal.h>
+
+# define malloc(x) NULL
 
 enum e_prmpt_type
 {
@@ -96,6 +98,7 @@ typedef struct s_env
 
 typedef struct s_file
 {
+	int				fd;
 	int				type;
 	int				quotes;
 	char			*data;
@@ -241,7 +244,7 @@ void		print_expand(t_expand *expand);
 void		print_expand_token(t_token *token);
 void		get_args(t_cmd *cmd);
 void		get_cmd(t_cmd **cmd, t_token *token);
-t_env		*ft_tabdup(char **args);
+t_env		*ft_tabdup(char **args, int i, int j);
 t_cmd		*parse_cmd(t_token	**token);
 size_t		ft_tablen(char **args);
 t_file		*ft_newfile(char *data, int type, enum e_state state);
