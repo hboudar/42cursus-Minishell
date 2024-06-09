@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 13:13:10 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:38:42 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ t_token	*get_and_or(t_token *token)
 		token = token->next;
 	}
 	return (NULL);
+}
+
+int	check_and_or_limit(t_token *token, t_token *limit)
+{
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp && tmp != limit)
+	{
+		if (tmp->type == AND_TOKEN || tmp->type == OR_TOKEN)
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
 }
 
 int	check_and_or(t_token *token)
@@ -63,6 +77,8 @@ void	handle_subshells(t_prompt **prmpt, t_token **token, t_token *limit)
 	t_token	*tmp;
 	t_token	*tmp2;
 
+	(*prmpt)->type = (limit->type == AND_TOKEN) * P_AND
+		+ (limit->type == OR_TOKEN) * P_OR;
 	(*prmpt)->left = malloc(sizeof(t_prompt));
 	ft_bzero((*prmpt)->left, sizeof(t_prompt));
 	(*prmpt)->left->subshell = 1;

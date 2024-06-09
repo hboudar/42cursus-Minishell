@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/01 17:56:03 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 03:33:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ void	add_last(char ***file, char *data)
 	*file = new;
 }
 
-t_file	*ft_newfile(char *data, int type)
+t_file	*ft_newfile(char *data, int type, enum e_state state)
 {
 	t_file	*new;
 
 	new = (t_file *)malloc(sizeof(t_file));
 	new->data = data;
 	new->type = type;
+	new->quotes = (state == IN_DQUOTES) + (state == IN_SQUOTES);
 	new->next = NULL;
 	return (new);
 }

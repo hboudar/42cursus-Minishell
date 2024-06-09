@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:36:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 03:26:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:02:56 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	fill_args(t_cmd *cmd, int i)
 		i++;
 	}
 	new_data[i] = NULL;
-	if (!new_data[0][0])
+	if (!new_data[0] || !new_data[0][0])
 	{
 		cmd->args = NULL;
 		free_tab(&new_data);
