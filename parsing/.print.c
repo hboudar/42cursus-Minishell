@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:44:10 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/04 15:24:40 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:56:51 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,20 +165,19 @@ void print_tokens(t_token *token)
 
 void	print_redirections(t_cmd *cmd)
 {
-	t_file	*tmp;
-	char		**args;
+	t_file	*file;
 
-	tmp = cmd->file;
-	args = cmd->limiter;
-	while (tmp)
+	file = cmd->file;
+	while (file)
 	{
-		printf("file: %s\n", tmp->data);
-		tmp = tmp->next;
-	}
-	while (args && *args)
-	{
-		printf("limiter: %s\n", *args);
-		args++;
+		if (!file->type)
+			printf("infile: ");
+		else if (file->type == 1)
+			printf("outfile: ");
+		else if (file->type == 2)
+			printf("appendable: ");
+		printf("%d %s\n", file->type, file->data);
+		file = file->next;
 	}
 }
 

@@ -22,7 +22,11 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 
 	std_in = dup(0);
 	std_out = dup(1);
-	exit_state = execution(prompt, env, std_in);
+	// do_files(prompt);
+	if (prompt->exit_state == 0)
+		exit_state = execution(prompt, env, std_in);
+	else
+		exit_state = prompt->exit_state;
 	dup2(std_in, 0);
 	dup2(std_out, 1);
 	close(std_in);
@@ -50,7 +54,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (!isatty(0) || argc != 1 || check_env(envp))
 		exit (1);
-	env = ft_tabdup(envp);
+	env = ft_tabdup(envp, -1, 0);
 	prompt = NULL;
 	while (1)
 	{

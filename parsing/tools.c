@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 22:24:03 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/02 12:29:33 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:54:59 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ void	set_type_env(t_env *env)
 	}
 }
 
-t_env	*ft_tabdup(char **args)
+t_env	*ft_tabdup(char **args, int i, int j)
 {
-	int		i;
-	int		j;
 	t_env	*tmp;
 	t_env	*newenv;
 
 	newenv = (t_env *)malloc(sizeof(t_env));
-	(1) && (i = -1, tmp = newenv);
+	if (!newenv)
+		exit(1);
+	tmp = newenv;
 	while (args[++i])
 	{
 		j = 0;
@@ -76,11 +76,10 @@ t_env	*ft_tabdup(char **args)
 		tmp->key = ft_substr(args[i], 0, j + 1);
 		tmp->value = ft_substr(args[i], j + 1, ft_strlen(args[i]) - j - 1);
 		tmp->next = (t_env *)malloc(sizeof(t_env));
+		ft_bzero(tmp->next, sizeof(t_env));
 		tmp = tmp->next;
 	}
 	tmp->key = ft_strdup("OLDPWD");
-	tmp->value = NULL;
-	tmp->next = NULL;
 	set_type_env(newenv);
 	ft_shell_lvl(newenv);
 	return (newenv);
