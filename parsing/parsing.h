@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 03:33:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:35:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ int			count_files(char **file);
 int			check_env(char **envp);
 int			get_args_count(t_data *data);
 int			was_syntax_error(t_prompt *prompt);
+int			check_and_or_limit(t_token *token, t_token *limit);
 int			remove_data(t_prompt *prmpt, t_data **data, int join);
 char		*ft_remove_quotes(char *str);
 char		*get_expanded_value(char **data, t_env *env);

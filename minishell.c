@@ -22,6 +22,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 
 	std_in = dup(0);
 	std_out = dup(1);
+	printf("std_in = %d\n", std_in);
 	exit_state = execution(prompt, env, std_in);
 	dup2(std_in, 0);
 	dup2(std_out, 1);

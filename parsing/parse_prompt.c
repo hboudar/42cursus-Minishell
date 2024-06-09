@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 16:47:03 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:34:29 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,10 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 		remove_redirections(&tmp2->next);
 		build_prompt(prmpt, token);
 	}
-	else
+	else if (check_and_or_limit(*token, tmp2))
 		handle_subshells(prmpt, token, tmp2->next);
+	else
+		build_prompt(prmpt, token);
 }
 
 void	build_prompt(t_prompt **prmpt, t_token **token)
