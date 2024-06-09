@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/09 16:12:23 by hboudar          ###   ########.fr       */
-=======
-/*   Updated: 2024/06/09 17:03:53 by aoulahra         ###   ########.fr       */
->>>>>>> 5e5b5172cfb4d58e01b2d058aecb6c4bedd2f438
+/*   Updated: 2024/06/09 20:08:22 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../execution.h"
 

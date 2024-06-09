@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 20:05:16 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 20:07:20 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	here_doc2(t_prompt *prompt, char *limiter, int quotes, int fd)
     extern int g_caught;
 	char	*str;
 
+    (void)quotes;
+    (void)prompt;
     setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
     while (1)
     {
@@ -61,7 +63,7 @@ void	here_doc1(t_prompt *p, t_file *file, t_limiter *lim)
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
-		here_doc2(file, lim->limit, lim->quotes, file->fd);
+		here_doc2(p, lim->limit, lim->quotes, file->fd);
 	else
 	{
 		waitpid(pid, &p->exit_state, 0);

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 16:30:29 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 20:08:37 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ int		subshell(t_prompt *prompt, t_env **env)
     int i;
 
     (1) && (i = -1, fd[0] = 0, fd[1] = 1, prompt->subshell = 0, g_caught = 0);
-    while (prompt->limiter && !g_caught && prompt->limiter[++i])
-        here_doc(prompt, i, fd);
     if (g_caught)
     {
         g_caught = 0;
