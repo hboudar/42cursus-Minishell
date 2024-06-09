@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 19:54:17 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 20:08:57 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # include <limits.h>
 # include <stdbool.h>
 # include <signal.h>
-
-# define malloc(x) NULL
 
 enum e_prmpt_type
 {
