@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 16:35:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:27:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,20 @@ typedef struct s_data
 	struct s_data	*next;
 }	t_data;
 
+typedef struct s_limiter
+{
+	char				*limit;
+	int					quotes;
+	struct s_limiter	*next;
+}		t_limiter;
+
 typedef struct s_cmd
 {
 	char			**args;
-	char			**limiter;
 	t_data			*data;
 	t_file			*file;
 	t_expand		*expand;
+	t_limiter		*limiter;
 	enum e_cmd_type	type;
 }		t_cmd;
 
@@ -133,9 +140,9 @@ typedef struct s_prompt
 {
 	int					subshell;
 	int					exit_state;
-	char				**limiter;
 	t_cmd				*cmd;
 	t_file				*file;
+	t_limiter			*limiter;
 	enum e_prmpt_type	type;
 	struct s_prompt		*left;
 	struct s_prompt		*right;

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 02:39:12 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:28:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	redirection_syntaxe_error(t_token *tkn)
 			|| (tkn->next->type != WORD && tkn->next->type != ENV)))
 		return (1);
 	if (tkn->type == APPEND && (!tkn->next
-		|| (tkn->next->type != WORD && tkn->next->type != ENV)))
+			|| (tkn->next->type != WORD && tkn->next->type != ENV)))
 		return (1);
 	if (tkn->type == REDIR_HERE_DOC && (!tkn->next
 			|| (tkn->next->type != WORD && tkn->next->type != ENV)))
