@@ -6,11 +6,33 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 03:35:13 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:28:47 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	add_limiter(t_limiter **limiter, char *data, int state)
+{
+	t_limiter	*new;
+	t_limiter	*tmp;
+
+	new = (t_limiter *)malloc(sizeof(t_limiter));
+	if (!new)
+		exit(1);
+	new->limit = data;
+	new->quotes = state;
+	new->next = NULL;
+	if (!*limiter)
+	{
+		*limiter = new;
+		return ;
+	}
+	tmp = *limiter;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+}
 
 int	count_files(char **file)
 {
@@ -64,7 +86,7 @@ void	fill_redirections(t_cmd *cmd, t_token *token)
 		else if (token->type == REDIR_HERE_DOC)
 		{
 			ft_fileaddback(&(cmd->file), ft_newfile(NULL, 3, token->state));
-			add_last(&cmd->limiter, token->next->data);
+			add_limiter(&cmd->limiter, token->next->data, token->next->state);
 			token = token->next;
 		}
 		token = token->next;
@@ -91,7 +113,7 @@ void	fill_redirections_subshell(t_prompt *prmpt, t_token *token)
 		else if (token->type == REDIR_HERE_DOC)
 		{
 			ft_fileaddback(&(prmpt->file), ft_newfile(NULL, 3, token->state));
-			add_last(&prmpt->limiter, token->next->data);
+			add_limiter(&prmpt->limiter, token->next->data, token->next->state);
 			token = token->next;
 		}
 		token = token->next;
