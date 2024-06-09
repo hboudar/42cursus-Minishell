@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 09:31:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 00:48:25 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:44:45 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	split_token(t_token *token, t_token *split, t_token **res)
 		tmp->size = token->size;
 		tmp->type = token->type;
 		tmp->state = token->state;
+		tmp->joinable = token->joinable;
 		tmp->next = (t_token *)malloc(sizeof(t_token));
 		ft_bzero(tmp->next, sizeof(t_token));
 		tmp = tmp->next;

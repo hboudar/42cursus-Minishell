@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:43:45 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 14:24:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:51:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	tokenize_word(char **line, int *i, t_token **token)
 	}
 	else
 	{
-		while (ft_isword((*line)[j]))
+		while (ft_isword((*line)[j]) || (*line)[j] == '$')
 			j++;
 	}
 	(*token)->data = ft_substr(*line, 0, j);
