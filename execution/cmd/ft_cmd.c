@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:26:19 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 09:30:07 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 16:22:53 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int    no_cmd(t_prompt *prompt, t_env **env, int *fd)
 {
     extern int g_caught;
 
+    printf("no_cmd\n");
     if (fd[0] != 0)
         close(fd[0]);
     if (g_caught)
@@ -31,6 +32,7 @@ int	execute_builtin(t_prompt *prompt, t_env **env, int *fd)
 {
     extern int g_caught;
 
+    printf("execute_builtin\n");
     if (g_caught)
     {
         g_caught = 0;
@@ -48,6 +50,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
     int i;
     int fd[2];
 
+    printf("ft_cmd\n");
 	expand_cmd(prompt, *env);
 	if (!prompt->cmd)
 	{

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/31 21:42:11 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 16:12:23 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int out_redirect(t_prompt *prompt, int *fd1)
         *fd1 = open(prompt->cmd->file->data, O_CREAT | O_WRONLY | O_APPEND, 0644);
     if (*fd1 == -1)
     {
-        printf("Error: %s: %s\n", prompt->cmd->file->next->data, strerror(errno));
+        printf("Error: %s: %s\n", prompt->cmd->file->data, strerror(errno));
         return (0);
     }
     if (!prompt->cmd->args)

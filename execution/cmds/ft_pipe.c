@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 09:28:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 15:12:40 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	ft_child(t_prompt *prompt, t_env **env)
 	char	**envp;
 	char	*path;
 
+	
 	if (is_builtin(prompt))
-		exit (ft_builtin(prompt, env));
+		exit(ft_builtin(prompt, env));
 	if (ft_strchr(prompt->cmd->args[0], '/') != NULL)
 		path = prompt->cmd->args[0];
 	else
@@ -79,11 +80,13 @@ int	do_right(t_prompt *prompt, t_env **env)
 
 int	ft_pipe(t_prompt *prompt, t_env **env, int std_in)
 {
-	printf("pipe\n");
 	if (prompt->left->type == P_CMD)
 		do_left(prompt->left, env);
 	else if (prompt->left->type == P_PIPE)
+	{
+		dup2(std_in, 0);
 		ft_pipe(prompt->left, env, std_in);
+	}
 	if (prompt->right->type == P_CMD)
 	{
 		prompt->exit_state = do_right(prompt->right, env);

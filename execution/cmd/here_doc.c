@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/07 00:35:21 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 12:49:03 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void here_doc(t_prompt *prompt, int i, int *fd)
     extern int g_caught;
     pid_t pid;
 
+    printf("here_doc\n");
     ignore_signals();
     if (pipe(fd) == -1)
     {

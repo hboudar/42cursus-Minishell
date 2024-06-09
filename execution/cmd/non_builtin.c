@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/05 18:46:53 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 16:22:01 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	non_inredirect(t_prompt *prompt, int *fd, int *fd0)
     return (1);
 }
 
-static void non_redirection(t_prompt *prompt, int *fd)
+void non_redirection(t_prompt *prompt, int *fd)
 {
     int fd0;
     int fd1;
@@ -98,6 +98,7 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env, int *fd)
     extern int g_caught;
     pid_t	    pid;
 
+    printf("execute_nonebuiltin\n");
     if (g_caught)
         return (1);
     ignore_signals();

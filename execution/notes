@@ -1,4 +1,8 @@
-&
+"&" : segfault
 ; btween quotes should work 
 update underscore in env
-(ls && ls) : segfault : cuz :  printf("{%u}\n", prompt->cmd->type);
+"(ls && ls)" : segfault : cuz :  printf("{%u}\n", prompt->cmd->type);
+when no cmd : "<< l" : seg after expand_cmd in if (!prompt->cmd)
+>> l
+<< l
+A$
