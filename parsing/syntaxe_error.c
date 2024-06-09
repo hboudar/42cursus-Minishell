@@ -6,11 +6,28 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/07 10:07:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/09 02:39:12 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	redirection_syntaxe_error(t_token *tkn)
+{
+	if (tkn->type == REDIR_IN && (!tkn->next
+			|| (tkn->next->type != WORD && tkn->next->type != ENV)))
+		return (1);
+	if (tkn->type == REDIR_OUT && (!tkn->next
+			|| (tkn->next->type != WORD && tkn->next->type != ENV)))
+		return (1);
+	if (tkn->type == APPEND && (!tkn->next
+		|| (tkn->next->type != WORD && tkn->next->type != ENV)))
+		return (1);
+	if (tkn->type == REDIR_HERE_DOC && (!tkn->next
+			|| (tkn->next->type != WORD && tkn->next->type != ENV)))
+		return (1);
+	return (0);
+}
 
 int	was_syntax_error(t_prompt *prompt)
 {
@@ -82,14 +99,7 @@ int	check_syntax(t_token *tkn)
 {
 	while (tkn)
 	{
-		if (tkn->type == REDIR_IN && (!tkn->next || tkn->next->type != WORD))
-			return (1);
-		if (tkn->type == REDIR_OUT && (!tkn->next || tkn->next->type != WORD))
-			return (1);
-		if (tkn->type == APPEND && (!tkn->next || tkn->next->type != WORD))
-			return (1);
-		if (tkn->type == REDIR_HERE_DOC
-			&& (!tkn->next))
+		if (redirection_syntaxe_error(tkn))
 			return (1);
 		if (tkn->type == PIPE_TKN && (!tkn->next
 				|| tkn->next->type == PIPE_TKN || tkn->next->type == CLOSEPAR
