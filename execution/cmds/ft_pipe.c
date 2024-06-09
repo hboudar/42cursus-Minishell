@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/07 00:43:41 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 09:28:38 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	ft_child(t_prompt *prompt, t_env **env)
 	char	**envp;
 	char	*path;
 
-	setup_signal_handlers(sig_handler_child, sig_handler_child);
+	if (is_builtin(prompt))
+		exit (ft_builtin(prompt, env));
 	if (ft_strchr(prompt->cmd->args[0], '/') != NULL)
 		path = prompt->cmd->args[0];
 	else
@@ -43,6 +44,7 @@ void	do_left(t_prompt *prompt, t_env **env)
 	if (pid == 0)
 	{
 		(1) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));
+		setup_signal_handlers(sig_handler_child, sig_handler_child);
 		ft_child(prompt, env);
 	}
 	else
@@ -63,7 +65,10 @@ int	do_right(t_prompt *prompt, t_env **env)
 	if (pid == -1)
 		error("fork");
 	if (pid == 0)
+	{
+		setup_signal_handlers(sig_handler_child, sig_handler_child);
 		ft_child(prompt, env);
+	}
 	else
 	{
 		waitpid(pid, &prompt->exit_state, 0);

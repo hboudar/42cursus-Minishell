@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 19:26:19 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/07 00:43:33 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/09 09:30:07 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
     int i;
     int fd[2];
 
-    printf("ft_cmd\n");
 	expand_cmd(prompt, *env);
 	if (!prompt->cmd)
 	{
