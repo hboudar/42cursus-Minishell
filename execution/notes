@@ -1,2 +1,5 @@
 update underscore in env
 A$
+bad address on redirection for heredoc
+redirections arent done when there is a wrong command like catt > a file a isnt created
+pipe priority caused by waitpid

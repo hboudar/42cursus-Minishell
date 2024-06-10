@@ -23,7 +23,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	std_in = dup(0);
 	std_out = dup(1);
 	here_doc(prompt);
-	if (prompt->exit_state == 0)
+	if (g_caught == 0)
 		exit_state = execution(prompt, env, std_in);
 	else
 		exit_state = prompt->exit_state;

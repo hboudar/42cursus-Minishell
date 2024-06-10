@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:36:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 17:10:00 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:13:59 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	fill_args(t_cmd *cmd, int i)
 	ft_bzero(new_data, sizeof(char *) * (i + 1));
 	data = cmd->data;
 	i = 0;
+	quotes = GENERAL;
 	while (data)
 	{
 		if (i == 0)
