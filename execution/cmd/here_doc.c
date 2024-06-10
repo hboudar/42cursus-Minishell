@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 20:07:20 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/10 03:01:02 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ void ignore_signals(void)
     sigaction(SIGQUIT, &sa_ignore, &sa_orig_int);
 }
 
-static void	here_doc2(t_prompt *prompt, char *limiter, int quotes, int fd)
+static void	here_doc2(char *limiter, int fd)
 {
     extern int g_caught;
 	char	*str;
 
-    (void)quotes;
-    (void)prompt;
+	//add prompt & quotes
     setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
     while (1)
     {
@@ -43,34 +42,36 @@ static void	here_doc2(t_prompt *prompt, char *limiter, int quotes, int fd)
         }
         write(fd, str, ft_strlen(str));
         write(fd, "\n", 1);
-        free(str);
-		close(fd);
+        (1) && (free(str), close(fd));
     }
     exit(0);
 }
 
-void	here_doc1(t_prompt *p, t_file *file, t_limiter *lim)
+void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim)
 {
 	extern int	g_caught;
 	pid_t	pid;
 
 	(1) && (unlink("/tmp/.doc"), g_caught = 0);
-	file->fd = open("/tmp/.doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	while (file && file->type != 3)
 		file = file->next;
 	if (!file)
 		return ;
+	file->fd = open("/tmp/.doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	unlink("/tmp/.doc");
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
-		here_doc2(p, lim->limit, lim->quotes, file->fd);
+		here_doc2(lim->limit, file->fd);
 	else
 	{
-		waitpid(pid, &p->exit_state, 0);
-		p->exit_state = WEXITSTATUS(p->exit_state);
-		g_caught = (p->exit_state == 1);
+		waitpid(pid, &prompt->exit_state, 0);
+		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+		g_caught = (prompt->exit_state == 1);
+        if (g_caught)
+            return ;
 		file->type = 0;
-        here_doc1(p, file->next, lim->next);
+        here_doc1(prompt, file->next, lim->next);
 	}
 }
 
@@ -78,18 +79,20 @@ void	here_doc(t_prompt *prompt)
 {
 	if (prompt->subshell)
 	{
+        if (!prompt->limiter)
+            return ;
 		here_doc1(prompt, prompt->file, prompt->limiter);
-		if (prompt->exit_state != 0)
-			return ;
 	}
 	if (prompt->type == P_CMD)
 	{
+        if (!prompt->cmd->limiter)
+            return ;
 		here_doc1(prompt, prompt->cmd->file, prompt->cmd->limiter);
-		if (prompt->exit_state != 0)
-			return ;
 	}
 	else
 	{
+		if (prompt->exit_state != 0)
+			return ;
 		here_doc(prompt->left);
 		if (prompt->exit_state != 0)
 			return ;

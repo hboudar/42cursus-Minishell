@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 16:22:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/10 05:19:11 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,11 @@ static void	child_process(t_prompt *prompt, t_env *env, int *fd)
     exit(127);
 }
 
-int    execute_nonebuiltin(t_prompt *prompt, t_env *env, int *fd)
+int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
 {
     extern int g_caught;
     pid_t	    pid;
+    int         fd[2] = {0, 1};
 
     printf("execute_nonebuiltin\n");
     if (g_caught)
@@ -111,8 +112,8 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env, int *fd)
     {
         waitpid(pid, &prompt->exit_state, 0);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-        if (fd[0] != 0)
-            close(fd[0]);
+        // if (fd[0] != 0)
+        //     close(fd[0]);
     }
     return (prompt->exit_state);
 }
