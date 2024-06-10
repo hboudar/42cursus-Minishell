@@ -52,7 +52,7 @@ make && ./minishell
 ```
 
 #### 📋 Testing
-> _Simply run this command :_
+> _Simply run this command  :_
 ```shell
 make && ./minishell
 ```
