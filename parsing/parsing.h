@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 14:47:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:45:10 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,6 @@ int			get_args_count(t_data *data);
 int			was_syntax_error(t_prompt *prompt);
 int			check_and_or_limit(t_token *token, t_token *limit);
 int			remove_data(t_prompt *prmpt, t_data **data, int join);
-int			expand_redirections(t_token **token, t_env *env);
 char		*ft_remove_quotes(char *str);
 char		**ft_split_expand(char *str);
 char		**ft_dupexpand(char **expand);
@@ -187,7 +186,7 @@ void		expand_cmd(t_prompt *prmpt, t_env *env);
 void		handle_sigint(int signum);
 void		set_size(t_token *token);
 void		expand_wildcard(t_token **token);
-void		expand_here_doc(char **str, t_env *env, int expand);
+void		expand_string(char **str, t_env *env, int expand);
 void		split_expand(t_token *token);
 void		fill_expand(t_cmd *cmd, t_token *token);
 void		get_expand(char **line, t_token *token);

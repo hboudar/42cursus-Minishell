@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 03:58:52 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 15:14:52 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:12:31 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	add_files(t_token **token, t_token *limit, char **files)
 {
 	int		i;
-	t_token *tmp;
-	t_token *new;
+	t_token	*tmp;
+	t_token	*new;
 
 	tmp = *token;
 	i = 0;
@@ -73,12 +73,14 @@ char	**get_files(char *pattern)
 		perror("opendir");
 		return (NULL);
 	}
-	while ((entry = readdir(dir)))
+	entry = readdir(dir);
+	while (entry)
 	{
 		if (entry->d_name[0] == '.')
 			continue ;
 		if (match(pattern, entry->d_name))
 			add_last(&files, entry->d_name);
+		entry = readdir(dir);
 	}
 	closedir(dir);
 	return (files);
