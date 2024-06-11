@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/10 03:01:02 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 18:27:47 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,15 @@ void ignore_signals(void)
     sigaction(SIGQUIT, &sa_ignore, &sa_orig_int);
 }
 
-static void	here_doc2(char *limiter, int fd)
+static void	here_doc2(char *limiter, int fd, int quotes, t_env *env)
 {
     extern int g_caught;
 	char	*str;
 
-	//add prompt & quotes
     setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
     while (1)
     {
         str = readline("> ");
-        //expanding the variables
         if (g_caught || (!ft_strncmp(str, limiter, ft_strlen(limiter))
             && ft_strlen(str) == ft_strlen(limiter)) || !str)
         {
@@ -40,6 +38,7 @@ static void	here_doc2(char *limiter, int fd)
                 free(str);
             break;
         }
+		expand_here_doc(&str, env, quotes);
         write(fd, str, ft_strlen(str));
         write(fd, "\n", 1);
         (1) && (free(str), close(fd));
@@ -47,22 +46,23 @@ static void	here_doc2(char *limiter, int fd)
     exit(0);
 }
 
-void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim)
+void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 {
 	extern int	g_caught;
 	pid_t	pid;
 
-	(1) && (unlink("/tmp/.doc"), g_caught = 0);
+	// (1) && (unlink("here"), g_caught = 0);
+	g_caught = 0;
 	while (file && file->type != 3)
 		file = file->next;
 	if (!file)
 		return ;
-	file->fd = open("/tmp/.doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	unlink("/tmp/.doc");
+	file->fd = open("here", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	// unlink("/tmp/.doc");
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
-		here_doc2(lim->limit, file->fd);
+		here_doc2(lim->limit, file->fd, lim->quotes , env);
 	else
 	{
 		waitpid(pid, &prompt->exit_state, 0);
@@ -70,32 +70,32 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim)
 		g_caught = (prompt->exit_state == 1);
         if (g_caught)
             return ;
-		file->type = 0;
-        here_doc1(prompt, file->next, lim->next);
+		file->type = 3;
+        here_doc1(prompt, file->next, lim->next, env);
 	}
 }
 
-void	here_doc(t_prompt *prompt)
+void	here_doc(t_prompt *prompt, t_env *env)
 {
 	if (prompt->subshell)
 	{
         if (!prompt->limiter)
             return ;
-		here_doc1(prompt, prompt->file, prompt->limiter);
+		here_doc1(prompt, prompt->file, prompt->limiter, env);
 	}
 	if (prompt->type == P_CMD)
 	{
         if (!prompt->cmd->limiter)
             return ;
-		here_doc1(prompt, prompt->cmd->file, prompt->cmd->limiter);
+		here_doc1(prompt, prompt->cmd->file, prompt->cmd->limiter, env);
 	}
 	else
 	{
 		if (prompt->exit_state != 0)
 			return ;
-		here_doc(prompt->left);
+		here_doc(prompt->left, env);
 		if (prompt->exit_state != 0)
 			return ;
-		here_doc(prompt->right);
+		here_doc(prompt->right, env);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/10 06:16:44 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 18:23:00 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 //execution main :
 
-void	here_doc(t_prompt *prompt);
+void	here_doc(t_prompt *prompt, t_env *env);
 int	    execution(t_prompt *prompt, t_env **env, int std_in);
 int     subshell(t_prompt *prompt, t_env **env);
 int	    ft_cmd(t_prompt *prompt, t_env **env);

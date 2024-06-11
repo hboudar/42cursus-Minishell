@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/10 06:01:47 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/10 22:31:16 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,15 @@ static int  non_outredirect(t_prompt *prompt, int *fd1)
 static int	non_inredirect(t_prompt *prompt, int *fd0)
 {
     (*fd0 != 0) && (close(*fd0));
-    *fd0 = open(prompt->cmd->file->data, O_RDONLY);
+    if (!prompt->cmd->file->type)
+        *fd0 = open(prompt->cmd->file->data, O_RDONLY);
+    else if (prompt->cmd->file->type == 3)
+    {
+        printf("here %d\n", prompt->cmd->file->fd);
+        dup2(prompt->cmd->file->fd, 0);
+        close(prompt->cmd->file->fd);
+        return (1);
+    }
     if (*fd0 == -1)
     {
         perror(prompt->cmd->file->data);
@@ -58,7 +66,8 @@ void non_redirection(t_prompt *prompt)
     (1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
     while (prompt->cmd->file != NULL)
     {
-        if (!prompt->cmd->file->type && !non_inredirect(prompt, &fd0))
+        if ((!prompt->cmd->file->type || prompt->cmd->file->type == 3)
+            && !non_inredirect(prompt, &fd0))
             exit(1);
         else if (prompt->cmd->file->type && !non_outredirect(prompt, &fd1))
             exit(1);
