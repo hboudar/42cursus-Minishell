@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:04:58 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 19:07:04 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 20:10:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	expand_string(char **str, t_env *env, int quotes)
 	char	*expand;
 	char	*to_expand;
 
-	if (quotes == IN_SQUOTES || quotes == IN_DQUOTES)
+	if (quotes == IN_SQUOTES || quotes == IN_DQUOTES || !*str)
 		return ;
 	tmp = *str;
 	expand = NULL;
@@ -76,6 +76,7 @@ void	expand_string(char **str, t_env *env, int quotes)
 			if (!expand)
 				expand = ft_strdup("");
 			replace_env_var(str, expand, ft_strlen(to_expand));
+			free(expand);
 			free(to_expand);
 		}
 		else
