@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 18:27:47 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 18:45:29 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	here_doc2(char *limiter, int fd, int quotes, t_env *env)
                 free(str);
             break;
         }
-		expand_here_doc(&str, env, quotes);
+		expand_string(&str, env, quotes);
         write(fd, str, ft_strlen(str));
         write(fd, "\n", 1);
         (1) && (free(str), close(fd));
@@ -51,14 +51,14 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	extern int	g_caught;
 	pid_t	pid;
 
-	// (1) && (unlink("here"), g_caught = 0);
+	(1) && (unlink("here"), g_caught = 0);
 	g_caught = 0;
 	while (file && file->type != 3)
 		file = file->next;
 	if (!file)
 		return ;
 	file->fd = open("here", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	// unlink("/tmp/.doc");
+	unlink("/tmp/.doc");
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
