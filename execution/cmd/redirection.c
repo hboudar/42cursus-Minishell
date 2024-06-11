@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 18:45:46 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 18:48:47 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 static int out_redirect(t_prompt *prompt, int *fd1, int quotes)
 {
+    if (!prompt->cmd->file->data && !quotes)
+    {
+        printf("minishell: ambiguous redirect\n");
+        (*fd1 != 0) && (close(*fd1));
+        prompt->exit_state = 1;
+        return (0);
+    }
     (*fd1 != 1) && (close(*fd1));
     if (prompt->cmd->file->type == 1)
         *fd1 = open(prompt->cmd->file->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -62,7 +69,7 @@ void redirection(t_prompt *prompt, t_env **env)
     (1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
     while (prompt->cmd->file != NULL)
     {
-        expand_string(&prompt->cmd->file->data, env, 0);
+        expand_string(&prompt->cmd->file->data, *env, 0);
         if (!prompt->cmd->file->type &&
             !in_redirect(prompt, &fd0, prompt->cmd->file->quotes))
             return ;
