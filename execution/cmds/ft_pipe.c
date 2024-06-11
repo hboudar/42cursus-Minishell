@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 15:12:40 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/10 06:21:20 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ int	ft_pipe(t_prompt *prompt, t_env **env, int std_in)
 	if (prompt->left->type == P_CMD)
 		do_left(prompt->left, env);
 	else if (prompt->left->type == P_PIPE)
-	{
-		dup2(std_in, 0);
 		ft_pipe(prompt->left, env, std_in);
-	}
 	if (prompt->right->type == P_CMD)
 	{
 		prompt->exit_state = do_right(prompt->right, env);
