@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 18:45:29 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 20:01:23 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	extern int	g_caught;
 	pid_t	pid;
 
-	(1) && (unlink("here"), g_caught = 0);
+	// (1) && (unlink("/tmp/.doc"), g_caught = 0);
 	g_caught = 0;
 	while (file && file->type != 3)
 		file = file->next;
 	if (!file)
 		return ;
-	file->fd = open("here", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	unlink("/tmp/.doc");
+	file->fd = open("/tmp/.doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	printf("{%d}\n", file->fd);
+	// unlink("/tmp/.doc");
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
@@ -67,10 +68,12 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	{
 		waitpid(pid, &prompt->exit_state, 0);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+		close(file->fd);
+		file->fd = open("/tmp/.doc", O_RDONLY);
+		printf("{%d}}, %d\n", file->fd, file->type);
 		g_caught = (prompt->exit_state == 1);
         if (g_caught)
             return ;
-		file->type = 3;
         here_doc1(prompt, file->next, lim->next, env);
 	}
 }
