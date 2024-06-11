@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/08 20:28:48 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 03:58:16 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	fix_token(t_token **token)
 		}
 		tmp = tmp2;
 	}
+	expand_wildcard(token);
 }
 
 t_token	*parse_token(char *line)

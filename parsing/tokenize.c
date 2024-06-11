@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:25:24 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/07 10:04:44 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 03:44:03 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	tokenize2(char **line, int *i, t_token **token)
 		tokenize_semicolon(line, i, token);
 	else if ((*line)[*i] == '&')
 		tokenize_error(line, i, token);
+	else if ((*line)[*i] == '*')
+		tokenize_wildcard(line, i, token);
 	else
 		tokenize_word(line, i, token);
 }
