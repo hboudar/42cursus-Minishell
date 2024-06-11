@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 22:58:00 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 23:41:07 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 static int out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 {
+    printf("out_redirect\n");
     if (file && !file->data[0] && !quotes)
     {
         printf("minishell: ambiguous redirect\n");
@@ -43,19 +44,20 @@ static int out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 
 static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
 {
-    if (file && !file->data[0] && !quotes)
+    printf("in_redirect\n");
+    if (file->data && !file->data[0] && !quotes)
     {
         printf("minishell: ambiguous redirect\n");
         (*fd0 != 0) && (close(*fd0));
         prompt->exit_state = 1;
         return (0);
-    } 
-    if (!file->type)
+    }
+    if (file->type == 0)
         *fd0 = open(file->data, O_RDONLY);
     else if (file->type == 3)
     {
-        close(file->fd);
-        return (1);
+        *fd0 = open("/tmp/.doc", O_RDONLY);
+        unlink("/tmp/.doc");
     }
     if (*fd0 == -1)
     {
@@ -77,10 +79,11 @@ void redirection(t_prompt *prompt, t_env **env)
     while (file != NULL)
     {
         expand_string(&file->data, *env, 0);
-        if ((!file->type && file->type == 3)
+        if ((file->type == 0 || file->type == 3)
             && !in_redirect(prompt, file, &fd0, file->quotes))
             return ;
-        else if (file->type && !out_redirect(prompt, file, &fd1, file->quotes))
+        else if (file->type && file->type != 3
+            && !out_redirect(prompt, file, &fd1, file->quotes))
             return ;
         file = file->next;
     }

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 20:27:05 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 23:22:21 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	here_doc2(char *limiter, int fd, int quotes, t_env *env)
         {
             if (str)
                 free(str);
+			close(fd);
             break;
         }
 		expand_string(&str, env, quotes);
@@ -50,29 +51,27 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 {
 	extern int	g_caught;
 	pid_t	pid;
+	int	fd;
 
-	(1) && (unlink("/tmp/.doc"), g_caught = 0);
-	g_caught = 0;
 	while (file && file->type != 3)
 		file = file->next;
 	if (!file)
 		return ;
-	file->fd = open("here", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	unlink("here");
+	(1) && (unlink("/tmp/.doc"), g_caught = 0);
+	fd = open("/tmp/.doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
-		here_doc2(lim->limit, file->fd, lim->quotes , env);
+		here_doc2(lim->limit, fd, lim->quotes , env);
 	else
 	{
 		waitpid(pid, &prompt->exit_state, 0);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-		close(file->fd);
-		file->fd = open("here", O_RDONLY);
+		close(fd);
 		g_caught = (prompt->exit_state == 1);
         if (g_caught)
             return ;
-        here_doc1(prompt, file->next, lim->next, env);
+		here_doc1(prompt, file->next, lim->next, env);
 	}
 }
 
