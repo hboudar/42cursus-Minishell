@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 19:28:04 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:08:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int	check_syntax_bonus(t_token *token)
 
 int	check_syntax(t_token *tkn)
 {
+	if (tkn->type == PIPE_TKN
+		|| tkn->type == OR_TOKEN || tkn->type == AND_TOKEN)
+		return (1);
 	while (tkn)
 	{
 		if (redirection_syntaxe_error(tkn))

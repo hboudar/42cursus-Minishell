@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:04:58 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 04:06:17 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:44:07 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_to_expand(char **str)
 	return (to_expand);
 }
 
-void	expand_here_doc(char **str, t_env *env, int quotes)
+void	expand_string(char **str, t_env *env, int quotes)
 {
 	char	*tmp;
 	char	*expand;
