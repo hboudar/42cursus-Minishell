@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 19:46:55 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 22:58:00 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 {
-    if (!file->data[0] && !quotes)
+    if (file && !file->data[0] && !quotes)
     {
         printf("minishell: ambiguous redirect\n");
         (*fd1 != 0) && (close(*fd1));
@@ -43,8 +43,7 @@ static int out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 
 static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
 {
-    // printf("in_redirect\n");
-    if (!file->data[0] && !quotes)
+    if (file && !file->data[0] && !quotes)
     {
         printf("minishell: ambiguous redirect\n");
         (*fd0 != 0) && (close(*fd0));
@@ -53,12 +52,11 @@ static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
     } 
     if (!file->type)
         *fd0 = open(file->data, O_RDONLY);
-    // else if (file->type == 3)
-    // {
-    //     (*fd0 != 0) && (close(*fd0));
-    //     dup2(file->fd, 0);
-    //     return (1);
-    // }
+    else if (file->type == 3)
+    {
+        close(file->fd);
+        return (1);
+    }
     if (*fd0 == -1)
     {
         perror(file->data);

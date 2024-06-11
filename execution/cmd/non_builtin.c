@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 20:10:35 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 20:24:41 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int  non_outredirect(t_file *file, int *fd1)
 {
-    printf("non_outredirect\n");
     if (file->type == 1)
         *fd1 = open(file->data, O_CREAT | O_WRONLY | O_TRUNC, 0644);
     else if (file->type == 2)
@@ -35,7 +34,6 @@ static int  non_outredirect(t_file *file, int *fd1)
 
 static int	non_inredirect(t_file *file, int *fd0)
 {
-    printf("non_inredirect\n");
     (*fd0 != 0) && (close(*fd0));
     if (!file->type)
         *fd0 = open(file->data, O_RDONLY);
@@ -69,18 +67,15 @@ static void non_redirection(t_prompt *prompt, t_env *env)
     (1) && (fd0 = 0, fd1 = 1, file = prompt->cmd->file, prompt->exit_state = 0);
     while (file != NULL)
     {
-        printf("file->data: {%d}%s\n", file->type, file->data);
-        printf("here\n");
         expand_string(&file->data, env, 0);
-        printf("here\n");
-        if (!file->data[0] && !file->quotes)
+        if (file->data && !file->data[0] && !file->quotes)
         {
             (fd0 != 0) && (close(fd0));
             (fd1 != 1) && (close(fd1));
             printf("minishell: ambiguous redirect\n");
             exit(1);
         }
-        if (file->type == 3 && !non_inredirect(file, &fd0))
+        if ((!file->type || file->type == 3) && !non_inredirect(file, &fd0))
             exit(1);
         else if (file->type && !non_outredirect(file, &fd1))
             exit(1);
@@ -93,7 +88,6 @@ static void	child_process(t_prompt *prompt, t_env *env)
     char   *path;
     char  **envp;
 
-    printf("child process\n");
     setup_signal_handlers(sig_handler_child, sig_handler_child);
     non_redirection(prompt, env);
     if (prompt->cmd->args[0][0] == '/')
@@ -122,7 +116,6 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode)
 
     if (!mode)
     {
-        printf("executing none builtin\n");
         ignore_signals();
         pid = fork();
         if (pid == -1)
