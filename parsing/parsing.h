@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 20:08:57 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 00:45:34 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include <dirent.h>
 # include <termios.h>
 # include <term.h>
-# include <curses.h>
 # include <limits.h>
 # include <stdbool.h>
 # include <signal.h>
@@ -184,6 +183,7 @@ void		free_token_limit(t_token **token, t_token *limit);
 void		expand_cmd(t_prompt *prmpt, t_env *env);
 void		handle_sigint(int signum);
 void		set_size(t_token *token);
+void		expand_here_doc(char **str, t_env *env, int expand);
 void		split_expand(t_token *token);
 void		fill_expand(t_cmd *cmd, t_token *token);
 void		get_expand(char **line, t_token *token);
