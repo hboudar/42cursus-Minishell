@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 18:30:12 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 18:58:23 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
         redirection(prompt, env);
         return (prompt->exit_state);
     }
-	return (execute_nonebuiltin(prompt, *env));
+	return (execute_nonebuiltin(prompt, *env, 0));
 }
 
 int	ft_or(t_prompt *prompt, t_env **env, int fd_in)

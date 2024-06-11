@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/10 22:31:16 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 19:05:30 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	non_inredirect(t_prompt *prompt, int *fd0)
     return (1);
 }
 
-void non_redirection(t_prompt *prompt)
+void non_redirection(t_prompt *prompt, t_env *env)
 {
     int fd0;
     int fd1;
@@ -66,6 +66,14 @@ void non_redirection(t_prompt *prompt)
     (1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
     while (prompt->cmd->file != NULL)
     {
+        expand_string(&prompt->cmd->file->data, env, 0);
+        if (!prompt->cmd->file->data[0] && !prompt->cmd->file->quotes)
+        {
+            (fd0 != 0) && (close(fd0));
+            (fd1 != 1) && (close(fd1));
+            printf("minishell: ambiguous redirect\n");
+            exit(1);
+        }
         if ((!prompt->cmd->file->type || prompt->cmd->file->type == 3)
             && !non_inredirect(prompt, &fd0))
             exit(1);
@@ -81,7 +89,7 @@ static void	child_process(t_prompt *prompt, t_env *env)
     char  **envp;
 
     setup_signal_handlers(sig_handler_child, sig_handler_child);
-    non_redirection(prompt);
+    non_redirection(prompt, env);
     if (prompt->cmd->args[0][0] == '/')
         path = prompt->cmd->args[0];
     else
@@ -92,20 +100,25 @@ static void	child_process(t_prompt *prompt, t_env *env)
     exit(127);
 }
 
-int    execute_nonebuiltin(t_prompt *prompt, t_env *env)
+int    execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode)
 {
     pid_t	    pid;
 
-    ignore_signals();
-    pid = fork();
-    if (pid == -1)
-        return (error("fork failed"));
-    else if (!pid)
-        child_process(prompt, env);
-    else
+    if (!mode)
     {
-        waitpid(pid, &prompt->exit_state, 0);
-        prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+        ignore_signals();
+        pid = fork();
+        if (pid == -1)
+            return (error("fork failed"));
+        else if (!pid)
+            child_process(prompt, env);
+        else
+        {
+            waitpid(pid, &prompt->exit_state, 0);
+            prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+        }
     }
+    else
+        child_process(prompt, env);
     return (prompt->exit_state);
 }
