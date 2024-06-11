@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 19:05:30 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 19:08:10 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	non_inredirect(t_prompt *prompt, int *fd0)
     return (1);
 }
 
-void non_redirection(t_prompt *prompt, t_env *env)
+static void non_redirection(t_prompt *prompt, t_env *env)
 {
     int fd0;
     int fd1;
