@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 20:08:57 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:47:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include <dirent.h>
 # include <termios.h>
 # include <term.h>
-# include <curses.h>
 # include <limits.h>
 # include <stdbool.h>
 # include <signal.h>
@@ -75,7 +74,8 @@ enum e_type
 	AND_TOKEN,
 	OR_TOKEN,
 	SEMI_COLON,
-	ERROR
+	ERROR,
+	WILDCARD
 };
 
 enum e_print
@@ -172,9 +172,11 @@ int			get_args_count(t_data *data);
 int			was_syntax_error(t_prompt *prompt);
 int			check_and_or_limit(t_token *token, t_token *limit);
 int			remove_data(t_prompt *prmpt, t_data **data, int join);
+int			expand_redirections(t_token **token, t_env *env);
 char		*ft_remove_quotes(char *str);
-char		*get_expanded_value(char **data, t_env *env);
 char		**ft_split_expand(char *str);
+char		**ft_dupexpand(char **expand);
+char		*get_expanded_value(char **data, t_env *env);
 void		print_redirections(t_cmd *cmd);
 void		replace_exit_state(t_prompt *prompt, t_data *data);
 void		init_signals(t_prompt *prompt);
@@ -184,6 +186,8 @@ void		free_token_limit(t_token **token, t_token *limit);
 void		expand_cmd(t_prompt *prmpt, t_env *env);
 void		handle_sigint(int signum);
 void		set_size(t_token *token);
+void		expand_wildcard(t_token **token);
+void		expand_here_doc(char **str, t_env *env, int expand);
 void		split_expand(t_token *token);
 void		fill_expand(t_cmd *cmd, t_token *token);
 void		get_expand(char **line, t_token *token);
@@ -211,6 +215,7 @@ void		tokenize_env(char **line, int *i, t_token **token);
 void		tokenize_word(char **line, int *i, t_token **token);
 void		tokenize_semicolon(char **line, int *i, t_token **token);
 void		tokenize_error(char **line, int *i, t_token **token);
+void		tokenize_wildcard(char **line, int *i, t_token **token);
 void		tokenize(char **line, int *i, t_token **token);
 void		fix_token(t_token **token);
 void		get_token_state(t_token *token);
@@ -230,12 +235,10 @@ void		fill_redirections_subshell(t_prompt *prmpt, t_token *token);
 void		print_env(t_env *env);
 void		print_cmd(t_cmd *cmd);
 void		ft_shell_lvl(t_env *env);
-void		ft_shell_lvl(t_env *env);
 void		print_files(t_file *file);
 void		build_prompt(t_prompt **prmpt, t_token **token);
 void		parse_pipes(t_prompt **prmpt, t_token **token);
 void		parse_prompt(t_prompt **oldprmpt, char *line);
-char		**ft_dupexpand(char **expand);
 void		split_token(t_token *token, t_token *split, t_token **res);
 void		end_token(t_token **token);
 void		print_expand(t_expand *expand);

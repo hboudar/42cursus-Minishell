@@ -6,49 +6,78 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:04:58 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 02:26:47 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 04:06:17 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-int	has_multiple_expand(char *str)
+void	replace_env_var(char **str, char *expand, int len)
 {
-    int		i;
-    int		quotes;
-    int		dquotes;
+	char	*tmp;
+	char	*new_str;
+	char	*tmp2;
 
-    i = 0;
-    quotes = 0;
-    dquotes = 0;
-    while (str[i])
-    {
-        if (str[i] == '\'' && !dquotes)
-            quotes = !quotes;
-        if (str[i] == '\"' && !quotes)
-            dquotes = !dquotes;
-        if (str[i] == '$' && !quotes && !dquotes)
-            return (1);
-        i++;
-    }
-    return (0);
+	(1) && (tmp = *str, new_str = ft_strdup(""));
+	while (*tmp != '$' && *tmp)
+	{
+		new_str = ft_strjoin_char(new_str, *tmp);
+		tmp++;
+	}
+	tmp2 = expand;
+	while (*tmp2)
+	{
+		new_str = ft_strjoin_char(new_str, *tmp2);
+		tmp2++;
+	}
+	tmp += len + 1;
+	while (*tmp)
+	{
+		new_str = ft_strjoin_char(new_str, *tmp);
+		tmp++;
+	}
+	free(*str);
+	*str = new_str;
 }
 
-void	expand_here_doc(char **str, t_env *env, int expand)
+char	*get_to_expand(char **str)
 {
-	char    *tmp;
-	char    *tmp2;
+	char	*to_expand;
+	char	*tmp;
 
-	if (!expand)
-		return ;
-    tmp2 = *str;
-	if (has_multiple_expand(*str))
-		handle_multiple_expands(str, env);
-	else
+	tmp = *str;
+	to_expand = ft_strdup("");
+	while (*tmp && ft_isword(*tmp))
 	{
-        while (*tmp2 && *tmp2 != '$')
-            tmp2++;
-		tmp = get_expanded_value(&tmp2, env);
-        replace_string(str, tmp);
+		to_expand = ft_strjoin_char(to_expand, *tmp);
+		tmp++;
+	}
+	*str = tmp;
+	return (to_expand);
+}
+
+void	expand_here_doc(char **str, t_env *env, int quotes)
+{
+	char	*tmp;
+	char	*expand;
+	char	*to_expand;
+
+	if (quotes == IN_SQUOTES || quotes == IN_DQUOTES)
+		return ;
+	tmp = *str;
+	expand = NULL;
+	while (*tmp)
+	{
+		if (*tmp == '$')
+		{
+			tmp++;
+			to_expand = get_to_expand(&tmp);
+			expand = get_expanded_value(&to_expand, env);
+			if (!expand)
+				expand = ft_strdup("");
+			replace_env_var(str, expand, ft_strlen(to_expand));
+		}
+		else
+			tmp++;
 	}
 }
