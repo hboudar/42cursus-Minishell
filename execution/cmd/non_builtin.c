@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 00:15:22 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 05:44:57 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode)
 
     if (!mode)
     {
+        printf("execution non_\n");
         ignore_signals();
         pid = fork();
         if (pid == -1)

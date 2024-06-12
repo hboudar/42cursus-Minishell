@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 23:50:56 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 23:51:23 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 06:42:53 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ static int	non_inredirect(t_file *file, int *fd0)
         *fd0 = open(file->data, O_RDONLY);
     else if (file->type == 3)
     {
-        *fd0 = open("/tmp/.doc", O_RDONLY);
-        dup2(*fd0, 0);
-        (1) && (close(*fd0), unlink("/tmp/.doc"));
+        dup2(file->fd, 0);
+        printf("file->fd: %d\n", file->fd);
         return (1);
     }
     if (*fd0 == -1)
@@ -68,7 +67,8 @@ void non_redirection(t_prompt *prompt, t_env *env)
     (1) && (fd0 = 0, fd1 = 1, file = prompt->cmd->file, prompt->exit_state = 0);
     while (file != NULL)
     {
-        expand_string(&file->data, env, 0);
+        if (file->quotes != IN_SQUOTES)
+            expand_string(&file->data, env, 0);
         if (file->data && !file->data[0] && !file->quotes)
         {
             (fd0 != 0) && (close(fd0));

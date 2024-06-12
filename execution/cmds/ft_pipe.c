@@ -6,29 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/10 06:21:20 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 02:56:20 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
-
-void	ft_child(t_prompt *prompt, t_env **env)
-{
-	char	**envp;
-	char	*path;
-
-	
-	if (is_builtin(prompt))
-		exit(ft_builtin(prompt, env));
-	if (ft_strchr(prompt->cmd->args[0], '/') != NULL)
-		path = prompt->cmd->args[0];
-	else
-		path = find_path(prompt->cmd->args, *env);
-	envp = env_to_envp(*env, *env);
-	execve(path, prompt->cmd->args, envp);
-	perror(prompt->cmd->args[0]);
-	exit(127);
-}
 
 void	do_left(t_prompt *prompt, t_env **env)
 {
@@ -45,8 +27,13 @@ void	do_left(t_prompt *prompt, t_env **env)
 	if (pid == 0)
 	{
 		(1) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));
-		setup_signal_handlers(sig_handler_child, sig_handler_child);
-		ft_child(prompt, env);
+		if (is_builtin(prompt))
+		{
+			setup_signal_handlers(sig_handler_child, sig_handler_child);
+			exit(ft_builtin(prompt, env));
+		}
+		else
+			execute_nonebuiltin(prompt, *env, 1);
 	}
 	else
 	{
@@ -67,8 +54,13 @@ int	do_right(t_prompt *prompt, t_env **env)
 		error("fork");
 	if (pid == 0)
 	{
-		setup_signal_handlers(sig_handler_child, sig_handler_child);
-		ft_child(prompt, env);
+		if (is_builtin(prompt))
+		{
+			setup_signal_handlers(sig_handler_child, sig_handler_child);
+			exit(ft_builtin(prompt, env));
+		}
+		else
+			execute_nonebuiltin(prompt, *env, 1);
 	}
 	else
 	{

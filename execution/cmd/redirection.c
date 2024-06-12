@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 23:41:07 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 03:46:11 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 static int out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 {
-    printf("out_redirect\n");
     if (file && !file->data[0] && !quotes)
     {
         printf("minishell: ambiguous redirect\n");
@@ -44,7 +43,6 @@ static int out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 
 static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
 {
-    printf("in_redirect\n");
     if (file->data && !file->data[0] && !quotes)
     {
         printf("minishell: ambiguous redirect\n");
@@ -56,8 +54,8 @@ static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
         *fd0 = open(file->data, O_RDONLY);
     else if (file->type == 3)
     {
-        *fd0 = open("/tmp/.doc", O_RDONLY);
-        unlink("/tmp/.doc");
+        close(file->fd);
+        return (1);
     }
     if (*fd0 == -1)
     {
@@ -65,7 +63,7 @@ static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
         prompt->exit_state = 1;
         return (0);
     }
-    close(*fd0);
+    (*fd0 != 0) && (close(*fd0));
     return (1);
 }
 
@@ -78,7 +76,8 @@ void redirection(t_prompt *prompt, t_env **env)
     (1) && (fd0 = 0, fd1 = 1, file = prompt->cmd->file, prompt->exit_state = 0);
     while (file != NULL)
     {
-        expand_string(&file->data, *env, 0);
+        if (file->quotes != IN_SQUOTES)
+            expand_string(&file->data, *env, 0);
         if ((file->type == 0 || file->type == 3)
             && !in_redirect(prompt, file, &fd0, file->quotes))
             return ;

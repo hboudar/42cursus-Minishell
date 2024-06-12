@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 23:22:21 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 05:41:45 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,15 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 {
 	extern int	g_caught;
 	pid_t	pid;
-	int	fd;
+	int    fd;
 
 	while (file && file->type != 3)
 		file = file->next;
 	if (!file)
 		return ;
 	(1) && (unlink("/tmp/.doc"), g_caught = 0);
-	fd = open("/tmp/.doc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	fd = open("/tmp/.doc", O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	(1) && (file->fd = open("/tmp/.doc", O_RDONLY), unlink("/tmp/.doc"));
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
@@ -66,12 +67,14 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	else
 	{
 		waitpid(pid, &prompt->exit_state, 0);
-		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-		close(fd);
-		g_caught = (prompt->exit_state == 1);
-        if (g_caught)
-            return ;
-		here_doc1(prompt, file->next, lim->next, env);
+		(1) && (prompt->exit_state = WEXITSTATUS(prompt->exit_state), close(fd));
+		g_caught = (prompt->exit_state == 1) * 2;
+		(g_caught) && (close(file->fd));
+		if (!g_caught && file->next)
+		{
+			close(file->fd);
+			here_doc1(prompt, file->next, lim->next, env);
+		}
 	}
 }
 
@@ -79,6 +82,7 @@ void	here_doc(t_prompt *prompt, t_env *env)
 {
 	if (prompt->subshell)
 	{
+		printf("subshell : here_doc\n");
         if (!prompt->limiter)
             return ;
 		here_doc1(prompt, prompt->file, prompt->limiter, env);
@@ -87,15 +91,18 @@ void	here_doc(t_prompt *prompt, t_env *env)
 	{
         if (!prompt->cmd->limiter)
             return ;
+		printf("cmd : here_doc\n");
 		here_doc1(prompt, prompt->cmd->file, prompt->cmd->limiter, env);
 	}
 	else
 	{
+		printf("otheres : here_doc\n");
 		if (prompt->exit_state != 0)
 			return ;
 		here_doc(prompt->left, env);
 		if (prompt->exit_state != 0)
 			return ;
+		printf("otheres : here_doc\n");
 		here_doc(prompt->right, env);
 	}
 }
