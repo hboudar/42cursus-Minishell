@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 23:50:56 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 06:42:53 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 22:00:48 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static int  non_outredirect(t_file *file, int *fd1)
 {
+    printf("outredirect :file->data: %s[%d]\n", file->data, file->type);
     if (file->type == 1)
-        *fd1 = open(file->data, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+        *fd1 = open(file->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
     else if (file->type == 2)
-        *fd1 = open(file->data, O_CREAT | O_WRONLY | O_APPEND, 0644);
+        *fd1 = open(file->data, O_CREAT | O_RDWR | O_APPEND, 0644);
     if (*fd1 == -1)
     {
         printf("Error: %s: %s\n", file->data, strerror(errno));
@@ -25,7 +26,7 @@ static int  non_outredirect(t_file *file, int *fd1)
     }
     if (dup2(*fd1, 1) == -1)
     {
-        close(*fd1);
+        (*fd1 != 1) && (close(*fd1));
         perror("dup2 in out");
         return (0);
     }
@@ -40,7 +41,7 @@ static int	non_inredirect(t_file *file, int *fd0)
     else if (file->type == 3)
     {
         dup2(file->fd, 0);
-        printf("file->fd: %d\n", file->fd);
+        close(file->fd);
         return (1);
     }
     if (*fd0 == -1)
@@ -50,7 +51,7 @@ static int	non_inredirect(t_file *file, int *fd0)
     }
     if (dup2(*fd0, 0) == -1)
     {
-        close(*fd0);
+        (*fd0 != 0) && (close(*fd0));
         perror("dup2 in in");
         return (0);
     }
@@ -78,7 +79,7 @@ void non_redirection(t_prompt *prompt, t_env *env)
         }
         if ((!file->type || file->type == 3) && !non_inredirect(file, &fd0))
             exit(1);
-        else if (file->type && file->type != 3 && !non_outredirect(file, &fd1))
+        else if ((file->type == 1 || file->type == 2) && !non_outredirect(file, &fd1))
             exit(1);
         file = file->next;
     }

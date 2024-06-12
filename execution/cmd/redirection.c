@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 06:50:28 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 20:10:14 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
     if (file->type == 1)
         *fd1 = open(file->data, O_CREAT | O_RDWR | O_TRUNC, 0644);
     else if (file->type == 2)
-        *fd1 = open(file->data, O_CREAT | O_WRONLY | O_APPEND, 0644);
+        *fd1 = open(file->data, O_CREAT | O_RDWR | O_APPEND, 0644);
     if (*fd1 == -1)
     {
         printf("Error: %s: %s\n", file->data, strerror(errno));
@@ -53,6 +53,7 @@ static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
         *fd0 = open(file->data, O_RDONLY);
     else if (file->type == 3)
     {
+        dup2(file->fd, 0);
         close(file->fd);
         return (1);
     }

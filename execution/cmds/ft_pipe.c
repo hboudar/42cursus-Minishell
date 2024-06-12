@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 02:56:20 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 17:58:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	do_left(t_prompt *prompt, t_env **env)
 	}
 	else
 	{
-		waitpid(pid, &prompt->exit_state, 0);
+		wait(&prompt->exit_state);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
 		(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
 	}
@@ -64,7 +64,7 @@ int	do_right(t_prompt *prompt, t_env **env)
 	}
 	else
 	{
-		waitpid(pid, &prompt->exit_state, 0);
+		wait(&prompt->exit_state);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
 	}
 	return (prompt->exit_state);

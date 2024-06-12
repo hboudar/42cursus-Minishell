@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 05:41:45 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 22:00:28 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 		return ;
 	(1) && (unlink("/tmp/.doc"), g_caught = 0);
 	fd = open("/tmp/.doc", O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	(1) && (file->fd = open("/tmp/.doc", O_RDONLY), unlink("/tmp/.doc"));
+	file->fd = open("/tmp/.doc", O_RDONLY);
+
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
@@ -67,10 +68,12 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	else
 	{
 		waitpid(pid, &prompt->exit_state, 0);
-		(1) && (prompt->exit_state = WEXITSTATUS(prompt->exit_state), close(fd));
+		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+		(1) && (close(fd), close(file->fd), file->fd = open("/tmp/.doc", O_RDONLY), unlink("/tmp/.doc"));
 		g_caught = (prompt->exit_state == 1) * 2;
-		(g_caught) && (close(file->fd));
-		if (!g_caught && file->next)
+		if (g_caught)
+			close(file->fd);
+		if (!g_caught && file->next && file->next->type == 3)
 		{
 			close(file->fd);
 			here_doc1(prompt, file->next, lim->next, env);
