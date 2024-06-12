@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 03:58:52 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 00:37:34 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:01:24 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ void	expand_wildcard(t_token **token)
 	t_token	*tmp;
 	t_token	*tmp2;
 
-	tmp = *token;
-	files = NULL;
+	(1) && (tmp = *token, files = NULL);
 	while (tmp)
 	{
 		if (tmp->type == WILDCARD
