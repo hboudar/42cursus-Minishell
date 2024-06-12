@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:15:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 01:28:00 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:38:37 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	set_data_type(t_data *data)
 			break ;
 		tmp++;
 	}
-	if (*tmp == '$')
+	if (*tmp == '$' && *(tmp + 1))
 		data->type = ENV;
 	else
 		data->type = WORD;
@@ -113,7 +113,8 @@ void	expand_cmd(t_prompt *prmpt, t_env *env)
 	{
 		while (data)
 		{
-			while (data && data->type == ENV && ft_strncmp(data->arg, "$?", 3))
+			while (data && data->type == ENV && ft_strncmp(data->arg, "$?", 3)
+				&& expand)
 			{
 				tmp = get_new_data(data->arg, expand, 0, env);
 				split_expanded(prmpt, &data, tmp);

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 03:58:52 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 16:12:31 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:37:34 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ char	**get_files(char *pattern)
 	while (entry)
 	{
 		if (entry->d_name[0] == '.')
+		{
+			entry = readdir(dir);
 			continue ;
+		}
 		if (match(pattern, entry->d_name))
 			add_last(&files, entry->d_name);
 		entry = readdir(dir);
@@ -93,6 +96,7 @@ void	expand_wildcard(t_token **token)
 	t_token	*tmp2;
 
 	tmp = *token;
+	files = NULL;
 	while (tmp)
 	{
 		if (tmp->type == WILDCARD
