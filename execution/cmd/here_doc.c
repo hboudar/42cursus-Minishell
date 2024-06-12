@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 22:00:28 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 23:04:34 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,6 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 
 void	here_doc(t_prompt *prompt, t_env *env)
 {
-	if (prompt->subshell)
-	{
-		printf("subshell : here_doc\n");
-        if (!prompt->limiter)
-            return ;
-		here_doc1(prompt, prompt->file, prompt->limiter, env);
-	}
 	if (prompt->type == P_CMD)
 	{
         if (!prompt->cmd->limiter)
@@ -107,5 +100,12 @@ void	here_doc(t_prompt *prompt, t_env *env)
 			return ;
 		printf("otheres : here_doc\n");
 		here_doc(prompt->right, env);
+	}
+	if (prompt->subshell)
+	{
+        if (!prompt->limiter)
+            return ;
+		printf("subshell : here_doc\n");
+		here_doc1(prompt, prompt->file, prompt->limiter, env);
 	}
 }

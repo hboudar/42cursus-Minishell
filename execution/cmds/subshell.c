@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 22:18:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 23:11:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,19 @@
 //     return (1);
 // }
 
-// int    ft_redirection(t_prompt *prompt, int *fd)
+// int    ft_redirection(t_prompt *prompt)
 // {
 //     int in;
 //     int out;
 //     int err;
-//     (void)fd;
+ 
 //     (1) && (in = 0, out = 1, err = 1);
 //     while (prompt->file)
 //     {
 //         if (prompt->file->type == 0 || prompt->file->type == 3)
-//             err = ft_inredirect(prompt, &in, fd);
+//             err = ft_inredirect(prompt, &in);
 //         else if (prompt->file->type)
-//             err = ft_outredirect(prompt, &out, fd);
+//             err = ft_outredirect(prompt, &out);
 //         if (!err)
 //         {
 //             printf("err\n");
@@ -89,8 +89,8 @@ int		subshell(t_prompt *prompt, t_env **env)
     if (pid == 0)
     {
         setup_signal_handlers(sig_handler_child, sig_handler_child);
-        prompt->subshell = 0;
-        exit (prep_execution(prompt, env));
+        // ft_redirection(prompt);
+        exit (execution(prompt, env));
     }
     else
     {
