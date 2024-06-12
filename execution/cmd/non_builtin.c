@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 23:50:20 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 00:15:22 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int    execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode)
             child_process(prompt, env);
         else
         {
-            waitpid(pid, &prompt->exit_state, 0);
+            wait(&prompt->exit_state);
             prompt->exit_state = WEXITSTATUS(prompt->exit_state);
         }
     }

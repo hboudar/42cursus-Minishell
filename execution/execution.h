@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 23:51:45 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/11 23:55:48 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,17 @@
 
 # include "../parsing/parsing.h"
 
-//execution main :
-
 void	here_doc(t_prompt *prompt, t_env *env);
 int	    execution(t_prompt *prompt, t_env **env, int std_in);
 int     subshell(t_prompt *prompt, t_env **env);
 int	    ft_cmd(t_prompt *prompt, t_env **env);
+int     execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode);
 int     ft_pipe(t_prompt *prompt, t_env **env, int fd_in);
 int	    ft_or(t_prompt *prompt, t_env **env, int fd_in);
 int	    ft_and(t_prompt *prompt, t_env **env, int fd_in);
 
 //one_cmd / no_cmd:
 
-int     execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode);
 void    redirection(t_prompt *prompt, t_env **env);
 void    non_redirection(t_prompt *prompt, t_env *env);
 int     ft_echo(t_prompt *prompt, t_env *env);

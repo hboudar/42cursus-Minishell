@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/11 18:58:23 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 00:02:49 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_cmd(t_prompt *prompt, t_env **env)
 {
-	// printf("{ft_cmd}\n");
 	expand_cmd(prompt, *env);
 	if (!prompt->cmd)
 	{
@@ -31,7 +30,6 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
 
 int	ft_or(t_prompt *prompt, t_env **env, int fd_in)
 {
-	// printf("{ft_or}");
 	prompt->exit_state = execution(prompt->left, env, fd_in);
 	if (prompt->exit_state)
 		prompt->exit_state = execution(prompt->right, env, fd_in);
@@ -40,7 +38,6 @@ int	ft_or(t_prompt *prompt, t_env **env, int fd_in)
 
 int ft_and(t_prompt *prompt, t_env **env, int fd_in)
 {
-    // printf("{ft_and}");
     prompt->exit_state = execution(prompt->left, env, fd_in);
     if (!prompt->exit_state)
         prompt->exit_state = execution(prompt->right, env, fd_in);
@@ -49,7 +46,6 @@ int ft_and(t_prompt *prompt, t_env **env, int fd_in)
 
 int	execution(t_prompt *prompt, t_env **env, int std_in)
 {
-	// printf("{execution}");
 	if (prompt->subshell)
 		return (subshell(prompt, env));
 	else if (prompt->type == P_CMD)

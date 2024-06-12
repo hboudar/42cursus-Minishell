@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 12:21:53 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 00:21:05 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ static void    ft_unsetenv(const char *name, t_env **env)
     t_env *tmp;
     t_env *prev;
 
-    tmp = *env;
-    prev = NULL;
+    if (ft_strncmp(name, "_", 2) == 0)
+        return ;
+    (1) && (tmp = *env, prev = NULL);
     while (tmp)
     {
         mode = (ft_strchr(tmp->key, '=') != NULL);
