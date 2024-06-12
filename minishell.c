@@ -23,7 +23,10 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	std_in = dup(0);
 	std_out = dup(1);
 	here_doc(prompt, *env);
-	exit_state = execution(prompt, env, std_in);
+	if (g_caught != 2)
+		exit_state = execution(prompt, env, std_in);
+	else
+		exit_state = 1;
 	dup2(std_in, 0);
 	dup2(std_out, 1);
 	close(std_in);
