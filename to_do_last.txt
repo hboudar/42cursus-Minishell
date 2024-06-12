@@ -1,4 +1,0 @@
-expand here_doc
-ambiguous rediredct
-expand * for current working directory only
-check all leaks

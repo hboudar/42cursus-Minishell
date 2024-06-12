@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 06:47:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/12 23:15:56 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_file	*ft_newfile(char *data, int type, enum e_state state)
 	new = (t_file *)malloc(sizeof(t_file));
 	new->data = data;
 	new->type = type;
-	new->quotes = (state == IN_DQUOTES) + (state == IN_SQUOTES);
+	new->quotes = state;
 	new->next = NULL;
 	return (new);
 }
