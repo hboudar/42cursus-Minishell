@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 00:02:49 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 22:08:47 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,33 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
 	return (execute_nonebuiltin(prompt, *env, 0));
 }
 
-int	ft_or(t_prompt *prompt, t_env **env, int fd_in)
+int	ft_or(t_prompt *prompt, t_env **env)
 {
-	prompt->exit_state = execution(prompt->left, env, fd_in);
+	prompt->exit_state = execution(prompt->left, env);
 	if (prompt->exit_state)
-		prompt->exit_state = execution(prompt->right, env, fd_in);
+		prompt->exit_state = execution(prompt->right, env);
 	return (prompt->exit_state);
 }
 
-int ft_and(t_prompt *prompt, t_env **env, int fd_in)
+int ft_and(t_prompt *prompt, t_env **env)
 {
-    prompt->exit_state = execution(prompt->left, env, fd_in);
+    prompt->exit_state = execution(prompt->left, env);
     if (!prompt->exit_state)
-        prompt->exit_state = execution(prompt->right, env, fd_in);
+        prompt->exit_state = execution(prompt->right, env);
     return (prompt->exit_state);
 }
 
-int	execution(t_prompt *prompt, t_env **env, int std_in)
+int	execution(t_prompt *prompt, t_env **env)
 {
 	if (prompt->subshell)
 		return (subshell(prompt, env));
 	else if (prompt->type == P_CMD)
 		prompt->exit_state = ft_cmd(prompt, env);
 	else if (prompt->type == P_PIPE)
-		prompt->exit_state = ft_pipe(prompt, env, std_in);
+		prompt->exit_state = ft_pipe(prompt, env);
 	else if (prompt->type == P_OR)
-		prompt->exit_state = ft_or(prompt, env, std_in);
+		prompt->exit_state = ft_or(prompt, env);
 	else if (prompt->type == P_AND)
-		prompt->exit_state = ft_and(prompt, env, std_in);
+		prompt->exit_state = ft_and(prompt, env);
 	return (prompt->exit_state);
 }

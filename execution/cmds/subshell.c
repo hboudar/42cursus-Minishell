@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/09 20:08:37 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 22:05:01 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int    ft_redirection(t_prompt *prompt, int *fd)
     return (1);
 }
 
-int sub_fork(t_prompt *prompt, t_env **env, int *fd)
+int		subshell(t_prompt *prompt, t_env **env)
 {
     pid_t pid;
 
@@ -90,8 +90,7 @@ int sub_fork(t_prompt *prompt, t_env **env, int *fd)
     if (pid == 0)
     {
         setup_signal_handlers(sig_handler_child, sig_handler_child);
-        ft_redirection(prompt, fd);
-        exit (execution(prompt, env, fd[0]));
+        exit (execution(prompt, env, 0));
     }
     else
     {
@@ -99,22 +98,6 @@ int sub_fork(t_prompt *prompt, t_env **env, int *fd)
             continue ;
     }
     return (prompt->exit_state);
-}
-
-int		subshell(t_prompt *prompt, t_env **env)
-{
-    extern int  g_caught;
-    int fd[2];
-    int i;
-
-    (1) && (i = -1, fd[0] = 0, fd[1] = 1, prompt->subshell = 0, g_caught = 0);
-    if (g_caught)
-    {
-        g_caught = 0;
-        close(fd[0]);
-        return (1);
-    }
-    return (sub_fork(prompt, env, fd));
 }
 
 //expand_cmd
