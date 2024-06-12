@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:00:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/09 19:56:06 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/12 06:53:06 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ void	free_prompt(t_prompt **prompt)
 	free_prompt(&(*prompt)->left);
 	free_prompt(&(*prompt)->right);
 	free_cmd(&(*prompt)->cmd);
+	free_files((*prompt)->file);
+	free_limiter(&(*prompt)->limiter);
 	free(*prompt);
+	(*prompt)->limiter = NULL;
+	(*prompt)->file = NULL;
+	(*prompt)->left = NULL;
+	(*prompt)->right = NULL;
 	*prompt = NULL;
 }

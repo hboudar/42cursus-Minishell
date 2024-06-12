@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 03:54:56 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:59:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int	has_semicolon(t_token *token)
 	while (tmp)
 	{
 		if (tmp->type == SEMI_COLON)
+			return (1);
+		if (tmp->next && tmp->next->type == OPENPAR && tmp->type != AND_TOKEN
+			&& tmp->type != OR_TOKEN && tmp->type != PIPE_TKN)
 			return (1);
 		tmp = tmp->next;
 	}
