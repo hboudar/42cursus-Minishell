@@ -6,23 +6,17 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 19:38:59 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 00:02:37 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void	do_left(t_prompt *prompt, t_env **env)
+void	do_left(t_prompt *prompt, t_env **env, int *fd)
 {
-	int		fd[2];
 	pid_t	pid;
 
-	if (prompt->exit_state)
-		return ;
-	expand_cmd(prompt, *env);
 	ignore_signals();
-	if (pipe(fd) == -1)
-		error("pipe");
 	pid = fork();
 	if (pid == -1)
 		error("fork");
@@ -31,7 +25,7 @@ void	do_left(t_prompt *prompt, t_env **env)
 		(1) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));
 		if (is_builtin(prompt))
 		{
-			setup_signal_handlers(sig_handler_child, sig_handler_child);
+			setup_signal_handlers(sig_handler_child, SIG_IGN);
 			exit(ft_builtin(prompt, env));
 		}
 		else
@@ -39,8 +33,7 @@ void	do_left(t_prompt *prompt, t_env **env)
 	}
 	else
 	{
-		while (wait(&prompt->exit_state) != pid)
-			;
+		wait(&prompt->exit_state);	
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
 		(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
 	}
@@ -50,9 +43,6 @@ int	do_right(t_prompt *prompt, t_env **env)
 {
 	pid_t	pid;
 
-	if (prompt->exit_state)
-		return (prompt->exit_state);
-	expand_cmd(prompt, *env);
 	ignore_signals();
 	pid = fork();
 	if (pid == -1)
@@ -61,7 +51,7 @@ int	do_right(t_prompt *prompt, t_env **env)
 	{
 		if (is_builtin(prompt))
 		{
-			setup_signal_handlers(sig_handler_child, sig_handler_child);
+			setup_signal_handlers(sig_handler_child, SIG_IGN);
 			exit(ft_builtin(prompt, env));
 		}
 		else
@@ -69,33 +59,25 @@ int	do_right(t_prompt *prompt, t_env **env)
 	}
 	else
 	{
-		while (wait(&prompt->exit_state) != pid)
-			;
+		wait(&prompt->exit_state);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
 	}
 	return (prompt->exit_state);
 }
 
-int	ft_pipe(t_prompt *prompt, t_env **env, int mode)
+int	ft_pipe(t_prompt *prompt, t_env **env, char side)
 {
 	int	fd[2];
 
+	if (pipe(fd) == -1)
+		error("pipe");
 	if (prompt->subshell)
-	{
-		if (pipe(fd) == -1)
-			error("pipe");
-		if (mode)
-			(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
-		else
-			(1) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));
-		subshell(prompt, env);
-	}
+		prompt->exit_state = subshell(prompt, env, fd);
 	else if (prompt->type == P_CMD)
 	{
-		(!mode) && (do_left(prompt, env), mode = 0);
-		(mode) && (do_right(prompt, env), mode = 1);
+		expand_cmd(prompt, *env);
+		(side == 'L') && (do_left(prompt, env, fd), side = 'L');
+		(side == 'R') && (do_right(prompt, env), side = 'R');
 	}
-	else
-		execution(prompt, env);
 	return (prompt->exit_state);
 }
