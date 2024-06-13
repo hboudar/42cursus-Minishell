@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 19:33:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 00:11:45 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ int	check_and_or(t_token *token)
 	return (0);
 }
 
-void	remove_redirections_subshell(t_token **token)
+void	remove_redirections_subshell(t_token **token, t_token *limit)
 {
 	t_token	*tmp;
 	t_token	*tmp2;
 
 	tmp = *token;
-	while (tmp && tmp->type != CLOSEPAR)
+	while (tmp && tmp != limit)
 	{
 		if (tmp->type == REDIR_HERE_DOC || tmp->type == REDIR_OUT
 			|| tmp->type == REDIR_IN || tmp->type == APPEND)
@@ -87,7 +87,7 @@ void	handle_subshells(t_prompt **prmpt, t_token **token, t_token *limit)
 	(*prmpt)->right = malloc(sizeof(t_prompt));
 	ft_bzero((*prmpt)->right, sizeof(t_prompt));
 	fill_redirections_subshell((*prmpt)->left, *token, limit);
-	remove_redirections_subshell(&limit);
+	remove_redirections_subshell(token, limit);
 	split_token(*token, limit, &tmp);
 	build_prompt(&(*prmpt)->left, &tmp);
 	free_token_limit(token, limit->next);
