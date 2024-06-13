@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 20:04:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 02:17:41 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 04:21:47 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ int	ft_builtin(t_prompt *prompt, t_env **env)
 
 int	is_builtin(t_prompt *prompt)
 {
-	return ((!ft_strncmp(prompt->cmd->args[0], "echo", 5)
-			|| !ft_strncmp(prompt->cmd->args[0], "cd", 3)
-			|| !ft_strncmp(prompt->cmd->args[0], "pwd", 4)
-			|| !ft_strncmp(prompt->cmd->args[0], "export", 7)
-			|| !ft_strncmp(prompt->cmd->args[0], "unset", 6)
-			|| !ft_strncmp(prompt->cmd->args[0], "env", 4)
-			|| !ft_strncmp(prompt->cmd->args[0], "exit", 5)));
+	if (prompt && prompt->cmd && prompt->cmd->args
+		&& prompt->cmd->args[0])
+		return ((!ft_strncmp(prompt->cmd->args[0], "echo", 5)
+				|| !ft_strncmp(prompt->cmd->args[0], "cd", 3)
+				|| !ft_strncmp(prompt->cmd->args[0], "pwd", 4)
+				|| !ft_strncmp(prompt->cmd->args[0], "export", 7)
+				|| !ft_strncmp(prompt->cmd->args[0], "unset", 6)
+				|| !ft_strncmp(prompt->cmd->args[0], "env", 4)
+				|| !ft_strncmp(prompt->cmd->args[0], "exit", 5)));
+	return (0);
 }

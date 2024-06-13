@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 02:17:20 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 03:21:50 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ void    sigint_handler_heredoc(int sig); //signal handler for heredoc
 void    ignore_signals(void); //ignoring signals
 void    sig_handler_child(int sig); //signal handler for child
 
-int     subshell_redirection(t_prompt *prompt, t_env **env, int *fd);
 
 #endif
