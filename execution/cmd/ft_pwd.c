@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:29 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/05 20:19:17 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 00:16:53 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int ft_pwd(t_prompt *prompt, t_env *env)
     pwd = getcwd(NULL, 0);
     if (pwd)
     {
-        printf("%s\n", pwd);
+        printf("{%s}\n", pwd);
         free(pwd);
         prompt->exit_state = 0;
         return (0);

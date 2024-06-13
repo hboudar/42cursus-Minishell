@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 23:50:56 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 22:00:48 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 23:35:33 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,13 @@ static int	non_inredirect(t_file *file, int *fd0)
     return (1);
 }
 
-void non_redirection(t_prompt *prompt, t_env *env)
+void non_redirection(t_prompt *prompt, t_env *env, t_file *file)
 {
-    t_file *file;
     int fd0;
     int fd1;
 
     (void)env;
-    (1) && (fd0 = 0, fd1 = 1, file = prompt->cmd->file, prompt->exit_state = 0);
+    (1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
     while (file != NULL)
     {
         if (file->quotes != IN_SQUOTES)

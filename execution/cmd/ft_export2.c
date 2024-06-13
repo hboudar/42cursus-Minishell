@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:01:44 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/13 20:10:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 02:03:53 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void add_env_equal_2(const char *str, t_env *env)
 {
+    printf("add_env_equal_2\n");
     env->next = malloc(sizeof(t_env));
     if (!env->next)
         return (perror("E: malloc in export"));

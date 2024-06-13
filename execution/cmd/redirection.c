@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 20:10:14 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/12 23:33:40 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ static int in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
     return (1);
 }
 
-void redirection(t_prompt *prompt, t_env **env)
+void redirection(t_prompt *prompt, t_env **env, t_file *file)
 {
-    t_file  *file;
     int     fd0;
 	int     fd1;
 
-    (1) && (fd0 = 0, fd1 = 1, file = prompt->cmd->file, prompt->exit_state = 0);
+    (1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
     while (file != NULL)
     {
         if (file->quotes != IN_SQUOTES)
@@ -86,7 +85,7 @@ void redirection(t_prompt *prompt, t_env **env)
             return ;
         file = file->next;
     }
-    if (prompt->cmd->args != NULL)
+    if (prompt->cmd && prompt->cmd->args != NULL)
     {
         ft_builtin(prompt, env);
         (fd1 != 1) && (close(fd1));

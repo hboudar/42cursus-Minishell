@@ -6,51 +6,75 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/28 15:48:02 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 02:28:01 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void set_oldpwd(char *oldpwd, t_env *env)
+void    add_path(char *path, char *key, t_env *env)
 {
-    while (env)
+    while (env->next)
+        env = env->next;
+    env->next = malloc(sizeof(t_env));
+    if (!env->next)
+        return ;
+    env->next->key = ft_strdup(key);
+    if (!env->next->key)
+        return ;
+    env->next->value = ft_strdup(path);
+    if (!env->next->value)
+        return ;
+    env->next->print = PRINT;
+    env->next->next = NULL;
+}
+
+void set_oldpwd(char *oldpwd, t_env *tmp_env, t_env *env)
+{
+    while (tmp_env)
     {
-        if (!ft_strncmp(env->key, "OLDPWD", 6))
+        if (!ft_strncmp(tmp_env->key, "OLDPWD", 6))
         {
-            if (!env->value)
+            if (!tmp_env->value)
             {
-                env->value = oldpwd;
-                free(env->key);
-                env->key = ft_strdup("OLDPWD=");
-                if (!env->key)
+                free(tmp_env->key);
+                tmp_env->key = ft_strdup("OLDPWD=");
+                if (!tmp_env->key)
                     return ;
-                env->print = PRINT;
             }
             else
             {
-                free(env->value);
-                env->value = NULL;
-                env->value = oldpwd;
-                env->print = PRINT;
+                free(tmp_env->value);
+                tmp_env->value = NULL;
             }
+            tmp_env->value = ft_strdup(oldpwd);
+            tmp_env->print = PRINT;
+            return ;
         }
-        env = env->next;
+        tmp_env = tmp_env->next;
     }
+    if (!tmp_env)
+        add_path(oldpwd, "OLDPWD=", env);
 }
 
-void set_pwd(char *pwd, t_env *env)
+void set_pwd(char *pwd, t_env *tmp_env, t_env *env)
 {
-    while (env)
+    while (tmp_env)
     {
-        if (!ft_strncmp(env->key, "PWD=", 8))
+        if (!ft_strncmp(tmp_env->key, "PWD=", 8))
         {
-            free(env->value);
-            env->value = NULL;
-            env->value = pwd;
+            if (tmp_env->value != NULL)
+            {
+                free(tmp_env->value);
+                tmp_env->value = NULL;
+            }
+            tmp_env->value = ft_strdup(pwd);
+            return ;
         }
-        env = env->next;
+        tmp_env = tmp_env->next;
     }
+    if (!tmp_env)
+        add_path(pwd, "PWD=", env);
 }
 
 char *ft_getpwd(char *arg, t_env *env, int mode)
@@ -83,7 +107,7 @@ char *ft_getpwd(char *arg, t_env *env, int mode)
 
 int ft_cd(t_prompt *prompt, t_env *env)
 {
-    char *oldpwd;
+    char *oldpwd = NULL;
     char *pwd;
 
     if (prompt->cmd->args[1] == NULL)
@@ -103,7 +127,7 @@ int ft_cd(t_prompt *prompt, t_env *env)
     pwd = ft_getpwd(prompt->cmd->args[1], env, 1);
     if (!pwd)
         perror("Error in ft_getcwd {pwd}");
-    set_pwd(pwd, env);
-    set_oldpwd(oldpwd, env);
+    (1) && (set_pwd(pwd, env, env), free(pwd), pwd = NULL);
+    (1) && (set_oldpwd(oldpwd, env, env), free(oldpwd), oldpwd = NULL);
     return (0);
 }

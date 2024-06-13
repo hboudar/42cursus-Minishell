@@ -6,77 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/12 23:11:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 00:05:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../execution.h"
-
-// static int  ft_outredirect(t_prompt *prompt, int *out, int *fd)
-// {
-//     (*out != 1) && (close(*out));
-//     if (prompt->file->type == 1)
-//         *out = open(prompt->file->data, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-//     else if (prompt->file->type == 2)
-//         *out = open(prompt->file->data, O_WRONLY | O_CREAT | O_APPEND, 0644);
-//     if (*out == -1)
-//     {
-//         close(fd[0]);
-//         perror(prompt->file->data);
-//         return (0);
-//     }
-//     if (dup2(*out, 1) == -1)
-//     {
-//         close(fd[0]);
-//         close(*out);
-//         perror("dup2 in out");
-//         return (0);
-//     }
-//     return (1);
-// }
-
-// static int	ft_inredirect(t_prompt *prompt, int *in, int *fd)
-// {
-//     (*in != 0) && (close(*in));
-//     *in = open(prompt->file->data, O_RDONLY);
-//     if (*in == -1)
-//     {
-//         close(fd[0]);
-//         perror(prompt->file->data);
-//         return (0);
-//     }
-//     if (dup2(*in, 0) == -1)
-//     {
-//         close(fd[0]);
-//         close(*in);
-//         perror("dup2 in in");
-//         return (0);
-//     }
-//     return (1);
-// }
-
-// int    ft_redirection(t_prompt *prompt)
-// {
-//     int in;
-//     int out;
-//     int err;
- 
-//     (1) && (in = 0, out = 1, err = 1);
-//     while (prompt->file)
-//     {
-//         if (prompt->file->type == 0 || prompt->file->type == 3)
-//             err = ft_inredirect(prompt, &in);
-//         else if (prompt->file->type)
-//             err = ft_outredirect(prompt, &out);
-//         if (!err)
-//         {
-//             printf("err\n");
-//             exit(1);
-//         }
-//         prompt->file = prompt->file->next;
-//     }
-//     return (1);
-// }
 
 int		subshell(t_prompt *prompt, t_env **env)
 {
@@ -89,18 +23,18 @@ int		subshell(t_prompt *prompt, t_env **env)
     if (pid == 0)
     {
         setup_signal_handlers(sig_handler_child, sig_handler_child);
-        // ft_redirection(prompt);
+        non_redirection(prompt, *env, prompt->file);
+        prompt->subshell = 0;
         exit (execution(prompt, env));
     }
     else
     {
         while (wait(&prompt->exit_state) != pid)
             continue ;
+        prompt->exit_state = WEXITSTATUS(prompt->exit_state);
     }
     return (prompt->exit_state);
 }
-
-//expand_cmd
 
 /*A subshell created by (…) has the same file descriptors as its creator.
 Some other means of creating subshells modify some file descriptors before executing user code; for example,
