@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:34:17 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 02:59:06 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 03:17:08 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 	else if (check_and_or_limit(*token, tmp))
 	{
 		(*prmpt)->subshell = 1;
-		fill_redirections_subshell(*prmpt, *token);
+		fill_redirections_subshell(*prmpt, *token, NULL);
 		remove_redirections_subshell(token);
 		build_prompt(prmpt, token);
 	}

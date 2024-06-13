@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 02:58:16 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 03:16:50 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void		free_prompt(t_prompt **prompt);
 void		free_cmd(t_cmd **cmd);
 void		free_files(t_file *file);
 void		remove_redirections(t_token **token);
-void		fill_redirections_subshell(t_prompt *prmpt, t_token *token);
+void		fill_redirections_subshell(t_prompt *prmpt, t_token *token, t_token *limit);
 void		ft_shell_lvl(t_env *env);
 void		build_prompt(t_prompt **prmpt, t_token **token);
 void		parse_pipes(t_prompt **prmpt, t_token **token);
