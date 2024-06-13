@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 03:22:12 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 18:16:29 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int		subshell(t_prompt *prompt, t_env **env)
 {
     pid_t pid;
 
+    printf("subshell\n");
+    prompt->subshell = 0;
     ignore_signals();
     pid = fork();
     if (pid == -1)
@@ -24,7 +26,6 @@ int		subshell(t_prompt *prompt, t_env **env)
     {
         setup_signal_handlers(sig_handler_child, sig_handler_child);
         non_redirection(prompt, *env, prompt->file);
-        prompt->subshell = 0;
         exit (execution(prompt, env));
     }
     else
