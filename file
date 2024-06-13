@@ -1,7 +1,5 @@
-Makefile
-README.md
-execution
-file
+outredirect :file->data: file[1]
+
 file2
 minishell
 minishell.c
