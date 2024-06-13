@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 03:37:00 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 19:15:34 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	child_process(t_prompt *prompt, t_env *env)
 
     setup_signal_handlers(sig_handler_child, sig_handler_child);
     non_redirection(prompt, env, prompt->cmd->file);
-    if (prompt->cmd->args[0][0] == '/')
+    if (ft_strchr(prompt->cmd->args[0], '/'))
         path = prompt->cmd->args[0];
     else
         path = find_path(prompt->cmd->args, env);

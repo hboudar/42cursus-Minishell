@@ -27,6 +27,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 		exit_state = execution(prompt, env);
 	else
 		exit_state = 1;
+	printf("{exit status: %d}\n", exit_state);
 	dup2(std_in, 0);
 	dup2(std_out, 1);
 	close(std_in);

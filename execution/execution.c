@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 18:33:03 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 19:25:45 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ int	ft_or(t_prompt *prompt, t_env **env)
 {
 	int	fd[2];
 
-	printf("or\n");
 	fd[0] = dup(0);
 	fd[1] = dup(1);
 	prompt->exit_state = execution(prompt->left, env);
-	printf("exit_state = %d\n", prompt->exit_state);
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
 	if (prompt->exit_state)
@@ -48,7 +46,6 @@ int ft_and(t_prompt *prompt, t_env **env)
 {
 	int	fd[2];
 
-	printf("and\n");
 	fd[0] = dup(0);
 	fd[1] = dup(1);
     prompt->exit_state = execution(prompt->left, env);
@@ -66,7 +63,10 @@ int	execution(t_prompt *prompt, t_env **env)
 	else if (prompt->type == P_CMD)
 		prompt->exit_state = ft_cmd(prompt, env);  
 	else if (prompt->type == P_PIPE)
-		prompt->exit_state = ft_pipe(prompt, env);
+	{
+		prompt->exit_state = ft_pipe(prompt->left, env, 0);
+		prompt->exit_state = ft_pipe(prompt->right, env, 1);
+	}
 	else if (prompt->type == P_OR)
 		prompt->exit_state = ft_or(prompt, env);
 	else if (prompt->type == P_AND)

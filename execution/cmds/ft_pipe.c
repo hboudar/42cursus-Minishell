@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 18:15:24 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 19:25:28 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	do_left(t_prompt *prompt, t_env **env)
 	int		fd[2];
 	pid_t	pid;
 
-	printf("do_left\n");
+	if (prompt->exit_state)
+		return ;
 	expand_cmd(prompt, *env);
 	ignore_signals();
 	if (pipe(fd) == -1)
@@ -49,7 +50,8 @@ int	do_right(t_prompt *prompt, t_env **env)
 {
 	pid_t	pid;
 
-	printf("do_right\n");
+	if (prompt->exit_state)
+		return (prompt->exit_state);
 	expand_cmd(prompt, *env);
 	ignore_signals();
 	pid = fork();
@@ -74,25 +76,16 @@ int	do_right(t_prompt *prompt, t_env **env)
 	return (prompt->exit_state);
 }
 
-int	ft_pipe(t_prompt *prompt, t_env **env)
+int	ft_pipe(t_prompt *prompt, t_env **env, int mode)
 {
 	if (prompt->subshell)
-		return (subshell(prompt, env));
-	else if (prompt->left->type == P_CMD)
-		do_left(prompt->left, env);
-	else if (prompt->left->type == P_PIPE)
-		ft_pipe(prompt->left, env);
-	else if (prompt->left->type == P_OR)
-		prompt->exit_state = ft_or(prompt->left, env);
-	else if (prompt->left->type == P_AND)
-		prompt->exit_state = ft_and(prompt->left, env);
-	if (prompt->right->type == P_CMD)
-		prompt->exit_state = do_right(prompt->right, env);
-	else if (prompt->right->type == P_PIPE)
-		ft_pipe(prompt->right, env);
-	else if (prompt->right->type == P_OR)
-		prompt->exit_state = ft_or(prompt->right, env);
-	else if (prompt->right->type == P_AND)
-		prompt->exit_state = ft_and(prompt->right, env);
+		subshell(prompt, env);
+	else if (prompt->type == P_CMD)
+	{
+		(!mode) && (do_left(prompt, env), mode = 0);
+		(mode) && (do_right(prompt, env), mode = 1);
+	}
+	else
+		execution(prompt, env);
 	return (prompt->exit_state);
 }
