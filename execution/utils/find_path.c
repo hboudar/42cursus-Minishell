@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:07:24 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/26 19:01:34 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 18:04:24 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static char    *free_array(char **array)
 
 static char    *get_env_value(char *key, t_env *env)
 {
+    if (!env)
+        return (NULL);
     while (env && env->key)
     {
         if (!ft_strncmp(env->key, key, 5))

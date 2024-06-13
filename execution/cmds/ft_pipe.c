@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 03:40:04 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 18:02:40 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	do_left(t_prompt *prompt, t_env **env)
 	int		fd[2];
 	pid_t	pid;
 
-	printf("do_left\n");
 	expand_cmd(prompt, *env);
 	ignore_signals();
 	if (pipe(fd) == -1)
@@ -49,7 +48,6 @@ int	do_right(t_prompt *prompt, t_env **env)
 {
 	pid_t	pid;
 
-	printf("do_right\n");
 	expand_cmd(prompt, *env);
 	ignore_signals();
 	pid = fork();
