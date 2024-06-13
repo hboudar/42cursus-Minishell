@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:00:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 06:53:06 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 04:04:34 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_limiter(t_limiter **limiter)
 		free(tmp->limit);
 		free(tmp);
 	}
+	*limiter = NULL;
 }
 
 void	free_data(t_data **data)
@@ -36,6 +37,7 @@ void	free_data(t_data **data)
 		free(tmp->arg);
 		free(tmp);
 	}
+	*data = NULL;
 }
 
 void	free_expand(t_expand **expand)
@@ -49,6 +51,7 @@ void	free_expand(t_expand **expand)
 		free(tmp->data);
 		free(tmp);
 	}
+	*expand = NULL;
 }
 
 void	free_cmd(t_cmd **cmd)
@@ -81,9 +84,5 @@ void	free_prompt(t_prompt **prompt)
 	free_files((*prompt)->file);
 	free_limiter(&(*prompt)->limiter);
 	free(*prompt);
-	(*prompt)->limiter = NULL;
-	(*prompt)->file = NULL;
-	(*prompt)->left = NULL;
-	(*prompt)->right = NULL;
 	*prompt = NULL;
 }
