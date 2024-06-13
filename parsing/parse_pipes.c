@@ -6,11 +6,26 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 03:48:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:44:51 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	handle_subshell_pipe(t_prompt **prmpt, t_token **token)
+{
+	t_token	*tmp;
+	t_token	*tmp2;
+
+	tmp = *token;
+	tmp2 = get_closepar(tmp);
+	remove_token(token, tmp);
+	tmp = tmp2->next;
+	remove_token(token, tmp2);
+	tmp2 = *token;
+	(*prmpt)->subshell = 1;
+	build_prompt(prmpt, token);
+}
 
 void	end_token(t_token **token)
 {
@@ -70,10 +85,12 @@ void	parse_pipes(t_prompt **prmpt, t_token **token)
 	if (!check_pipe(*token))
 	{
 		set_size(*token);
-		(*prmpt)->left = NULL;
-		(*prmpt)->right = NULL;
-		(*prmpt)->type = P_CMD;
 		(*prmpt)->cmd = parse_cmd(token);
+		return ;
+	}
+	if ((*token)->type == OPENPAR)
+	{
+		handle_subshell_pipe(prmpt, token);
 		return ;
 	}
 	tmp = get_pipe(token);

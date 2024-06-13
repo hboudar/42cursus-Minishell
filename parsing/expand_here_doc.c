@@ -6,13 +6,22 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:04:58 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 03:37:55 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 04:03:54 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	replace_env_var(char **str, char *expand, int len)
+void	replace_old_tmp(char **str, char **oldtmp, char *new_str)
+{
+	int i;
+
+	i = *oldtmp - *str;
+	printf("oldtmp: %d\n", i);
+	*oldtmp = &new_str[i - 1];
+}
+
+void	replace_env_var(char **str, char *expand, int len, char **oldtmp)
 {
 	char	*tmp;
 	char	*new_str;
@@ -36,6 +45,7 @@ void	replace_env_var(char **str, char *expand, int len)
 		new_str = ft_strjoin_char(new_str, *tmp);
 		tmp++;
 	}
+	replace_old_tmp(str, oldtmp, new_str);
 	free(*str);
 	*str = new_str;
 }
@@ -75,7 +85,7 @@ void	expand_string(char **str, t_env *env, int quotes)
 			expand = get_expanded_value(&to_expand, env);
 			if (!expand)
 				expand = ft_strdup("");
-			replace_env_var(str, expand, ft_strlen(to_expand));
+			replace_env_var(str, expand, ft_strlen(to_expand), &tmp);
 			if (!expand[0])
 				free(expand);
 			free(to_expand);

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 03:58:52 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 20:01:24 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 03:55:35 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	add_files(t_token **token, t_token *limit, char **files)
 
 	tmp = *token;
 	i = 0;
-	while (tmp->next != limit)
+	while (tmp && tmp->next != limit)
 		tmp = tmp->next;
 	while (files[i])
 	{
@@ -32,10 +32,9 @@ void	add_files(t_token **token, t_token *limit, char **files)
 		}
 		ft_bzero(new, sizeof(t_token));
 		new->data = ft_strdup(files[i]);
-		new->type = WORD;
-		new->state = GENERAL;
-		new->next = tmp->next;
-		tmp->next = new;
+		(tmp) && (new->next = tmp->next);
+		(tmp) && (tmp->next = new);
+		(!(*token)) && (*token = new);
 		tmp = new;
 		i++;
 	}
