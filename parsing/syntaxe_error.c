@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 23:45:47 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/12 23:49:33 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	check_syntax(t_token *tkn)
 	{
 		if (tkn->next && tkn->next->type == OPENPAR
 			&& tkn->type != OR_TOKEN && tkn->type != AND_TOKEN
-			&& tkn->type != PIPE_TKN)
+			&& tkn->type != PIPE_TKN && tkn->type != OPENPAR)
 			return (1);
 		if (redirection_syntaxe_error(tkn))
 			return (1);
