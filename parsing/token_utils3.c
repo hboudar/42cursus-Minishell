@@ -6,11 +6,26 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:00:37 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 03:44:26 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 02:58:26 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+t_token	*get_limit(t_token *token)
+{
+	t_token	*tmp;
+
+	tmp = token;
+	while (tmp)
+	{
+		if (tmp->type == PIPE_TKN || tmp->type == AND_TOKEN
+			|| tmp->type == OR_TOKEN)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
 
 void	add_token(t_token *new_token)
 {
