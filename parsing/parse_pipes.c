@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 18:54:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 17:44:51 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:34:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	handle_subshell_pipe(t_prompt **prmpt, t_token **token)
 	tmp = *token;
 	tmp2 = get_closepar(tmp);
 	remove_token(token, tmp);
-	tmp = tmp2->next;
 	remove_token(token, tmp2);
-	tmp2 = *token;
 	(*prmpt)->subshell = 1;
 	build_prompt(prmpt, token);
 }
@@ -51,6 +49,8 @@ int	check_pipe(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
+		if (tmp->type == OPENPAR)
+			tmp = get_closepar(tmp);
 		if (tmp->type == PIPE_TKN)
 			return (1);
 		tmp = tmp->next;
@@ -82,15 +82,15 @@ void	parse_pipes(t_prompt **prmpt, t_token **token)
 	t_token	*tmp;
 	t_token	*pipeless;
 
+	if ((*token)->type == OPENPAR)
+	{
+		handle_subshell_pipe(prmpt, token);
+		return ;
+	}
 	if (!check_pipe(*token))
 	{
 		set_size(*token);
 		(*prmpt)->cmd = parse_cmd(token);
-		return ;
-	}
-	if ((*token)->type == OPENPAR)
-	{
-		handle_subshell_pipe(prmpt, token);
 		return ;
 	}
 	tmp = get_pipe(token);

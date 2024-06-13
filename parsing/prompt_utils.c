@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 03:16:35 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:30:45 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	check_and_or(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
+		if (tmp->type == OPENPAR)
+			tmp = get_closepar(tmp);
 		if (tmp->type == AND_TOKEN || tmp->type == OR_TOKEN)
 			return (1);
 		tmp = tmp->next;
