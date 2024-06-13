@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 18:30:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:33:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,18 @@ void	remove_redirections_subshell(t_token **token)
 void	handle_subshells(t_prompt **prmpt, t_token **token, t_token *limit)
 {
 	t_token	*tmp;
-	t_token	*tmp2;
 
 	(*prmpt)->type = (limit->type == AND_TOKEN) * P_AND
-		+ (limit->type == OR_TOKEN) * P_OR;
+		+ (limit->type == OR_TOKEN) * P_OR + (limit->type == PIPE_TKN) * P_PIPE;
 	(*prmpt)->left = malloc(sizeof(t_prompt));
 	ft_bzero((*prmpt)->left, sizeof(t_prompt));
 	(*prmpt)->left->subshell = 1;
 	(*prmpt)->right = malloc(sizeof(t_prompt));
 	ft_bzero((*prmpt)->right, sizeof(t_prompt));
 	fill_redirections_subshell((*prmpt)->left, *token, limit);
-	tmp2 = limit->next;
 	remove_redirections_subshell(&limit);
-	limit = tmp2;
 	split_token(*token, limit, &tmp);
 	build_prompt(&(*prmpt)->left, &tmp);
-	free_token_limit(token, limit);
+	free_token_limit(token, limit->next);
 	build_prompt(&(*prmpt)->right, token);
 }
