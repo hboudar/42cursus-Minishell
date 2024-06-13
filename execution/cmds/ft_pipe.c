@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 19:25:28 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 19:38:59 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,18 @@ int	do_right(t_prompt *prompt, t_env **env)
 
 int	ft_pipe(t_prompt *prompt, t_env **env, int mode)
 {
+	int	fd[2];
+
 	if (prompt->subshell)
+	{
+		if (pipe(fd) == -1)
+			error("pipe");
+		if (mode)
+			(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
+		else
+			(1) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));
 		subshell(prompt, env);
+	}
 	else if (prompt->type == P_CMD)
 	{
 		(!mode) && (do_left(prompt, env), mode = 0);
