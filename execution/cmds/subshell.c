@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 18:16:29 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 18:33:38 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int		subshell(t_prompt *prompt, t_env **env)
     }
     else
     {
-        while (wait(&prompt->exit_state) != pid)
-            continue ;
+        waitpid(pid, &prompt->exit_state, 0);
         prompt->exit_state = WEXITSTATUS(prompt->exit_state);
     }
     return (prompt->exit_state);
