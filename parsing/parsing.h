@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 22:18:03 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 02:58:16 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,8 @@ size_t		ft_tablen(char **args);
 t_file		*ft_newfile(char *data, int type, enum e_state state);
 t_token		*get_closepar(t_token *token);
 t_token		*parse_token(char *line);
-t_token		*pipeless_token(t_token *token);
 t_token		*get_and_or(t_token *token);
+t_token		*get_limit(t_token *token);
+t_token		*pipeless_token(t_token *token);
 
 #endif

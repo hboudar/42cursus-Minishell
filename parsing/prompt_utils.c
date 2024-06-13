@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 03:50:39 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/13 02:56:30 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	check_and_or_limit(t_token *token, t_token *limit)
 	tmp = token;
 	while (tmp && tmp != limit)
 	{
-		if (tmp->type == AND_TOKEN || tmp->type == OR_TOKEN)
+		if (tmp->type == AND_TOKEN || tmp->type == OR_TOKEN
+			|| tmp->type == PIPE_TKN)
 			return (1);
 		tmp = tmp->next;
 	}
