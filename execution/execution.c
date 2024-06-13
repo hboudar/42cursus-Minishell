@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 02:36:13 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/13 03:13:45 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,14 @@ int	ft_or(t_prompt *prompt, t_env **env)
 
 int ft_and(t_prompt *prompt, t_env **env)
 {
-	printf("ft_and\n");
     prompt->exit_state = execution(prompt->left, env);
     if (!prompt->exit_state)
-	{
         prompt->exit_state = execution(prompt->right, env);
-	}
     return (prompt->exit_state);
 }
 
 int	execution(t_prompt *prompt, t_env **env)
 {
-	printf("subshell : %d\n", prompt->subshell);
 	if (prompt->subshell)
 		return (subshell(prompt, env));
 	else if (prompt->type == P_CMD)
