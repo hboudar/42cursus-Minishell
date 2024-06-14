@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 12:04:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	here_doc3(char *limiter, int fd, int quotes, t_env *env)
 			close(fd);
 			break ;
 		}
-		expand_string(&str, env, quotes);
+		expand_string(&str, env, quotes, NULL);
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		free(str);
