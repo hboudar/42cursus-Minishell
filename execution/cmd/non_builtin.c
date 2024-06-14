@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 12:03:32 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 12:11:37 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	child_process(t_prompt *prompt, t_env *env)
 		path = prompt->cmd->args[0];
 	else
 		path = find_path(prompt->cmd->args, env);
-	if (path && access(path, F_OK) == -1
-		|| (prompt->cmd->args && !prompt->cmd->args[0][0]))
+	if ((path && access(path, F_OK) == -1)
+		|| ((prompt->cmd->args && !prompt->cmd->args[0][0])))
 	{
 		printf("minishell: %s: command not found\n", prompt->cmd->args[0]);
 		exit(127);
