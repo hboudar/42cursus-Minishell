@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 00:11:45 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 01:58:53 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	handle_subshells(t_prompt **prmpt, t_token **token, t_token *limit)
 	(*prmpt)->left->subshell = 1;
 	(*prmpt)->right = malloc(sizeof(t_prompt));
 	ft_bzero((*prmpt)->right, sizeof(t_prompt));
-	fill_redirections_subshell((*prmpt)->left, *token, limit);
+	fill_redirections_sub((*prmpt)->left, *token, limit);
 	remove_redirections_subshell(token, limit);
 	split_token(*token, limit, &tmp);
 	build_prompt(&(*prmpt)->left, &tmp);
