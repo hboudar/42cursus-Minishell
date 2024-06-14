@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 23:50:56 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:31:51 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 12:05:01 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
 static int	non_outredirect(t_file *file, int *fd1)
 {
@@ -66,7 +66,7 @@ void	non_redirection(t_prompt *prompt, t_env *env, t_file *file)
 	while (file != NULL)
 	{
 		if (file->quotes != IN_SQUOTES)
-			expand_string(&file->data, env, 0);
+			expand_string(&file->data, env, 0, NULL);
 		if (file->data && !file->data[0] && !file->quotes)
 		{
 			(fd0 != 0) && (close(fd0));

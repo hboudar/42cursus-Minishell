@@ -10,7 +10,7 @@ SRC		=	minishell.c parsing/expand_utils2.c parsing/prompt_utils.c parsing/token_
 			execution/cmd/non_redirection.c execution/utils/pid_addback.c
 
 OBJ		= $(SRC:.c=.o)
-HEADER	= execution.h
+HEADER	= minishell.h
 NAME	= minishell
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror

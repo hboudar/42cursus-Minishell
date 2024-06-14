@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:32:44 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 12:05:24 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
 static int	out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 {
@@ -76,7 +76,7 @@ void	redirection(t_prompt *prompt, t_env **env, t_file *file)
 	while (file != NULL)
 	{
 		if (file->quotes != IN_SQUOTES)
-			expand_string(&file->data, *env, 0);
+			expand_string(&file->data, *env, 0, NULL);
 		if ((file->type == 0 || file->type == 3)
 			&& !in_redirect(prompt, file, &fd0, file->quotes))
 			return ;
