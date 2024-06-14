@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:50:51 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 05:59:00 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:02:37 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	handle_sigint(int signum)
 {
 	extern int	g_caught;
 
-	printf("here                                                la\n");
 	if (signum == SIGINT)
 	{
 		g_caught = 1;
@@ -27,7 +26,7 @@ void	handle_sigint(int signum)
 	}
 }
 
-void	init_signals(t_prompt *prompt)
+void	init_signals(t_prompt *prompt, int mode)
 {
 	extern int	g_caught;
 
@@ -41,6 +40,7 @@ void	init_signals(t_prompt *prompt)
 	{
 		if (prompt)
 			prompt->exit_state = 1;
-		g_caught = 0;
+		if (!mode)
+			g_caught = 0;
 	}
 }
