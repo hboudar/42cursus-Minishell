@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:18 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/06 19:19:17 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 02:18:33 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	ft_exit_2(t_prompt *prompt)
 	extern int	g_caught;
 
 	printf("exit\n");
-	if(!prompt)
+	if (!prompt)
 		exit(g_caught);
 	exit (prompt->exit_state);
 }

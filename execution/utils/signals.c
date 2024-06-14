@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:55:40 by hboudar           #+#    #+#             */
-/*   Updated: 2024/05/29 19:28:55 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 02:11:10 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,42 @@ int	error(char *msg)
 	return (1);
 }
 
-void sig_handler_child(int sig)
+void	sig_handler_child(int sig)
 {
-    extern int g_caught;
+	extern int	g_caught;
 
-    if (sig == SIGINT)
-    {
-        rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-        write(1, "  \n", 3);
-        exit(1);
-    }
-    else if (sig == SIGQUIT)
-    {
-        rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-        exit(131);
-    }
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		write(1, "  \n", 3);
+		exit(1);
+	}
+	else if (sig == SIGQUIT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		exit(131);
+	}
 }
 
-void sigint_handler_heredoc(int sig)
+void	sigint_handler_heredoc(int sig)
 {
-    if (sig == SIGINT) {
-        rl_replace_line("", 0);
-        rl_on_new_line();
-        rl_redisplay();
-        write(1, "  \n", 3);
-        exit(1);
-    }
+	if (sig == SIGINT)
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		write(1, "  \n", 3);
+		exit(1);
+	}
 }
 
-void setup_signal_handlers(void (*int_handler)(int), void (*quit_handler)(int))
+void	setup_signal_handlers(void (*int_)(int), void (*quit_)(int))
 {
-    rl_catch_signals = 1;
-    signal(SIGINT, int_handler);
-    signal(SIGQUIT, quit_handler);
+	rl_catch_signals = 1;
+	signal(SIGINT, int_);
+	signal(SIGQUIT, quit_);
 }

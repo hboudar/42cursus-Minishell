@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 00:02:37 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 02:01:18 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	do_left(t_prompt *prompt, t_env **env, int *fd)
 	}
 	else
 	{
-		wait(&prompt->exit_state);	
-		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+		wait(NULL);	
+		// prompt->exit_state = WEXITSTATUS(prompt->exit_state);
 		(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
 	}
 }
@@ -69,15 +69,21 @@ int	ft_pipe(t_prompt *prompt, t_env **env, char side)
 {
 	int	fd[2];
 
-	if (pipe(fd) == -1)
-		error("pipe");
+	if (side == 'L')
+		if (pipe(fd) == -1)
+			error("pipe");
 	if (prompt->subshell)
-		prompt->exit_state = subshell(prompt, env, fd);
+	{
+		(side == 'L') && (prompt->exit_state = subshell(prompt, env, fd));
+		(side == 'R') && (prompt->exit_state = subshell(prompt, env, NULL));
+	}
 	else if (prompt->type == P_CMD)
 	{
 		expand_cmd(prompt, *env);
 		(side == 'L') && (do_left(prompt, env, fd), side = 'L');
 		(side == 'R') && (do_right(prompt, env), side = 'R');
 	}
+	else
+		prompt->exit_state = execution(prompt, env);
 	return (prompt->exit_state);
 }

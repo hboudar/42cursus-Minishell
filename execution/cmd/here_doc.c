@@ -6,52 +6,52 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/13 00:13:32 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 02:29:46 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void ignore_signals(void)
+void	ignore_signals(void)
 {
-    struct sigaction sa_ignore;
-    struct sigaction sa_orig_int;
+	struct sigaction	sa_ignore;
+	struct sigaction	sa_orig_int;
 
-    sa_ignore.sa_handler = SIG_IGN;
-    sigaction(SIGINT, &sa_ignore, &sa_orig_int);
-    sigaction(SIGQUIT, &sa_ignore, &sa_orig_int);
+	sa_ignore.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &sa_ignore, &sa_orig_int);
+	sigaction(SIGQUIT, &sa_ignore, &sa_orig_int);
 }
 
-static void	here_doc2(char *limiter, int fd, int quotes, t_env *env)
+static void	here_doc3(char *limiter, int fd, int quotes, t_env *env)
 {
-    extern int g_caught;
-	char	*str;
+	extern int	g_caught;
+	char		*str;
 
-    setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
-    while (1)
-    {
-        str = readline("> ");
-        if (g_caught || (!ft_strncmp(str, limiter, ft_strlen(limiter))
-            && ft_strlen(str) == ft_strlen(limiter)) || !str)
-        {
-            if (str)
-                free(str);
+	setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
+	while (1)
+	{
+		str = readline("> ");
+		if (g_caught || (!ft_strncmp(str, limiter, ft_strlen(limiter))
+				&& ft_strlen(str) == ft_strlen(limiter)) || !str)
+		{
+			if (str)
+				free(str);
 			close(fd);
-            break;
-        }
+			break ;
+		}
 		expand_string(&str, env, quotes);
-        write(fd, str, ft_strlen(str));
-        write(fd, "\n", 1);
-        free(str);
-    }
-    exit(0);
+		write(fd, str, ft_strlen(str));
+		write(fd, "\n", 1);
+		free(str);
+	}
+	exit(0);
 }
 
 void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 {
 	extern int	g_caught;
-	pid_t	pid;
-	int    fd;
+	pid_t		pid;
+	int			fd;
 
 	while (file && file->type != 3)
 		file = file->next;
@@ -60,11 +60,10 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	(1) && (unlink("/tmp/.doc"), g_caught = 0);
 	fd = open("/tmp/.doc", O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	file->fd = open("/tmp/.doc", O_RDONLY);
-
 	ignore_signals();
 	pid = fork();
 	if (pid == 0)
-		here_doc2(lim->limit, fd, lim->quotes , env);
+		here_doc3(lim->limit, fd, lim->quotes, env);
 	else
 	{
 		waitpid(pid, &prompt->exit_state, 0);
@@ -87,8 +86,8 @@ void	here_doc(t_prompt *prompt, t_env *env)
 
 	if (prompt->type == P_CMD)
 	{
-        if (!prompt->cmd->limiter)
-            return ;
+		if (!prompt->cmd->limiter)
+			return ;
 		here_doc1(prompt, prompt->cmd->file, prompt->cmd->limiter, env);
 	}
 	else
@@ -96,14 +95,14 @@ void	here_doc(t_prompt *prompt, t_env *env)
 		if (g_caught == 2)
 			return ;
 		here_doc(prompt->left, env);
-		if (g_caught == 0)
+		if (g_caught == 2)
 			return ;
 		here_doc(prompt->right, env);
 	}
 	if (prompt->subshell)
 	{
-        if (!prompt->limiter)
-            return ;
+		if (!prompt->limiter)
+			return ;
 		here_doc1(prompt, prompt->file, prompt->limiter, env);
 	}
 }
