@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 07:05:01 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 07:06:50 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 		exit_state = 1;
 	tmp = pid;
 	(1) && (dup2(std_in, 0), dup2(std_out, 1), close(std_in), close(std_out));
-	while (pid)
+	while (pid && !g_caught)
 	{
 		waitpid(pid->pid, &exit_state, 0);
 		pid = pid->next;
