@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 04:08:59 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 04:16:09 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ typedef struct s_pid
 }				t_pid;
 
 void	here_doc(t_prompt *prompt, t_env *env);
-int		execution(t_prompt *prompt, t_env **env);
-int		subshell(t_prompt *prompt, t_env **env, int *fd);
+int		execution(t_prompt *prompt, t_env **env, t_pid *pids);
+int		subshell(t_prompt *prompt, t_env **env, int *fd, t_pid *pids);
 int		ft_cmd(t_prompt *prompt, t_env **env);
 int		execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode);
-int		ft_pipe(t_prompt *prompt, t_env **env, char side);
-int		ft_or(t_prompt *prompt, t_env **env);
-int		ft_and(t_prompt *prompt, t_env **env);
+int		ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid *pids);
+int		ft_or(t_prompt *prompt, t_env **env, t_pid *pids);
+int		ft_and(t_prompt *prompt, t_env **env, t_pid *pids);
 
 void	redirection(t_prompt *prompt, t_env **env, t_file *file);
 void	non_redirection(t_prompt *prompt, t_env *env, t_file *file);
