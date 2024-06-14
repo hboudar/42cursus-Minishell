@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 04:28:48 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 05:15:11 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	pid = NULL;
 	here_doc(prompt, *env);
 	if (g_caught != 2)
-		exit_state = execution(prompt, env, pid);
+		exit_state = execution(prompt, env, &pid);
 	else
 		exit_state = 1;
 	tmp = pid;
