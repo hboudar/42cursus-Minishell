@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 05:16:49 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 05:35:56 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 {
+	extern int	g_caught;
 	pid_t	pid;
 
 	prompt->subshell = 0;
 	ignore_signals();
+	g_caught = 0;
 	pid = fork();
 	if (pid == -1)
 		error("fork");

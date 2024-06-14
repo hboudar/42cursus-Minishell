@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:31:04 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 05:46:50 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	child_process(t_prompt *prompt, t_env *env)
 	char	**envp;
 	char	*path;
 
+	printf("child process\n");
 	setup_signal_handlers(sig_handler_child, sig_handler_child);
 	non_redirection(prompt, env, prompt->cmd->file);
 	if (ft_strchr(prompt->cmd->args[0], '/'))
@@ -41,10 +42,12 @@ static void	child_process(t_prompt *prompt, t_env *env)
 
 int	execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode)
 {
+	extern int	g_caught;
 	pid_t	pid;
 
 	if (!mode)
 	{
+		g_caught = 0;
 		ignore_signals();
 		pid = fork();
 		if (pid == -1)
@@ -55,6 +58,9 @@ int	execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode)
 		{
 			wait(&prompt->exit_state);
 			prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+			g_caught = (prompt->exit_state == 1);
+			if (g_caught)
+				return (1);
 		}
 	}
 	else

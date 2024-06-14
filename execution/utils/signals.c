@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:55:40 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:11:10 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 05:47:43 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ void	sig_handler_child(int sig)
 {
 	extern int	g_caught;
 
+	printf("signal %d\n", sig);
 	if (sig == SIGINT)
 	{
+		g_caught = 1;
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
@@ -32,6 +34,8 @@ void	sig_handler_child(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
+		write(1, "Quit: 3\n", 8);
+		g_caught = 1;
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 05:15:42 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 05:24:26 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ void	sig_handler_child(int sig);
 
 void	pid_addback(t_pid **pids, t_pid *new);
 t_pid	*new_pid(pid_t pid);
+void	free_pid(t_pid **pids);
 
 #endif
