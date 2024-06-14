@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 05:16:24 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 07:01:04 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	ft_cmd(t_prompt *prompt, t_env **env)
+int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 {
 	expand_cmd(prompt, *env);
 	if (!prompt->cmd)
@@ -25,7 +25,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env)
 		redirection(prompt, env, prompt->cmd->file);
 		return (prompt->exit_state);
 	}
-	return (execute_nonebuiltin(prompt, *env, 0));
+	return (execute_nonebuiltin(prompt, *env, 0, pids));
 }
 
 int	ft_or(t_prompt *prompt, t_env **env, t_pid **pids)
@@ -46,15 +46,12 @@ int	ft_and(t_prompt *prompt, t_env **env, t_pid **pids)
 
 int	execution(t_prompt *prompt, t_env **env, t_pid **pids)
 {
-	extern int	g_caught;
-
 	if (prompt->subshell)
-		prompt->exit_state = subshell(prompt, env, NULL, pids);
+		prompt->exit_state = subshell(prompt, env, NULL);
 	else if (prompt->type == P_CMD)
-		prompt->exit_state = ft_cmd(prompt, env);
+		prompt->exit_state = ft_cmd(prompt, env, pids);
 	else if (prompt->type == P_PIPE)
 	{
-		g_caught = 0;
 		prompt->exit_state = ft_pipe(prompt->left, env, 'L', pids);
 		prompt->exit_state = ft_pipe(prompt->right, env, 'R', pids);
 		while (0);

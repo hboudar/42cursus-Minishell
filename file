@@ -1,0 +1,11 @@
+Makefile
+README.md
+execution
+file
+minishell
+minishell.c
+minishell.h
+minishell.o
+parsing
+to_do_last.txt
+utils

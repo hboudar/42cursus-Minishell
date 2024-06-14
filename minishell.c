@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 05:23:28 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 06:25:48 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	(1) && (dup2(std_in, 0), dup2(std_out, 1), close(std_in), close(std_out));
 	while (pid)
 	{
+		printf("{pid = %d}\n", pid->pid);
 		waitpid(pid->pid, &exit_state, 0);
 		pid = pid->next;
 	}
