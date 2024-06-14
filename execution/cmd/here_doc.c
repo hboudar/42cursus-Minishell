@@ -6,11 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:29:46 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 02:42:41 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+
+void	here_doc0(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env);
 
 void	ignore_signals(void)
 {
@@ -53,11 +55,6 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	pid_t		pid;
 	int			fd;
 
-	while (file && file->type != 3)
-		file = file->next;
-	if (!file)
-		return ;
-	(1) && (unlink("/tmp/.doc"), g_caught = 0);
 	fd = open("/tmp/.doc", O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	file->fd = open("/tmp/.doc", O_RDONLY);
 	ignore_signals();
@@ -68,15 +65,32 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 	{
 		waitpid(pid, &prompt->exit_state, 0);
 		prompt->exit_state = WEXITSTATUS(prompt->exit_state);
-		(1) && (close(fd), close(file->fd), file->fd = open("/tmp/.doc", O_RDONLY), unlink("/tmp/.doc"));
+		(1) && (close(fd), close(file->fd),
+			file->fd = open("/tmp/.doc", O_RDONLY), unlink("/tmp/.doc"));
 		g_caught = (prompt->exit_state == 1) * 2;
 		if (g_caught)
 			close(file->fd);
 		if (!g_caught && file->next && file->next->type == 3)
 		{
 			close(file->fd);
-			here_doc1(prompt, file->next, lim->next, env);
+			here_doc0(prompt, file->next, lim->next, env);
 		}
+	}
+}
+
+void	here_doc0(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
+{
+	extern int	g_caught;
+
+	while (file && file->type != 3)
+		file = file->next;
+	if (!file)
+		return ;
+	else
+	{
+		g_caught = 0;
+		unlink("/tmp/.doc");
+		here_doc1(prompt, file, lim, env);
 	}
 }
 
@@ -88,7 +102,7 @@ void	here_doc(t_prompt *prompt, t_env *env)
 	{
 		if (!prompt->cmd->limiter)
 			return ;
-		here_doc1(prompt, prompt->cmd->file, prompt->cmd->limiter, env);
+		here_doc0(prompt, prompt->cmd->file, prompt->cmd->limiter, env);
 	}
 	else
 	{
@@ -103,6 +117,6 @@ void	here_doc(t_prompt *prompt, t_env *env)
 	{
 		if (!prompt->limiter)
 			return ;
-		here_doc1(prompt, prompt->file, prompt->limiter, env);
+		here_doc0(prompt, prompt->file, prompt->limiter, env);
 	}
 }
