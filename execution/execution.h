@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 07:00:56 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 08:54:48 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 
 typedef struct s_pid
 {
-    pid_t			pid;
-    struct s_pid	*next;
+	pid_t			pid;
+	struct s_pid	*next;
 }				t_pid;
 
 void	here_doc(t_prompt *prompt, t_env *env);
 int		execution(t_prompt *prompt, t_env **env, t_pid **pids);
-int		subshell(t_prompt *prompt, t_env **env, int *fd);
+int		subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids);
 int		ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids);
-int		execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode, t_pid **pids);
+int		exec_nonebuiltin(t_prompt *prompt, t_env *env, int mode, t_pid **pids);
 int		ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid **pids);
 int		ft_or(t_prompt *prompt, t_env **env, t_pid **pids);
 int		ft_and(t_prompt *prompt, t_env **env, t_pid **pids);

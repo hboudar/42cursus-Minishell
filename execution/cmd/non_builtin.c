@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 06:20:58 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 08:49:50 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ static void	child_process(t_prompt *prompt, t_env *env)
 	exit(127);
 }
 
-int	execute_nonebuiltin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
+int	exec_nonebuiltin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 {
-	extern int	g_caught;
 	pid_t	pid;
 
 	if (!mode)
 	{
-		g_caught = 0;
 		setup_signal_handlers(sig_handler_child, sig_handler_child);
 		pid = fork();
 		if (pid == -1)
