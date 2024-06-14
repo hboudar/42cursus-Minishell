@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 02:39:08 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 07:01:01 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int			check_env(char **envp);
 int			get_args_count(t_data *data);
 int			was_syn_err(t_prompt *prompt);
 int			check_and_or_limit(t_token *token, t_token *limit);
-int			prep_execution(t_prompt *prompt, t_env **env);
+int			prep_execution(t_prompt *prompt, t_env **env, int mode);
 char		*ft_remove_quotes(char *str);
 char		**ft_split_expand(char *str);
 char		**ft_dupexpand(char **expand);
