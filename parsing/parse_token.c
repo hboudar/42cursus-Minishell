@@ -6,11 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 10:47:33 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 23:43:56 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:09:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 int	has_error(t_token *token)
 {

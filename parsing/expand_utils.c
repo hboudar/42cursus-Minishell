@@ -6,11 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:21:20 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 19:54:36 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:09:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 void	split_expanded(t_prompt *prmpt, t_data **data, char *expanded)
 {

@@ -6,11 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 12:28:12 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 01:58:53 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:09:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 t_token	*get_and_or(t_token *token)
 {

@@ -6,11 +6,11 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:36:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/11 03:46:35 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:09:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../minishell.h"
 
 void	replace_exit_state(t_prompt *prompt, t_data *data)
 {
