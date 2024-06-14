@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 07:06:50 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 08:48:49 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int		g_caught = 0;
 
 int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 {
-	int	std_in;
-	int	std_out;
-	int	exit_state;
+	int		std_in;
+	int		std_out;
+	int		exit_state;
 	t_pid	*pid;
 	t_pid	*tmp;
 
@@ -31,13 +31,14 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 		exit_state = 1;
 	tmp = pid;
 	(1) && (dup2(std_in, 0), dup2(std_out, 1), close(std_in), close(std_out));
-	while (pid && !g_caught)
+	while (pid)
 	{
-		waitpid(pid->pid, &exit_state, 0);
+		waitpid(pid->pid, &prompt->exit_state, 0);
+		(exit_state != 130) && (exit_state = WEXITSTATUS(prompt->exit_state));
+		printf("{exit_state = %d}\n", exit_state);
 		pid = pid->next;
 	}
 	exit_state = WEXITSTATUS(exit_state);
-	printf("{exit_state = %d}\n", exit_state);
 	free_pid(&tmp);
 	return (exit_state);
 }
