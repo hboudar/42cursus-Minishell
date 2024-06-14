@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 04:14:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 04:17:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 04:22:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-t_pid    *pid_new(pid_t pid)
+t_pid    *new_pid(pid_t pid)
 {
     t_pid	*new;
 
