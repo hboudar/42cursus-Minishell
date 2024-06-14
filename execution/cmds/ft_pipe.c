@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 10:12:47 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
 void	do_left(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 {

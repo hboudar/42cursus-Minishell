@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:46:44 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:10:24 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
 char	**free_envp(char **envp)
 {

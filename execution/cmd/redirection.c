@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:32:44 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
 static int	out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 {

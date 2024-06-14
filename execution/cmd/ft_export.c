@@ -6,11 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:00:30 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../execution.h"
+#include "../../minishell.h"
 
 int	check_key(const char *name)
 {
