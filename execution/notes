@@ -1,3 +1,2 @@
 update underscore in env
-wait in child
 nm -u ./minishell 
