@@ -6,11 +6,27 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:20:25 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:00:30 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+
+int	check_key(const char *name)
+{
+	char	*tmp;
+
+	tmp = (char *)name;
+	while (*tmp && *tmp != '=')
+	{
+		if (ft_is_whitespace(*tmp))
+			return (0);
+		tmp++;
+	}
+	if (!*tmp)
+		return (0);
+	return (1);
+}
 
 static int	is_valid(const char *name, int i, int mode)
 {
@@ -21,7 +37,7 @@ static int	is_valid(const char *name, int i, int mode)
 	{
 		if (!ft_isalpha(name[0]) && name[0] != '_')
 			return (0);
-		else if (ft_strchr(name, '='))
+		else if (check_key(name))
 			return (1);
 		while (name[i])
 		{

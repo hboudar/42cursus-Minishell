@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 08:54:28 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 11:01:29 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,25 @@
 
 int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 {
+	t_env	*tmp_env;
+
 	expand_cmd(prompt, *env);
+	tmp_env = *env;
 	if (!prompt->cmd)
 	{
 		perror("malloc");
 		return (1);
 	}
 	if (!prompt->cmd->args || is_builtin(prompt))
-	{
 		redirection(prompt, env, prompt->cmd->file);
-		return (prompt->exit_state);
-	}
-	return (exec_nonebuiltin(prompt, *env, 0, pids));
+	else
+		exec_nonebuiltin(prompt, *env, 0, pids);
+	if (prompt->cmd && prompt->cmd->args)
+		change_underscore(env,
+			prompt->cmd->args[ft_tablen(prompt->cmd->args) - 1]);
+	else if (prompt->cmd)
+		change_underscore(env, "");
+	return (prompt->exit_state);
 }
 
 int	ft_or(t_prompt *prompt, t_env **env, t_pid **pids)
