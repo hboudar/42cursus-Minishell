@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pid_addback.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 04:14:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 04:22:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 04:24:26 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "../execution.h"
 
 t_pid    *new_pid(pid_t pid)
 {
