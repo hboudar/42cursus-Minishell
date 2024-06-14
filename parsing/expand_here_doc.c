@@ -6,22 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:04:58 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 01:56:27 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:05:41 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-void	replace_old_tmp(char **str, char **oldtmp, char *new_str)
-{
-	int	i;
-
-	i = *oldtmp - *str;
-	printf("oldtmp: %d\n", i);
-	*oldtmp = new_str + i - 1;
-}
-
-void	replace_env_var(char **str, char *expand, int len, char **oldtmp)
+void	replace_env_var(char **str, char *expand, int len, char *mode)
 {
 	char	*tmp;
 	char	*new_str;
@@ -45,8 +36,8 @@ void	replace_env_var(char **str, char *expand, int len, char **oldtmp)
 		new_str = ft_strjoin_char(new_str, *tmp);
 		tmp++;
 	}
-	replace_old_tmp(str, oldtmp, new_str);
-	free(*str);
+	if (*str != mode)
+		free(*str);
 	*str = new_str;
 }
 
@@ -66,7 +57,7 @@ char	*get_to_expand(char **str)
 	return (to_expand);
 }
 
-void	expand_string(char **str, t_env *env, int quotes)
+void	expand_string(char **str, t_env *env, int quotes, char *tmp2)
 {
 	char	*tmp;
 	char	*expand;
@@ -74,9 +65,8 @@ void	expand_string(char **str, t_env *env, int quotes)
 
 	if (quotes == IN_SQUOTES || quotes == IN_DQUOTES || !*str)
 		return ;
-	tmp = *str;
-	expand = NULL;
-	while (*tmp)
+	(1) && (tmp = *str, expand = NULL, tmp2 = *str);
+	while (tmp && *tmp)
 	{
 		if (*tmp == '$')
 		{
@@ -85,7 +75,7 @@ void	expand_string(char **str, t_env *env, int quotes)
 			expand = get_expanded_value(&to_expand, env);
 			if (!expand)
 				expand = ft_strdup("");
-			replace_env_var(str, expand, ft_strlen(to_expand), &tmp);
+			replace_env_var(&tmp2, expand, ft_strlen(to_expand), tmp2);
 			if (!expand[0])
 				free(expand);
 			free(to_expand);
@@ -93,4 +83,6 @@ void	expand_string(char **str, t_env *env, int quotes)
 		else
 			tmp++;
 	}
+	(*str != tmp2) && (free(*str), *str = tmp2);
 }
+

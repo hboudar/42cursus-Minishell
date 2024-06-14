@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:07:32 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/12 23:15:56 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:06:53 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,15 @@ void	free_files(t_file *file)
 		file = file->next;
 		if (tmp->fd)
 			close(tmp->fd);
-		free(tmp->data);
-		free(tmp);
+		if (tmp->data)
+		{
+			free(tmp->data);
+			tmp->data = NULL;
+		}
+		if (tmp)
+		{
+			free(tmp);
+			tmp = NULL;
+		}
 	}
 }

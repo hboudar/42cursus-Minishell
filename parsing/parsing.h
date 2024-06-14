@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 10:02:31 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:06:29 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ void		expand_cmd(t_prompt *prmpt, t_env *env);
 void		handle_sigint(int signum);
 void		set_size(t_token *token);
 void		expand_wildcard(t_token **token);
-void		expand_string(char **str, t_env *env, int expand);
+void		expand_string(char **str, t_env *env, int expand, char *tmp2);
 void		split_expand(t_token *token);
 void		fill_expand(t_cmd *cmd, t_token *token);
 void		get_expand(char **line, t_token *token);
