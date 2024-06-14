@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 07:03:06 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 07:05:01 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		g_caught = 0;
 
-int	prep_execution(t_prompt *prompt, t_env **env)
+int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 {
 	int	std_in;
 	int	std_out;
@@ -22,10 +22,9 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	t_pid	*pid;
 	t_pid	*tmp;
 
-	std_in = dup(0);
-	std_out = dup(1);
-	pid = NULL;
-	here_doc(prompt, *env);
+	(1) && (std_in = dup(0), std_out = dup(1), pid = NULL);
+	if (!mode)
+		here_doc(prompt, *env);
 	if (g_caught != 2)
 		exit_state = execution(prompt, env, &pid);
 	else
@@ -34,7 +33,6 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	(1) && (dup2(std_in, 0), dup2(std_out, 1), close(std_in), close(std_out));
 	while (pid)
 	{
-		printf("{pid = %d}\n", pid->pid);
 		waitpid(pid->pid, &exit_state, 0);
 		pid = pid->next;
 	}
@@ -77,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(line);
 			parse_prompt(&prompt, line);
 			if (!was_syn_err(prompt) && (prompt->type != P_CMD || prompt->cmd))
-				prompt->exit_state = prep_execution(prompt, &env);
+				prompt->exit_state = prep_execution(prompt, &env, 0);
 		}
 		free(line);
 	}
