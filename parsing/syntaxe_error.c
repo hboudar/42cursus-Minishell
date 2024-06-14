@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 22:17:41 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 01:06:37 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 02:39:37 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int	redirection_syntaxe_error(t_token *tkn)
 	return (0);
 }
 
-int	was_syntax_error(t_prompt *prompt)
+int	was_syn_err(t_prompt *prompt)
 {
 	if (prompt->exit_state == 300)
 	{
 		prompt->exit_state = 258;
 		return (1);
 	}
-	if (prompt->left && was_syntax_error(prompt->left))
+	if (prompt->left && was_syn_err(prompt->left))
 		return (1);
-	if (prompt->right && was_syntax_error(prompt->right))
+	if (prompt->right && was_syn_err(prompt->right))
 		return (1);
 	return (0);
 }

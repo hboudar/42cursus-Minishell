@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:04:58 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 04:03:54 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 01:56:27 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	replace_old_tmp(char **str, char **oldtmp, char *new_str)
 {
-	int i;
+	int	i;
 
 	i = *oldtmp - *str;
 	printf("oldtmp: %d\n", i);
-	*oldtmp = &new_str[i - 1];
+	*oldtmp = new_str + i - 1;
 }
 
 void	replace_env_var(char **str, char *expand, int len, char **oldtmp)

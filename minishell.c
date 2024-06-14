@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 16:50:46 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/05/25 13:08:49 by aoulahra          ###   ########.fr       */
+/*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
+/*   Updated: 2024/06/14 02:38:34 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			parse_prompt(&prompt, line);
-			if (!was_syntax_error(prompt) && (prompt->type != P_CMD || prompt->cmd))
+			if (!was_syn_err(prompt) && (prompt->type != P_CMD || prompt->cmd))
 				prompt->exit_state = prep_execution(prompt, &env);
 		}
 		free(line);

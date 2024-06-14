@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 00:11:23 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 02:39:08 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int			has_pipe(t_token *token);
 int			count_files(char **file);
 int			check_env(char **envp);
 int			get_args_count(t_data *data);
-int			was_syntax_error(t_prompt *prompt);
+int			was_syn_err(t_prompt *prompt);
 int			check_and_or_limit(t_token *token, t_token *limit);
 int			prep_execution(t_prompt *prompt, t_env **env);
 char		*ft_remove_quotes(char *str);
@@ -225,7 +225,7 @@ void		free_prompt(t_prompt **prompt);
 void		free_cmd(t_cmd **cmd);
 void		free_files(t_file *file);
 void		remove_redirections(t_token **token);
-void		fill_redirections_subshell(t_prompt *prmpt, t_token *token, t_token *limit);
+void		fill_redirections_sub(t_prompt *prmpt, t_token *tkn, t_token *lmt);
 void		ft_shell_lvl(t_env *env);
 void		build_prompt(t_prompt **prmpt, t_token **token);
 void		parse_pipes(t_prompt **prmpt, t_token **token);

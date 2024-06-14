@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 20:57:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 03:16:43 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 01:57:39 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void	fill_redirections(t_cmd *cmd, t_token *token)
 	}
 }
 
-void	fill_redirections_subshell(t_prompt *prmpt, t_token *token, t_token *limit)
+void	fill_redirections_sub(t_prompt *prmpt, t_token *token, t_token *lmt)
 {
-	while (token && token != limit)
+	while (token && token != lmt)
 	{
 		if (token->type == REDIR_IN)
 		{
