@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   pid_addback.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 04:14:06 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 04:24:26 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 05:19:33 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+
+void    free_pid(t_pid **pid)
+{
+    t_pid	*tmp;
+
+    while (*pid)
+    {
+        tmp = (*pid)->next;
+        free(*pid);
+        *pid = tmp;
+    }
+    *pid = NULL;
+}
 
 t_pid    *new_pid(pid_t pid)
 {
