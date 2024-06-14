@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 20:35:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 04:26:04 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 05:15:24 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid *pids)
+int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 {
 	pid_t	pid;
 

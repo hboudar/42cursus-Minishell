@@ -6,13 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 04:25:58 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 05:15:17 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
 
-void	do_left(t_prompt *prompt, t_env **env, int *fd, t_pid *pids)
+void	do_left(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 {
 	pid_t	pid;
 
@@ -33,12 +33,12 @@ void	do_left(t_prompt *prompt, t_env **env, int *fd, t_pid *pids)
 	}
 	else
 	{
-		pid_addback(&pids, new_pid(pid));
 		(1) && (dup2(fd[0], 0), close(fd[0]), close(fd[1]));
+		pid_addback(&pids, new_pid(pid));
 	}
 }
 
-int	do_right(t_prompt *prompt, t_env **env, t_pid *pids)
+int	do_right(t_prompt *prompt, t_env **env, t_pid **pids)
 {
 	pid_t	pid;
 
@@ -61,7 +61,7 @@ int	do_right(t_prompt *prompt, t_env **env, t_pid *pids)
 	return (prompt->exit_state);
 }
 
-int	ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid *pids)
+int	ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid **pids)
 {
 	int	fd[2];
 
