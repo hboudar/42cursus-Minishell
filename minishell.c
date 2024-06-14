@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 08:48:49 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:05:04 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	end_program(t_prompt *prompt)
 		free_cmd(&prompt->cmd);
 		prompt->cmd = NULL;
 	}
-	init_signals(prompt);
+	init_signals(prompt, 1);
 	return (1);
 }
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 	prompt = NULL;
 	while (1)
 	{
-		init_signals(prompt);
+		init_signals(prompt, 0);
 		line = readline("\033[1;34m➜ minishell \033[0m");
 		if (!line)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:26:22 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 07:01:01 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:02:31 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ char		**ft_split_expand(char *str);
 char		**ft_dupexpand(char **expand);
 char		*get_expanded_value(char **data, t_env *env);
 void		replace_exit_state(t_prompt *prompt, t_data *data);
-void		init_signals(t_prompt *prompt);
+void		init_signals(t_prompt *prompt, int mode);
 void		remove_arg(t_cmd *cmd, int i, char *to_add);
 void		add_and_split(t_cmd *cmd, t_expand *expand, t_env *env);
 void		free_token_limit(t_token **token, t_token *limit);
