@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 08:49:50 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 09:39:40 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	exec_nonebuiltin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 		pid = fork();
 		if (pid == -1)
 			return (error("fork failed"));
-		else if (!pid)
+		else if (pid == 0)
 			child_process(prompt, env);
 		else
 		{
