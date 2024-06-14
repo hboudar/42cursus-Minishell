@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:00:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/13 04:04:34 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 12:06:05 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	free_limiter(t_limiter **limiter)
 	{
 		tmp = *limiter;
 		*limiter = (*limiter)->next;
-		free(tmp->limit);
-		free(tmp);
+		if (tmp->limit)
+			free(tmp->limit);
+		if (tmp)
+			free(tmp);
 	}
 	*limiter = NULL;
 }
@@ -34,8 +36,10 @@ void	free_data(t_data **data)
 	{
 		tmp = *data;
 		*data = (*data)->next;
-		free(tmp->arg);
-		free(tmp);
+		if (tmp->arg)
+			free(tmp->arg);
+		if (tmp)
+			free(tmp);
 	}
 	*data = NULL;
 }
@@ -48,8 +52,10 @@ void	free_expand(t_expand **expand)
 	{
 		tmp = *expand;
 		*expand = (*expand)->next;
-		free(tmp->data);
-		free(tmp);
+		if (tmp->data)
+			free(tmp->data);
+		if (tmp)
+			free(tmp);
 	}
 	*expand = NULL;
 }
@@ -66,11 +72,8 @@ void	free_cmd(t_cmd **cmd)
 	free_files((*cmd)->file);
 	free_expand(&(*cmd)->expand);
 	free_data(&(*cmd)->data);
-	(*cmd)->expand = NULL;
-	(*cmd)->args = NULL;
-	(*cmd)->limiter = NULL;
-	(*cmd)->file = NULL;
-	free(*cmd);
+	if (*cmd)
+		free(*cmd);
 	*cmd = NULL;
 }
 
@@ -83,6 +86,7 @@ void	free_prompt(t_prompt **prompt)
 	free_cmd(&(*prompt)->cmd);
 	free_files((*prompt)->file);
 	free_limiter(&(*prompt)->limiter);
-	free(*prompt);
+	if (*prompt)
+		free(*prompt);
 	*prompt = NULL;
 }
