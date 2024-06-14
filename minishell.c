@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 04:10:46 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 04:28:48 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	int	std_out;
 	int	exit_state;
 	t_pid	*pid;
+	t_pid	*tmp;
 
 	std_in = dup(0);
 	std_out = dup(1);
@@ -29,11 +30,15 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 		exit_state = execution(prompt, env, pid);
 	else
 		exit_state = 1;
+	tmp = pid;
+	while (pid)
+	{
+		waitpid(pid->pid, &exit_state, 0);
+		exit_state = WEXITSTATUS(exit_state);
+		pid = pid->next;
+	}
 	printf("{exit_state = %d}\n", exit_state);
-	dup2(std_in, 0);
-	dup2(std_out, 1);
-	close(std_in);
-	close(std_out);
+	(1) && (dup2(std_in, 0), dup2(std_out, 1), close(std_in), close(std_out));
 	return (exit_state);
 }
 
