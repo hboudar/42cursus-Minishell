@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 09:19:42 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 10:12:47 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	do_right(t_prompt *prompt, t_env **env, t_pid **pids)
 
 int	ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid **pids)
 {
-	extern int	g_caught;
 	int	fd[2];
 
 	if (side == 'L')
@@ -70,15 +69,13 @@ int	ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid **pids)
 	if (prompt->subshell)
 	{
 		(side == 'L') && (prompt->exit_state = subshell(prompt, env, fd, pids));
-		(side == 'R') && (prompt->exit_state = subshell(prompt, env, NULL, pids));
+		(side == 'R')
+			&& (prompt->exit_state = subshell(prompt, env, NULL, pids));
 	}
 	else if (prompt->type == P_CMD)
 	{
-		g_caught = 0;
 		expand_cmd(prompt, *env);
 		(side == 'L') && (do_left(prompt, env, fd, pids), side = 'L');
-		// if (g_caught)
-			printf("prompt->exit_state = %d\n", prompt->exit_state);
 		(side == 'R') && (do_right(prompt, env, pids), side = 'R');
 	}
 	else
