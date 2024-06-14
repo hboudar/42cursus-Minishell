@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 02:38:00 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/14 05:23:28 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 07:01:14 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		g_caught = 0;
 
-int	prep_execution(t_prompt *prompt, t_env **env)
+int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 {
 	int	std_in;
 	int	std_out;
@@ -25,7 +25,8 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 	std_in = dup(0);
 	std_out = dup(1);
 	pid = NULL;
-	here_doc(prompt, *env);
+	if (!mode)
+		here_doc(prompt, *env);
 	if (g_caught != 2)
 		exit_state = execution(prompt, env, &pid);
 	else
@@ -38,7 +39,6 @@ int	prep_execution(t_prompt *prompt, t_env **env)
 		pid = pid->next;
 	}
 	exit_state = WEXITSTATUS(exit_state);
-	printf("{exit_state = %d}\n", exit_state);
 	free_pid(&tmp);
 	return (exit_state);
 }
@@ -76,7 +76,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(line);
 			parse_prompt(&prompt, line);
 			if (!was_syn_err(prompt) && (prompt->type != P_CMD || prompt->cmd))
-				prompt->exit_state = prep_execution(prompt, &env);
+				prompt->exit_state = prep_execution(prompt, &env, 0);
 		}
 		free(line);
 	}

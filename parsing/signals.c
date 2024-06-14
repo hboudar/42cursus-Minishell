@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:50:51 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/10 21:29:25 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/06/14 05:59:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	handle_sigint(int signum)
 {
 	extern int	g_caught;
 
+	printf("here                                                la\n");
 	if (signum == SIGINT)
 	{
 		g_caught = 1;
