@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 07:01:04 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 07:10:52 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_and(t_prompt *prompt, t_env **env, t_pid **pids)
 
 int	execution(t_prompt *prompt, t_env **env, t_pid **pids)
 {
+	extern int	g_caught;
+
 	if (prompt->subshell)
 		prompt->exit_state = subshell(prompt, env, NULL);
 	else if (prompt->type == P_CMD)
@@ -53,7 +55,8 @@ int	execution(t_prompt *prompt, t_env **env, t_pid **pids)
 	else if (prompt->type == P_PIPE)
 	{
 		prompt->exit_state = ft_pipe(prompt->left, env, 'L', pids);
-		prompt->exit_state = ft_pipe(prompt->right, env, 'R', pids);
+		if (g_caught == 0)
+			prompt->exit_state = ft_pipe(prompt->right, env, 'R', pids);
 		while (0);
 	}
 	else if (prompt->type == P_OR)
