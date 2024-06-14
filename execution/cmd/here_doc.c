@@ -6,11 +6,13 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:58:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 02:40:31 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/14 02:42:41 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../execution.h"
+
+void	here_doc0(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env);
 
 void	ignore_signals(void)
 {
@@ -47,22 +49,6 @@ static void	here_doc3(char *limiter, int fd, int quotes, t_env *env)
 	exit(0);
 }
 
-void	here_doc0(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
-{
-	extern int	g_caught;
-
-	while (file && file->type != 3)
-		file = file->next;
-	if (!file)
-		return ;
-	else
-	{
-		g_caught = 0;
-		unlink("/tmp/.doc");
-		here_doc1(prompt, file, lim, env);
-	}
-}
-
 void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 {
 	extern int	g_caught;
@@ -87,8 +73,24 @@ void	here_doc1(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
 		if (!g_caught && file->next && file->next->type == 3)
 		{
 			close(file->fd);
-			here_doc1(prompt, file->next, lim->next, env);
+			here_doc0(prompt, file->next, lim->next, env);
 		}
+	}
+}
+
+void	here_doc0(t_prompt *prompt, t_file *file, t_limiter *lim, t_env *env)
+{
+	extern int	g_caught;
+
+	while (file && file->type != 3)
+		file = file->next;
+	if (!file)
+		return ;
+	else
+	{
+		g_caught = 0;
+		unlink("/tmp/.doc");
+		here_doc1(prompt, file, lim, env);
 	}
 }
 
