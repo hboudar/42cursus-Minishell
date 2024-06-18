@@ -6,80 +6,45 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 12:46:31 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	check_key(const char *name)
+static int	check_arg(const char *arg, char *equal, char *plus)
 {
-	char	*tmp;
+	int	plus_count;
+	int	count;
+	int	i;
 
-	tmp = (char *)name;
-	while (*tmp && *tmp != '=')
-	{
-		if (ft_is_whitespace(*tmp))
-			return (0);
-		tmp++;
-	}
-	if (!*tmp)
+	(1) && (count = 0, plus_count = 0, i = 0);
+	if (!ft_isalpha(arg[0]) && arg[0] != '_')
 		return (0);
-	return (1);
-}
-
-static int	is_valid(const char *name, int i, int mode)
-{
-	char	*equal;
-	char	*plus;
-
-	if (!mode)
+	while (arg[++i] && arg[i] != '=')
 	{
-		if (!ft_isalpha(name[0]) && name[0] != '_')
-			return (0);
-		else if (check_key(name))
-			return (1);
-		while (name[i])
+		if (!plus || (plus && !equal))
 		{
-			if (!ft_isalnum(name[i]) && name[i] != '_')
+			if (!ft_isalnum(arg[i]) && arg[i] != '_')
 				return (0);
-			i++;
 		}
-		return (1);
-	}
-	(1) && (equal = ft_strchr(name, '='), plus = ft_strchr(name, '+'));
-	if (!equal && !plus)
-		return (0);
-	else if (!plus || (plus && equal && plus > equal))
-		return (1);
-	else if (plus && equal && plus < equal)
-		return (2);
-	return (1);
-}
-
-static int	export_only(t_env *env)
-{
-	while (env)
-	{
-		if (env->print == PRINT || env->print == EXP_PRINT)
+		else if (plus && equal)
 		{
-			if (env->value)
-				printf("declare -x %s\"%s\"\n", env->key, env->value);
-			else
-				printf("declare -x %s\n", env->key);
+			if (!ft_isalnum(arg[i]) && arg[i] != '_' && arg[i] != '+')
+				return (0);
+			(arg[i] == '+') && (plus_count++);
 		}
-		env = env->next;
 	}
-	return (0);
+	if (plus && equal && plus < equal && (plus_count != 1 || arg[i - 1] != '+'))
+		return (0);
+	return (1);
 }
 
 static void	add_env(const char *str, t_env *env)
 {
 	while (env)
 	{
-		if (!ft_strncmp(env->key, str, ft_strlen(str))
-			&& (env->key[ft_strlen(str)] == '='
-				|| env->key[ft_strlen(str)] == '\0'))
+		if (env->print != NO_PRINT && !ft_strncmp(env->key, str, ft_strlen(str)) && (env->key[ft_strlen(str)] == '=' || env->key[ft_strlen(str)] == '\0'))
 			return ;
 		if (!env->next)
 			break ;
@@ -102,26 +67,29 @@ static void	add_env(const char *str, t_env *env)
 		env->next->print = EXP_PRINT);
 }
 
-int	ft_export(t_prompt *prompt, t_env *env)
+int	ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus)
 {
-	int	i;
+	int		i;
 
 	if (prompt->cmd->args[1] == NULL)
 		return (export_only(env));
 	i = 0;
 	while (prompt->cmd->args[++i])
 	{
-		if (!is_valid(prompt->cmd->args[i], 1, 0))
+		equal = ft_strchr(prompt->cmd->args[i], '=');
+		plus = ft_strchr(prompt->cmd->args[i], '+');
+		if (!check_arg(prompt->cmd->args[i], equal, plus))
 		{
-			printf("export: `%s': not a valid identifier\n",
-				prompt->cmd->args[i]);
+			ft_putstr_fd("export: ", 2);
+			ft_putstr_fd(prompt->cmd->args[i], 2);
+			ft_putstr_fd(": not a valid identifier\n", 2);
 			prompt->exit_state = 1;
 		}
-		else if (!is_valid(prompt->cmd->args[i], 1, 1))
+		else if (!equal && !plus)
 			add_env(prompt->cmd->args[i], env);
-		else if (is_valid(prompt->cmd->args[i], 1, 1) == 1)
+		else if (!plus || (plus && equal && plus > equal))
 			add_env_equal(prompt->cmd->args[i], env);
-		else if (is_valid(prompt->cmd->args[i], 1, 1) == 2)
+		else if (plus && equal && plus < equal)
 			add_env_plus(prompt->cmd->args[i], env);
 	}
 	return (0);

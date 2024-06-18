@@ -6,31 +6,11 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:33 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 08:34:44 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	change_underscore(t_env **env, char *str)
-{
-	t_env	*tmp;
-
-	tmp = *env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key, "_=", 3))
-		{
-			(tmp->value) && (free(tmp->value), tmp->value = NULL);
-			tmp->value = ft_strdup(str);
-			if (!tmp->value)
-				return (1);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
 
 static bool	is_valid_name(const char *name)
 {
@@ -48,31 +28,29 @@ static bool	is_valid_name(const char *name)
 	return (true);
 }
 
-static int	ft_unsetenv(const char *name, t_env **env)
+static int	ft_unsetenv(const char *name, t_env *env)
 {
-	t_env	*prev;
-	t_env	*tmp;
+	int		underscor;
 	int		mode;
 
-	if (ft_strncmp(name, "_", 2) == 0)
-		return (change_underscore(env, "_"));
-	(1) && (tmp = *env, prev = NULL);
-	while (tmp)
+	underscor = !ft_strncmp(name, "_", 2);
+	while (env)
 	{
-		mode = (ft_strchr(tmp->key, '=') != NULL);
-		if (!ft_strncmp(tmp->key, name, ft_strlen(name))
-			&& ft_strlen(tmp->key) - mode == ft_strlen(name))
+		mode = (ft_strchr(env->key, '=') != NULL);
+		if (!underscor && !ft_strncmp(env->key, name, ft_strlen(name))
+			&& ft_strlen(env->key) - mode == ft_strlen(name))
 		{
-			(tmp->key) && (free(tmp->key), tmp->key = NULL);
-			(tmp->value) && (free(tmp->value), tmp->value = NULL);
-			if (prev != NULL)
-				prev->next = tmp->next;
-			else
-				*env = (*env)->next;
-			(1) && (free(tmp), tmp = NULL);
+			env->print = NO_PRINT;
 			break ;
 		}
-		(1) && (prev = tmp, tmp = tmp->next);
+		else if (underscor && !ft_strncmp(env->key, "_=", 3))
+		{
+			free(env->value);
+			env->value = NULL;
+			env->value = ft_strdup("_");
+			break ;
+		}
+		env = env->next;
 	}
 	return (0);
 }
@@ -86,7 +64,7 @@ int	ft_unset(t_prompt *prompt, t_env **env)
 	while (prompt->cmd->args[i])
 	{
 		if (is_valid_name(prompt->cmd->args[i]))
-			ft_unsetenv(prompt->cmd->args[i], env);
+			ft_unsetenv(prompt->cmd->args[i], *env);
 		else
 		{
 			ft_putstr_fd("minishell: unset: `", 2);

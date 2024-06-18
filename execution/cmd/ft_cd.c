@@ -6,129 +6,94 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 12:18:06 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	add_path(char *path, char *key, t_env *env)
+void	set_path(char *path, char *key, t_env *env)
 {
-	while (env->next)
+	while (env)
+	{
+		if (!ft_strncmp(env->key, key, ft_strlen(env->key)))
+		{
+			free(env->key);
+			env->key = ft_strdup(key);
+			(env->value) && (free(env->value), env->value = NULL);
+			env->value = ft_strdup(path);
+			env->print = PRINT;
+			break ;
+		}
 		env = env->next;
-	env->next = malloc(sizeof(t_env));
-	if (!env->next)
-		return ;
-	env->next->key = ft_strdup(key);
-	if (!env->next->key)
-		return ;
-	env->next->value = ft_strdup(path);
-	if (!env->next->value)
-		return ;
-	env->next->print = PRINT;
-	env->next->next = NULL;
-}
-
-void	set_oldpwd(char *oldpwd, t_env *tmp_env, t_env *env)
-{
-	while (tmp_env)
-	{
-		if (!ft_strncmp(tmp_env->key, "OLDPWD", 6))
-		{
-			if (!tmp_env->value)
-			{
-				free(tmp_env->key);
-				tmp_env->key = ft_strdup("OLDPWD=");
-				if (!tmp_env->key)
-					return ;
-			}
-			else
-			{
-				free(tmp_env->value);
-				tmp_env->value = NULL;
-			}
-			tmp_env->value = ft_strdup(oldpwd);
-			tmp_env->print = PRINT;
-			return ;
-		}
-		tmp_env = tmp_env->next;
 	}
-	if (!tmp_env)
-		add_path(oldpwd, "OLDPWD=", env);
+	free(path);
 }
 
-void	set_pwd(char *pwd, t_env *tmp_env, t_env *env)
-{
-	while (tmp_env)
-	{
-		if (!ft_strncmp(tmp_env->key, "PWD=", 8))
-		{
-			if (tmp_env->value != NULL)
-			{
-				free(tmp_env->value);
-				tmp_env->value = NULL;
-			}
-			tmp_env->value = ft_strdup(pwd);
-			return ;
-		}
-		tmp_env = tmp_env->next;
-	}
-	if (!tmp_env)
-		add_path(pwd, "PWD=", env);
-}
-
-char	*ft_getpwd(char *arg, t_env *env, int mode)
+char	*ft_getpath(char *arg, t_env *env, int mode)
 {
 	char	*pwd;
 	char	*tmp;
 
+	(1) && (pwd = NULL, tmp = NULL);
 	pwd = getcwd(NULL, 0);
-	if (pwd != NULL)
-		return (pwd);
-	while (env)
+	while (!pwd && env)
 	{
 		if (!ft_strncmp(env->key, "PWD=", 5))
+		{
+			if (!mode)
+				pwd = ft_strdup(env->value);
+			else
+			{
+				tmp = ft_strjoin(env->value, "/");
+				pwd = ft_strjoin(tmp, arg);
+				free(tmp);
+			}
 			break ;
+		}
 		env = env->next;
 	}
-	if (!env)
-		return (NULL);
-	if (!mode)
-		return (ft_strdup(env->value));
-	tmp = ft_strjoin(env->value, "/");
-	if (!tmp)
-		return (NULL);
-	pwd = ft_strjoin(tmp, arg);
-	free(tmp);
-	if (!pwd)
+	if (!pwd && !env)
 		return (NULL);
 	return (pwd);
+}
+
+int	tohome_wego(t_env *env)
+{
+	char	*home;
+	char	*oldpwd;
+	char	*pwd;
+
+	(1) && (home = NULL, oldpwd = NULL, pwd = NULL);
+	home = get_env("HOME=", env, 0);
+	oldpwd = ft_getpath(NULL, env, 0);
+	if (chdir(home) == -1)
+	{
+		(home) && (free(home), home = NULL);
+		(oldpwd) && (free(oldpwd), oldpwd = NULL);
+		perror("Error in chdir");
+		return (1);
+	}
+	pwd = ft_getpath(NULL, env, 0);
+	set_path(pwd, "PATH=", env);
+	set_path(oldpwd, "OLDPWD=", env);
+	(home) && (free(home), home = NULL);
+	return (0);
 }
 
 int	ft_cd(t_prompt *prompt, t_env *env, char *oldpwd, char *pwd)
 {
 	if (prompt->cmd->args[1] == NULL)
-	{
-		ft_putstr_fd("cd: NO arguments\n", 2);
-		return (1);
-	}
-	oldpwd = ft_getpwd(prompt->cmd->args[1], env, 0);
-	if (!oldpwd)
-		perror("Error in getcwd oldpwd");
+		return (tohome_wego(env));
+	oldpwd = ft_getpath(prompt->cmd->args[1], env, 0);
 	if (chdir(prompt->cmd->args[1]) == -1)
 	{
-		free(oldpwd);
-		perror("Error in cd chdir");
-		return (1);
-	}
-	pwd = ft_getpwd(prompt->cmd->args[1], env, 1);
-	if (!pwd)
-	{
-		perror("Error in ft_getcwd pwd");
 		(oldpwd) && (free(oldpwd), oldpwd = NULL);
+		perror("Error in chdir");
 		return (1);
 	}
-	(1) && (set_pwd(pwd, env, env), free(pwd), pwd = NULL);
-	(1) && (set_oldpwd(oldpwd, env, env), free(oldpwd), oldpwd = NULL);
+	pwd = ft_getpath(prompt->cmd->args[1], env, 1);
+	set_path(pwd, "PWD=", env);
+	set_path(oldpwd, "OLDPWD=", env);
 	return (0);
 }

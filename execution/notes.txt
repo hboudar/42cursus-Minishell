@@ -1,0 +1,80 @@
+
+on it :
+5- in export : if "PRINT" add the value or change it, if "NON_PRINT" change the value and the type, if it does not exits add it
+add_env : should be changed
+
+
+
+already done :
+reset the in and out fds between the and/or commands [V]
+0- unset : don't free just hide? by changing the type [V]
+1- in cd [V]
+2- in pwd [V]
+3- in env [V]
+4- commands (search for the Path check if PRINT) [V]
+export key{anything except alpha or '_'}+{here should be nothing}=value shouldnt work [V]
+
+
+
+
+still not done :
+# ctrl c exit state
+# ^\ should return 131 in child process
+# (redirection for one command in subshell)
+# when command has no path : does not handeled by execv
+# fork every pipe then execute the pipes to get the correct exit state
+
+
+
+
+*New minishell*:
+when unseting something (because i only hide) : $KEY : should be expanded to nothing
+
+note :
+parsing : check_env : before if env was unset tottally excuted : ./minishell ghadi tra error
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# search about hash tabe and hashing

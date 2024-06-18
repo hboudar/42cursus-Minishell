@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:16:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 12:25:30 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	do_left(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 		if (is_builtin(prompt))
 			exit(ft_builtin(prompt, env));
 		else
-			exec_nonebuiltin(prompt, *env, 1, pids);
+			none_builtin(prompt, *env, 1, pids);
 	}
 	else
 	{
@@ -49,7 +49,7 @@ int	do_right(t_prompt *prompt, t_env **env, t_pid **pids)
 		if (is_builtin(prompt))
 			exit(ft_builtin(prompt, env));
 		else
-			exec_nonebuiltin(prompt, *env, 1, pids);
+			none_builtin(prompt, *env, 1, pids);
 	}
 	else
 	{

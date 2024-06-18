@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_builtin.c                                      :+:      :+:    :+:   */
+/*   none_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 12:13:36 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 12:25:13 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	child_process(t_prompt *prompt, t_env *env)
 	char	**envp;
 	char	*path;
 
-	non_redirection(prompt, env, prompt->cmd->file);
+	none_redirection(prompt, env, prompt->cmd->file);
 	if (!prompt->cmd->args)
 		path = NULL;
 	else if (ft_strchr(prompt->cmd->args[0], '/'))
@@ -41,7 +41,7 @@ static void	child_process(t_prompt *prompt, t_env *env)
 	exit(127);
 }
 
-int	exec_nonebuiltin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
+int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 {
 	pid_t	pid;
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_redirection.c                                  :+:      :+:    :+:   */
+/*   none_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 23:50:56 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 12:05:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 12:24:24 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	non_inredirect(t_file *file, int *fd0)
 	return (1);
 }
 
-void	non_redirection(t_prompt *prompt, t_env *env, t_file *file)
+void	none_redirection(t_prompt *prompt, t_env *env, t_file *file)
 {
 	int	fd0;
 	int	fd1;

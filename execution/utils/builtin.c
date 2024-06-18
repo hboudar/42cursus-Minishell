@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 20:04:30 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 12:07:03 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 int	ft_builtin(t_prompt *prompt, t_env **env)
 {
 	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))
-		prompt->exit_state = (ft_echo(prompt, *env));
+		prompt->exit_state = ft_echo(prompt, *env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))
-		prompt->exit_state = (ft_cd(prompt, *env, NULL, NULL));
+		prompt->exit_state = ft_cd(prompt, *env, NULL, NULL);
 	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))
-		prompt->exit_state = (ft_pwd(prompt, *env));
+		prompt->exit_state = ft_pwd(*env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "export", 7))
-		prompt->exit_state = (ft_export(prompt, *env));
+		prompt->exit_state = ft_export(prompt, *env, NULL, NULL);
 	else if (!ft_strncmp(prompt->cmd->args[0], "unset", 6))
-		prompt->exit_state = (ft_unset(prompt, env));
+		prompt->exit_state = ft_unset(prompt, env);
 	else if (!ft_strncmp(prompt->cmd->args[0], "env", 4))
-		prompt->exit_state = (ft_env(prompt, *env));
+		prompt->exit_state = ft_env(prompt, *env);
 	else
-		prompt->exit_state = (ft_exit(prompt));
+		prompt->exit_state = ft_exit(prompt);
 	return (prompt->exit_state);
 }
 
