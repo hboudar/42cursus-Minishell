@@ -1,7 +1,6 @@
 
 on it :
-5- in export : if "PRINT" add the value or change it, if "NON_PRINT" change the value and the type, if it does not exits add it
-add_env : should be changed
+when command has no path : does not handeled by execv
 
 
 
@@ -12,6 +11,8 @@ reset the in and out fds between the and/or commands [V]
 2- in pwd [V]
 3- in env [V]
 4- commands (search for the Path check if PRINT) [V]
+5- in export : if "PRINT" add the value or change it, if "NON_PRINT" change the value and the type, if it does not exits add it [V]
+add_env : should be changed [V]
 export key{anything except alpha or '_'}+{here should be nothing}=value shouldnt work [V]
 
 
@@ -21,8 +22,7 @@ still not done :
 # ctrl c exit state
 # ^\ should return 131 in child process
 # (redirection for one command in subshell)
-# when command has no path : does not handeled by execv
-# fork every pipe then execute the pipes to get the correct exit state
+# fork every pipe then execute the pipes to get the correct exit state (not sure)
 
 
 
