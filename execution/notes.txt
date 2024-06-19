@@ -32,8 +32,7 @@ when unseting something (because i only hide) : $KEY : should be expanded to not
 
 note :
 parsing : check_env : before if env was unset tottally excuted : ./minishell ghadi tra error
-
-
+_ does not show in export (env only)
 
 
 

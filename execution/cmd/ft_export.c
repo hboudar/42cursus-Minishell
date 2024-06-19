@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:22 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/18 12:46:31 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/19 10:54:00 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,43 @@ static int	check_arg(const char *arg, char *equal, char *plus)
 	return (1);
 }
 
-static void	add_env(const char *str, t_env *env)
+int	check_state(const char *str, t_env *env)
 {
+	char	*key;
+	int		mode;
+
 	while (env)
 	{
-		if (env->print != NO_PRINT && !ft_strncmp(env->key, str, ft_strlen(str)) && (env->key[ft_strlen(str)] == '=' || env->key[ft_strlen(str)] == '\0'))
-			return ;
-		if (!env->next)
-			break ;
+		if (!ft_strncmp(env->key, str, ft_strlen(str))
+			&& (env->key[ft_strlen(str)] == '=' || !env->key[ft_strlen(str)]))
+		{
+			if (env->print == NO_PRINT)
+			{
+				(env->value) && (free(env->value), env->value = NULL);
+				env->print = EXP_PRINT;
+				mode = (ft_strchr(env->key, '=') != NULL);
+				key = ft_substr(env->key, 0, ft_strlen(env->key) - mode);
+				(1) && (free(env->key), env->key = NULL);
+				env->key = key;
+			}
+			return (1);
+		}
 		env = env->next;
 	}
+	return (0);
+}
+
+static void	add_env(const char *str, t_env *env)
+{
+	if (check_state(str, env))
+		return ;
+	while (env->next)
+		env = env->next;
 	env->next = malloc(sizeof(t_env));
-	if (!env->next)
-	{
-		perror("malloc in add_env failed");
-		return ;
-	}
 	env->next->key = ft_strdup(str);
-	if (!env->next->key)
-	{
-		free(env->next);
-		perror("ft_strdup in add_env failed");
-		return ;
-	}
-	(1) && (env->next->value = NULL, env->next->next = NULL,
-		env->next->print = EXP_PRINT);
+	env->next->value = NULL;
+	env->next->next = NULL;
+	env->next->print = EXP_PRINT;
 }
 
 int	ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus)
@@ -90,7 +102,7 @@ int	ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus)
 		else if (!plus || (plus && equal && plus > equal))
 			add_env_equal(prompt->cmd->args[i], env);
 		else if (plus && equal && plus < equal)
-			add_env_plus(prompt->cmd->args[i], env);
+			add_env_plus(prompt->cmd->args[i], env, NULL, NULL);
 	}
 	return (0);
 }

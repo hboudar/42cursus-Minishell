@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:01:44 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/19 10:58:06 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,21 @@ void	add_env_equal(const char *str, t_env *env)
 		env->value = ft_strdup(ft_strchr(str, '=') + 1);
 		if (!env->value)
 			return (perror("E: ft_strdup in export"));
+		env->print = PRINT;
 		if (ft_strchr(env->key, '='))
 			return ;
-		(1) && (tmp = env->key, env->key = ft_strjoin(env->key, "="));
-		if (!env->key)
-			return (perror("E: ft_strjoin in export"));
-		free(tmp);
-		env->print = PRINT;
+		tmp = ft_strjoin(env->key, "=");
+		if (!tmp)
+			return (perror("E: ft_strdup in export"));
+		free(env->key);
+		env->key = tmp;
 	}
 	else
 		add_env_equal_2(str, env);
 }
 
-static void	add_env_plus_3(const char *str, t_env *env)
+static void	add_env_plus_3(const char *str, t_env *env, char *tmp)
 {
-	char	*tmp;
-
 	env->next = malloc(sizeof(t_env));
 	if (!env->next)
 		return (perror("malloc in add_env failed"));
@@ -78,10 +77,8 @@ static void	add_env_plus_3(const char *str, t_env *env)
 	env->print = PRINT;
 }
 
-static void	add_env_plus_2(const char *str, t_env *env)
+static void	add_env_plus_2(const char *str, t_env *env, char *tmp)
 {
-	char	*tmp;
-
 	env->value = ft_strdup(ft_strchr(str, '=') + 1);
 	if (!env->value)
 		return (perror("ft_strdup in add_env_plus failed"));
@@ -94,10 +91,8 @@ static void	add_env_plus_2(const char *str, t_env *env)
 	return ;
 }
 
-void	add_env_plus(const char *str, t_env *env)
+void	add_env_plus(const char *str, t_env *env, char *tmp, char *tmp2)
 {
-	char	*tmp;
-
 	tmp = ft_substr(str, 0, ft_strchr(str, '+') - str);
 	if (!tmp)
 		return (perror("ft_strdup in add_env_plus failed"));
@@ -109,16 +104,18 @@ void	add_env_plus(const char *str, t_env *env)
 	}
 	if (!ft_strncmp(env->key, tmp, ft_strlen(tmp)) && ft_strchr(env->key, '='))
 	{
-		(1) && (free(tmp), tmp = env->value);
-		env->value = ft_strjoin(env->value, ft_strchr(str, '=') + 1);
-		if (!env->value)
+		(env->print == NO_PRINT) && (free(env->value), env->value = NULL);
+		(env->print != NO_PRINT) && (free(tmp), tmp = env->value);
+		tmp2 = ft_strjoin(env->value, ft_strchr(str, '=') + 1);
+		if (!tmp2)
 			return (perror("ft_strdup in add_env_plus failed"));
+		env->value = tmp2;
 		env->print = PRINT;
 	}
 	else if (!ft_strncmp(env->key, tmp, ft_strlen(tmp))
 		&& !ft_strchr(env->key, '='))
-		add_env_plus_2(str, env);
+		add_env_plus_2(str, env, NULL);
 	else
-		add_env_plus_3(str, env);
+		add_env_plus_3(str, env, NULL);
 	free(tmp);
 }

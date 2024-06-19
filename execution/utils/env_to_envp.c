@@ -6,11 +6,25 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:46:44 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 11:27:08 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/18 18:50:04 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+int	len_env(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env)
+	{
+		if (env->print != NO_PRINT)
+			i++;
+		env = env->next;
+	}
+	return (i);
+}
 
 char	**free_envp(char **envp)
 {
@@ -30,25 +44,26 @@ char	**free_envp(char **envp)
 	return (NULL);
 }
 
-char	**env_to_envp(t_env *tmp, t_env *tmp1)
+char	**env_to_envp(t_env *tmp)
 {
 	char	**envp;
 	int		i;
 
-	i = -1;
-	while (tmp1 && ++i >= 0)
-		tmp1 = tmp1->next;
+	i = len_env(tmp);
 	envp = malloc(sizeof(char *) * (i + 1));
 	if (!envp)
 		return (perror("malloc function"), NULL);
 	i = -1;
 	while (tmp)
 	{
-		envp[++i] = ft_strjoin(tmp->key, tmp->value);
-		if (envp[i] == NULL)
+		if (tmp->print != NO_PRINT)
 		{
-			perror("ft_strjoin failed");
-			return (free_envp(envp));
+			envp[++i] = ft_strjoin(tmp->key, tmp->value);
+			if (envp[i] == NULL)
+			{
+				perror("ft_strjoin failed");
+				return (free_envp(envp));
+			}
 		}
 		tmp = tmp->next;
 	}

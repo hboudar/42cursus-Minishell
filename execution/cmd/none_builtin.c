@@ -6,17 +6,14 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/18 12:25:13 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/19 09:55:11 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	child_process(t_prompt *prompt, t_env *env)
+static void	child_process(t_prompt *prompt, t_env *env, char **envp, char *path)
 {
-	char	**envp;
-	char	*path;
-
 	none_redirection(prompt, env, prompt->cmd->file);
 	if (!prompt->cmd->args)
 		path = NULL;
@@ -35,8 +32,8 @@ static void	child_process(t_prompt *prompt, t_env *env)
 		printf("minishell: %s: permission denied\n", prompt->cmd->args[0]);
 		exit(126);
 	}
-	(1) && (envp = env_to_envp(env, env),
-		execve(path, prompt->cmd->args, envp));
+	envp = env_to_envp(env);
+	execve(path, prompt->cmd->args, envp);
 	(prompt->cmd->args) && (perror(prompt->cmd->args[0]), free_envp(envp));
 	exit(127);
 }
@@ -52,7 +49,7 @@ int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 		if (pid == -1)
 			return (error("fork failed"));
 		else if (pid == 0)
-			child_process(prompt, env);
+			child_process(prompt, env, NULL, NULL);
 		else
 		{
 			ignore_signals();
@@ -60,6 +57,6 @@ int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 		}
 	}
 	else
-		child_process(prompt, env);
+		child_process(prompt, env, NULL, NULL);
 	return (prompt->exit_state);
 }

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 16:53:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/06/18 12:24:31 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/19 10:54:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ int			ft_cd(t_prompt *prompt, t_env *env, char *oldpwd, char *pwd);
 int			ft_pwd(t_env *env);
 int			ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus);
 int			export_only(t_env *env);
-void		add_env_plus(const char *str, t_env *env);
+void		add_env_plus(const char *str, t_env *env, char *tmp, char *tmp2);
 void		add_env_equal(const char *str, t_env *env);
 int			ft_unset(t_prompt *prompt, t_env **env);
 int			ft_env(t_prompt *prompt, t_env *env);
@@ -277,7 +277,7 @@ int			error(char *msg);
 int			ft_builtin(t_prompt *prompt, t_env **env);
 int			is_builtin(t_prompt *prompt);
 char		*find_path(char **cmd, t_env *env);
-char		**env_to_envp(t_env *env, t_env *env1);
+char		**env_to_envp(t_env *env);
 char		**free_envp(char **envp);
 void		setup_signal_handlers(void (*int_)(int), void (*quit_)(int));
 void		sigint_handler_heredoc(int sig);
