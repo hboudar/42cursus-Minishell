@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:07:24 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/18 08:29:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/20 06:27:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ char	*get_env(char *key, t_env *env, int mode)
 
 static char	*ft_pathcmd(char *cmd, char **path, int i)
 {
-	char	*tmp;
 	char	*tmp2;
+	char	*tmp;
 
 	tmp = ft_strjoin(path[i], "/");
 	if (!tmp)
@@ -72,16 +72,14 @@ char	*find_path(char **cmd, t_env *env)
 	int		i;
 
 	i = -1;
-	if (!get_env("PATH=", env, 1))
-		return (NULL);
+	if (ft_strchr(cmd[0], '/'))
+            return cmd[0];
+	else if (!get_env("PATH=", env, 1))
+        return NULL;
 	path = ft_split(get_env("PATH=", env, 1), ':');
-	if (!path)
-		return (perror("ft_split failed"), NULL);
 	while (path[++i])
 	{
 		tmp = ft_pathcmd(cmd[0], path, i);
-		if (!tmp)
-			return (NULL);
 		if (!access(tmp, F_OK))
 		{
 			free_array(path);
@@ -89,5 +87,5 @@ char	*find_path(char **cmd, t_env *env)
 		}
 		free(tmp);
 	}
-	return (free_array(path), cmd[0]);
+	return (free_array(path));
 }

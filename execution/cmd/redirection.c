@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:21:13 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/14 12:05:24 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/20 07:08:36 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 {
 	if (file && !file->data[0] && !quotes)
 	{
+		prompt->exit_state = 1;
 		printf("minishell: ambiguous redirect\n");
 		(*fd1 != 0) && (close(*fd1));
-		prompt->exit_state = 1;
 		return (0);
 	}
 	(*fd1 != 1) && (close(*fd1));
@@ -29,12 +29,13 @@ static int	out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 	if (*fd1 == -1)
 	{
 		printf("Error: %s: %s\n", file->data, strerror(errno));
+		prompt->exit_state = 1;
 		return (0);
 	}
 	else if (dup2(*fd1, 1) == -1)
 	{
-		close(*fd1);
-		perror("dup2");
+		(1) && (perror("dup2"), close(*fd1));
+		prompt->exit_state = 1;
 		return (0);
 	}
 	return (1);
