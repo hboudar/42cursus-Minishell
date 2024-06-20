@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 11:36:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/20 07:28:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/20 07:35:35 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 			prompt->cmd->args[ft_tablen(prompt->cmd->args) - 1]);
 	else if (prompt->cmd)
 		change_underscore(env, "");
+	printf("{%d}\n", prompt->exit_state);
 	return (prompt->exit_state);
 }
 

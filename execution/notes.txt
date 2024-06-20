@@ -1,41 +1,40 @@
 
 on it :
-when command has no path : does not handeled by execv
+
+
+already done :----------------------------------------------------------------------------------------------------------------------
+[V] reset the in and out fds between the and/or commands
+[V] 0- unset : don't free just hide? by changing the type
+[V] 1- in cd
+[V] 2- in pwd
+[V] 3- in env
+[V] 4- commands (search for the Path check if PRINT)
+[V] 5- in export : if "PRINT" add the value or change it, if "NON_PRINT" change the value and the type, if it does not exits add it
+[V] add_env : should be changed
+[V] export key{anything except alpha or '_'}+{here should be nothing}=value
+[V] when command has no path : does not handeled by execv
+[V] error displaying before execve
+------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-already done :
-reset the in and out fds between the and/or commands [V]
-0- unset : don't free just hide? by changing the type [V]
-1- in cd [V]
-2- in pwd [V]
-3- in env [V]
-4- commands (search for the Path check if PRINT) [V]
-5- in export : if "PRINT" add the value or change it, if "NON_PRINT" change the value and the type, if it does not exits add it [V]
-add_env : should be changed [V]
-export key{anything except alpha or '_'}+{here should be nothing}=value shouldnt work [V]
-
-
-
-
-still not done :
+still not done :---------------------------------------------------------------------------------
 # ctrl c exit state
 # ^\ should return 131 in child process
 # (redirection for one command in subshell)
 # fork every pipe then execute the pipes to get the correct exit state (not sure)
+-------------------------------------------------------------------------------------------------
 
 
 
-
-*New minishell*:
-when unseting something (because i only hide) : $KEY : should be expanded to nothing
-
-note :
-parsing : check_env : before if env was unset tottally excuted : ./minishell ghadi tra error
-_ does not show in export (env only)
-when : > file (permission 000) : echo $? : should be 1 but it is 0
-when : > $something : echo $? : should be 1 but it is 0
-
+*New minishell*:---------------------------------------------------------------------------------
+for parsing :
+    when unseting something (because i only hide) : $KEY : should be expanded to nothing
+    (toqba) parsing : check_env : before if env was unset tottally excuted : ./minishell ghadi tra error
+    when : > file (permission 000) : echo $? : should be 1 but it is 0
+for me :
+    _ does not show in export (env only)
+-------------------------------------------------------------------------------------------------
 
 
 
