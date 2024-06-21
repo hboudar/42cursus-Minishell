@@ -30,7 +30,7 @@ still not done :----------------------------------------------------------------
 *New minishell*:---------------------------------------------------------------------------------
 for parsing :
     when unseting something (because i only hide) : $KEY : should be expanded to nothing
-    (toqba) parsing : check_env : before if env was unset tottally excuted : ./minishell ghadi tra error
+    (toqba) parsing : check_env : before if env was unset tottally : "./minishell" ghadi tra error
     when : > file (permission 000) : echo $? : should be 1 but it is 0
 for me :
     _ does not show in export (env only)
