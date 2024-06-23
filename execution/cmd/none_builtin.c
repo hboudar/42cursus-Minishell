@@ -6,16 +6,15 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 08:43:21 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/20 07:20:44 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/23 11:44:59 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-
-void handle_error(char *path)
+void	handle_error(char *path)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	if (path == NULL || access(path, F_OK) == -1)
 	{
@@ -28,7 +27,7 @@ void handle_error(char *path)
 		exit(127);
 	}
 	stat(path, &path_stat);
-	if (S_ISDIR(path_stat.st_mode)|| access(path, X_OK) == -1)
+	if (S_ISDIR(path_stat.st_mode) || access(path, X_OK) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(path, 2);
@@ -44,7 +43,7 @@ static void	child_process(t_prompt *prompt, t_env *env, char **envp, char *path)
 {
 	none_redirection(prompt, env, prompt->cmd->file);
 	if (prompt->cmd->args[0] == NULL || strlen(prompt->cmd->args[0]) == 0)
-       handle_error(NULL);
+		handle_error(NULL);
 	path = find_path(prompt->cmd->args, env);
 	handle_error(path);
 	envp = env_to_envp(env);

@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/18 12:18:06 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/23 11:43:50 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,33 +58,30 @@ char	*ft_getpath(char *arg, t_env *env, int mode)
 	return (pwd);
 }
 
-int	tohome_wego(t_env *env)
+int	tohome_wego(t_env *env, char *home, char *oldpwd, char *pwd)
 {
-	char	*home;
-	char	*oldpwd;
-	char	*pwd;
-
-	(1) && (home = NULL, oldpwd = NULL, pwd = NULL);
 	home = get_env("HOME=", env, 0);
+	pwd = get_env("PWD=", env, 0);
+	if (!ft_strncmp(home, pwd, ft_strlen(pwd))
+		&& !ft_strncmp(home, pwd, ft_strlen(home)))
+		return (0);
 	oldpwd = ft_getpath(NULL, env, 0);
 	if (chdir(home) == -1)
 	{
-		(home) && (free(home), home = NULL);
 		(oldpwd) && (free(oldpwd), oldpwd = NULL);
 		perror("Error in chdir");
 		return (1);
 	}
 	pwd = ft_getpath(NULL, env, 0);
-	set_path(pwd, "PATH=", env);
+	set_path(pwd, "PWD=", env);
 	set_path(oldpwd, "OLDPWD=", env);
-	(home) && (free(home), home = NULL);
 	return (0);
 }
 
 int	ft_cd(t_prompt *prompt, t_env *env, char *oldpwd, char *pwd)
 {
 	if (prompt->cmd->args[1] == NULL)
-		return (tohome_wego(env));
+		return (tohome_wego(env, NULL, NULL, NULL));
 	oldpwd = ft_getpath(prompt->cmd->args[1], env, 0);
 	if (chdir(prompt->cmd->args[1]) == -1)
 	{

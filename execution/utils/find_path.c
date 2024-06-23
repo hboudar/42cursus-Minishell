@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:07:24 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/20 06:27:55 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/23 11:45:44 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ char	*find_path(char **cmd, t_env *env)
 
 	i = -1;
 	if (ft_strchr(cmd[0], '/'))
-            return cmd[0];
+		return (cmd[0]);
 	else if (!get_env("PATH=", env, 1))
-        return NULL;
+		return (NULL);
 	path = ft_split(get_env("PATH=", env, 1), ':');
 	while (path[++i])
 	{
