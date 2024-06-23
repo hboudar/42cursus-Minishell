@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 09:01:04 by hboudar           #+#    #+#             */
-/*   Updated: 2024/06/23 11:43:50 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/06/23 11:54:25 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,12 @@ char	*ft_getpath(char *arg, t_env *env, int mode)
 
 int	tohome_wego(t_env *env, char *home, char *oldpwd, char *pwd)
 {
-	home = get_env("HOME=", env, 0);
+	home = get_env("HOME=", env, 1);
+	if (!home)
+	{
+		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		return (1);
+	}
 	pwd = get_env("PWD=", env, 0);
 	if (!ft_strncmp(home, pwd, ft_strlen(pwd))
 		&& !ft_strncmp(home, pwd, ft_strlen(home)))
