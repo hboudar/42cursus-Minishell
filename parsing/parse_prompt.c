@@ -111,18 +111,19 @@ void	parse_prompt(t_prompt **oldprmpt, char *line)
 		return ;
 	if (*oldprmpt)
 	{
-		prmpt->exit_state = ((*oldprmpt)->exit_state) * (1 - g_caught);
+		prmpt->exit_state = (*oldprmpt)->exit_state + g_caught;
+		g_caught = 0;
 		free_prompt(oldprmpt);
 		*oldprmpt = prmpt;
 	}
+	prmpt->exit_state = g_caught;
 	if (check_syntax_bonus(token) || check_syntax(token))
 	{
 		printf("Syntax error\n");
 		prmpt->exit_state = 300;
-		*oldprmpt = prmpt;
 		free_token(&token);
-		return ;
 	}
-	build_prompt(&prmpt, &token);
+	else
+		build_prompt(&prmpt, &token);
 	*oldprmpt = prmpt;
 }

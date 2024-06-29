@@ -49,7 +49,8 @@ char	*get_expanded_value(char **data, t_env *env)
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->key, *data, ft_strlen(*data))
-			&& ft_strlen(*data) == ft_strlen(tmp->key) - 1)
+			&& ft_strlen(*data) == ft_strlen(tmp->key) - 1
+			&& tmp->print != NO_PRINT)
 			return (tmp->value);
 		tmp = tmp->next;
 	}

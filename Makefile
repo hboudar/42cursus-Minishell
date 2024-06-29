@@ -13,7 +13,7 @@ OBJ		= $(SRC:.c=.o)
 HEADER	= minishell.h
 NAME	= minishell
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra
 RM		= rm -f
 LIBFT	= utils/libft.a
 
@@ -23,13 +23,13 @@ READLINE_INCLUDES = $(shell brew --prefix readline)/include
 all: pre $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) -lreadline $(CFLAGS) -L $(READLINE_LIB) -o $(NAME) $(OBJ) $(LIBFT)
+	$(CC) $(OBJ) -lreadline $(CFLAGS) -L $(READLINE_LIB) -o $(NAME) $(LIBFT)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -I $(READLINE_INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(READLINE_INCLUDES)
 
 pre:
-	@cd utils && make
+	$(MAKE) -C utils
 
 clean:
 	$(RM) $(OBJ)
