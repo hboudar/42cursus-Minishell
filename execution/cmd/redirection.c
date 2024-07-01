@@ -73,7 +73,7 @@ void	redirection(t_prompt *prompt, t_env **env, t_file *file)
 	int	fd0;
 	int	fd1;
 
-	(1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
+	(1) && (fd0 = 0, fd1 = 1);
 	while (file != NULL)
 	{
 		if (file->quotes != IN_SQUOTES)

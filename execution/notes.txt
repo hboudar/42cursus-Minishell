@@ -14,25 +14,14 @@ already done :------------------------------------------------------------------
 [V] export key{anything except alpha or '_'}+{here should be nothing}=value
 [V] when command has no path : does not handeled by execv
 [V] error displaying before execve
+[V] ctrl c exit state
 ------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 still not done :---------------------------------------------------------------------------------
-# ctrl c exit state
-    ➜ minishell cat
-    {exec 0}
-    ^C{prep :130}
-    {mini 130}
-    ➜ minishell echo $?
-    0
-    {exec 0}
-    {prep :0}
-    {mini 0}
-
 # ^\ should return 131 in child process
 # (redirection for one command in subshell)
-# fork every pipe then execute the pipes to get the correct exit state (not sure)
 -------------------------------------------------------------------------------------------------
 
 
