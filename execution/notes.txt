@@ -20,6 +20,16 @@ already done :------------------------------------------------------------------
 
 still not done :---------------------------------------------------------------------------------
 # ctrl c exit state
+    ➜ minishell cat
+    {exec 0}
+    ^C{prep :130}
+    {mini 130}
+    ➜ minishell echo $?
+    0
+    {exec 0}
+    {prep :0}
+    {mini 0}
+
 # ^\ should return 131 in child process
 # (redirection for one command in subshell)
 # fork every pipe then execute the pipes to get the correct exit state (not sure)
@@ -33,4 +43,5 @@ for parsing :
     when : > file (permission 000) : echo $? : should be 1 but it is 0
 for me :
     _ does not show in export (env only)
+
 -------------------------------------------------------------------------------------------------
