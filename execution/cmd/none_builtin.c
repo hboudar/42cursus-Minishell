@@ -48,7 +48,7 @@ static void	child_process(t_prompt *prompt, t_env *env, char **envp, char *path)
 	handle_error(path);
 	envp = env_to_envp(env);
 	if (execve(path, prompt->cmd->args, envp) == -1)
-		perror("Minishell: execve failed YOOOOO");
+		perror("Minishell: execve failed");
 	free_envp(envp);
 	exit(1);
 }

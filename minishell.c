@@ -39,6 +39,7 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 		prompt->exit_state = 130;
 	else
 		prompt->exit_state = prompt->exit_state >> 8;
+	printf("{prep :%d}\n", prompt->exit_state);
 	free_pid(&tmp);
 	return (prompt->exit_state);
 }
@@ -77,6 +78,7 @@ int	main(int argc, char **argv, char **envp)
 			parse_prompt(&prompt, line);
 			if (!was_syn_err(prompt) && (prompt->type != P_CMD || prompt->cmd))
 				prompt->exit_state = prep_execution(prompt, &env, 0);
+				printf("{mini %d}\n", prompt->exit_state);
 		}
 		free(line);
 	}

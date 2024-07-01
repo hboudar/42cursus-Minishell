@@ -22,7 +22,6 @@ void	sig_handler_child(int sig)
 {
 	extern int	g_caught;
 
-	printf("signal %d\n", sig);
 	if (sig == SIGINT)
 	{
 		g_caught = 1;
