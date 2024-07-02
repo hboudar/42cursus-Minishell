@@ -32,5 +32,5 @@ for parsing :
     when : > file (permission 000) : echo $? : should be 1 but it is 0
 for me :
     _ does not show in export (env only)
-
+    rediections : case : (cmd | cmd > file) > file1
 -------------------------------------------------------------------------------------------------
