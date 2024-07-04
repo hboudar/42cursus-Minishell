@@ -87,6 +87,15 @@ enum e_print
 	EXP_PRINT,
 };
 
+typedef struct s_data
+{
+	char			*arg;
+	int				joinable;
+	enum e_type		type;
+	enum e_state	state;
+	struct s_data	*next;
+}	t_data;
+
 typedef struct s_pid
 {
 	pid_t			pid;
@@ -107,6 +116,7 @@ typedef struct s_file
 	int				type;
 	int				quotes;
 	char			*data;
+	t_data			*args;
 	struct s_file	*next;
 }	t_file;
 
@@ -118,19 +128,11 @@ typedef struct s_expand
 	struct s_expand	*next;
 }	t_expand;
 
-typedef struct s_data
-{
-	char			*arg;
-	int				joinable;
-	enum e_type		type;
-	enum e_state	state;
-	struct s_data	*next;
-}	t_data;
-
 typedef struct s_limiter
 {
 	char				*limit;
 	int					quotes;
+	t_data				*args;
 	struct s_limiter	*next;
 }		t_limiter;
 
