@@ -50,6 +50,7 @@ void	remove_redirections(t_token **token)
 	t_token	*tmp2;
 
 	tmp = *token;
+	//edit the removal to remove all the tokens you saved into the file struct
 	while (tmp)
 	{
 		if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT
@@ -68,6 +69,7 @@ void	remove_redirections(t_token **token)
 
 void	fill_redirections(t_cmd *cmd, t_token *token)
 {
+	//edit addlimiter and newfile to match the new struct and to edit on the actual token to skip all the ones
 	while (token)
 	{
 		if (token->type == REDIR_IN)
