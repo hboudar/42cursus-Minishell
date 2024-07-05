@@ -1,8 +1,21 @@
+to solve :---------------------------------------------------------------------------------
+# ^\ should return 131 in child process
+# (redirection for one command in subshell)
+-------------------------------------------------------------------------------------------------
 
-on it :
+
+*New minishell*:---------------------------------------------------------------------------------
+for parsing :
+    when : > file (permission 000) : echo $? : should be 1 but it is 0
+for me :
+    _ does not show in export (env only)
+    rediections : case : (cmd > file) > file1
+    output should be in file not file1
+-------------------------------------------------------------------------------------------------
 
 
-already done :----------------------------------------------------------------------------------------------------------------------
+
+solved :----------------------------------------------------------------------------------------------------------------------
 [V] reset the in and out fds between the and/or commands
 [V] 0- unset : don't free just hide? by changing the type
 [V] 1- in cd
@@ -15,22 +28,5 @@ already done :------------------------------------------------------------------
 [V] when command has no path : does not handeled by execv
 [V] error displaying before execve
 [V] ctrl c exit state
+[V] when unseting something (because i only hide) : $KEY : should be expanded to nothing
 ------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-still not done :---------------------------------------------------------------------------------
-# ^\ should return 131 in child process
-# (redirection for one command in subshell)
--------------------------------------------------------------------------------------------------
-
-
-
-*New minishell*:---------------------------------------------------------------------------------
-for parsing :
-    when unseting something (because i only hide) : $KEY : should be expanded to nothing : done
-    when : > file (permission 000) : echo $? : should be 1 but it is 0
-for me :
-    _ does not show in export (env only)
-    rediections : case : (cmd | cmd > file) > file1
--------------------------------------------------------------------------------------------------
