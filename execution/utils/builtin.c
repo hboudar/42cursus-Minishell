@@ -15,7 +15,7 @@
 int	ft_builtin(t_prompt *prompt, t_env **env)
 {
 	if (!ft_strncmp(prompt->cmd->args[0], "echo", 5))
-		prompt->exit_state = ft_echo(prompt, *env);
+		prompt->exit_state = ft_echo(prompt);
 	else if (!ft_strncmp(prompt->cmd->args[0], "cd", 3))
 		prompt->exit_state = ft_cd(prompt, *env, NULL, NULL);
 	else if (!ft_strncmp(prompt->cmd->args[0], "pwd", 4))

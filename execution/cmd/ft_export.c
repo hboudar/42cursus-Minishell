@@ -40,7 +40,7 @@ static int	check_arg(const char *arg, char *equal, char *plus)
 	return (1);
 }
 
-int	check_state(const char *str, t_env *env)
+static int	check_state(const char *str, t_env *env)
 {
 	char	*key;
 	int		mode;
@@ -79,13 +79,29 @@ static void	add_env(const char *str, t_env *env)
 	env->next->print = EXP_PRINT;
 }
 
+static int	export_only(t_env *env)
+{
+	while (env)
+	{
+		if (env->print == PRINT || env->print == EXP_PRINT)
+		{
+			if (env->value)
+				printf("declare -x %s\"%s\"\n", env->key, env->value);
+			else
+				printf("declare -x %s\n", env->key);
+		}
+		env = env->next;
+	}
+	return (0);
+}
+
 int	ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus)
 {
 	int		i;
 
 	if (prompt->cmd->args[1] == NULL)
 		return (export_only(env));
-	i = 0;
+	(1) && (i = 0, prompt->exit_state = 0);
 	while (prompt->cmd->args[++i])
 	{
 		equal = ft_strchr(prompt->cmd->args[i], '=');
@@ -104,5 +120,5 @@ int	ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus)
 		else if (plus && equal && plus < equal)
 			add_env_plus(prompt->cmd->args[i], env, NULL, NULL);
 	}
-	return (0);
+	return (prompt->exit_state);
 }

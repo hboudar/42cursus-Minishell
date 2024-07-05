@@ -57,10 +57,9 @@ static int	ft_unsetenv(const char *name, t_env *env)
 
 int	ft_unset(t_prompt *prompt, t_env **env)
 {
-	int	exit_state;
 	int	i;
 
-	(1) && (i = 1, exit_state = 0);
+	(1) && (i = 1, prompt->exit_state = 0);
 	while (prompt->cmd->args[i])
 	{
 		if (is_valid_name(prompt->cmd->args[i]))
@@ -70,9 +69,9 @@ int	ft_unset(t_prompt *prompt, t_env **env)
 			ft_putstr_fd("minishell: unset: `", 2);
 			ft_putstr_fd(prompt->cmd->args[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
-			exit_state = 1;
+			prompt->exit_state = 1;
 		}
 		i++;
 	}
-	return (exit_state);
+	return (prompt->exit_state);
 }

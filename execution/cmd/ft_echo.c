@@ -46,12 +46,12 @@ static void	ft_print(t_prompt *prompt, int option)
 		ft_putstr_fd("\n", 1);
 }
 
-int	ft_echo(t_prompt *prompt, t_env *env)
+int	ft_echo(t_prompt *prompt)
 {
 	int	option;
 	int	i;
 
-	(void)env;
+	prompt->exit_state = 0;
 	if (prompt->cmd->args[1])
 	{
 		(1) && (option = 1, i = 1);

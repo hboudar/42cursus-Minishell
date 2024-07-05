@@ -16,6 +16,7 @@ int	ft_env(t_prompt *prompt, t_env *env)
 {
 	char	*path;
 
+	prompt->exit_state = 0;
 	if (prompt->cmd->args[1] != NULL)
 	{
 		ft_putstr_fd("env: too many arguments\n", 2);
@@ -34,42 +35,6 @@ int	ft_env(t_prompt *prompt, t_env *env)
 		if (env->value && (env->print == ENV_PRINT || env->print == PRINT))
 			printf("%s%s\n", env->key, env->value);
 		env = env->next;
-	}
-	return (0);
-}
-
-int	export_only(t_env *env)
-{
-	while (env)
-	{
-		if (env->print == PRINT || env->print == EXP_PRINT)
-		{
-			if (env->value)
-				printf("declare -x %s\"%s\"\n", env->key, env->value);
-			else
-				printf("declare -x %s\n", env->key);
-		}
-		env = env->next;
-	}
-	return (0);
-}
-
-int	change_underscore(t_env **env, char *str)
-{
-	t_env	*tmp;
-
-	tmp = *env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key, "_=", 3))
-		{
-			(tmp->value) && (free(tmp->value), tmp->value = NULL);
-			tmp->value = ft_strdup(str);
-			if (!tmp->value)
-				return (1);
-			break ;
-		}
-		tmp = tmp->next;
 	}
 	return (0);
 }

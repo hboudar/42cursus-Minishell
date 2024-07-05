@@ -262,11 +262,10 @@ int			ft_and(t_prompt *prompt, t_env **env, t_pid **pids);
 
 void		redirection(t_prompt *prompt, t_env **env, t_file *file);
 void		none_redirection(t_prompt *prompt, t_env *env, t_file *file);
-int			ft_echo(t_prompt *prompt, t_env *env);
+int			ft_echo(t_prompt *prompt);
 int			ft_cd(t_prompt *prompt, t_env *env, char *oldpwd, char *pwd);
 int			ft_pwd(t_env *env);
 int			ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus);
-int			export_only(t_env *env);
 void		add_env_plus(const char *str, t_env *env, char *tmp, char *tmp2);
 void		add_env_equal(const char *str, t_env *env);
 int			ft_unset(t_prompt *prompt, t_env **env);
@@ -284,7 +283,6 @@ void		sigint_handler_heredoc(int sig);
 void		ignore_signals(void);
 void		sig_handler_child(int sig);
 
-int			change_underscore(t_env **env, char *str);
 char		*get_env(char *key, t_env *env, int mode);
 void		pid_addback(t_pid **pids, t_pid *new);
 t_pid		*new_pid(pid_t pid);

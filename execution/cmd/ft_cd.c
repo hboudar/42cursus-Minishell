@@ -85,13 +85,14 @@ int	tohome_wego(t_env *env, char *home, char *oldpwd, char *pwd)
 
 int	ft_cd(t_prompt *prompt, t_env *env, char *oldpwd, char *pwd)
 {
+	prompt->exit_state = 0;
 	if (prompt->cmd->args[1] == NULL)
 		return (tohome_wego(env, NULL, NULL, NULL));
 	oldpwd = ft_getpath(prompt->cmd->args[1], env, 0);
 	if (chdir(prompt->cmd->args[1]) == -1)
 	{
 		(oldpwd) && (free(oldpwd), oldpwd = NULL);
-		perror("Error in chdir");
+		perror("chdir failed");
 		return (1);
 	}
 	pwd = ft_getpath(prompt->cmd->args[1], env, 1);
