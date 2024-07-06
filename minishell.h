@@ -287,6 +287,7 @@ void		sig_handler_child(int sig);
 
 char		*get_env(char *key, t_env *env, int mode);
 void		pid_addback(t_pid **pids, t_pid *new);
+int			change_underscore(t_env **env, char *str);
 t_pid		*new_pid(pid_t pid);
 void		free_pid(t_pid **pids);
 

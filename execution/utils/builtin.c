@@ -44,3 +44,23 @@ int	is_builtin(t_prompt *prompt)
 				|| !ft_strncmp(prompt->cmd->args[0], "exit", 5)));
 	return (0);
 }
+
+int	change_underscore(t_env **env, char *str)
+{
+	t_env	*tmp;
+
+	tmp = *env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, "_=", 3))
+		{
+			(tmp->value) && (free(tmp->value), tmp->value = NULL);
+			tmp->value = ft_strdup(str);
+			if (!tmp->value)
+				return (1);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}

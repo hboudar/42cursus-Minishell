@@ -12,26 +12,6 @@
 
 #include "../minishell.h"
 
-static int	change_underscore(t_env **env, char *str)
-{
-	t_env	*tmp;
-
-	tmp = *env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key, "_=", 3))
-		{
-			(tmp->value) && (free(tmp->value), tmp->value = NULL);
-			tmp->value = ft_strdup(str);
-			if (!tmp->value)
-				return (1);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
 int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 {
 	t_env	*tmp_env;
