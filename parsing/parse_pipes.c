@@ -90,7 +90,7 @@ void	parse_pipes(t_prompt **prmpt, t_token **token)
 	if (!check_pipe(*token))
 	{
 		set_size(*token);
-		(*prmpt)->cmd = parse_cmd(token);
+		(*prmpt)->cmd = parse_cmd(*prmpt, token);
 		return ;
 	}
 	tmp = get_pipe(token);
