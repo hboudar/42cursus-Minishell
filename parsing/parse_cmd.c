@@ -53,10 +53,8 @@ void	fill_args(t_cmd *cmd, int i)
 
 void	get_cmd(t_cmd **cmd, t_token *token)
 {
-	int		i;
 	t_data	*data;
 
-	i = 0;
 	data = NULL;
 	while (token)
 	{
@@ -106,12 +104,29 @@ void	get_args(t_cmd *cmd)
 	fill_args(cmd, i);
 }
 
-t_cmd	*parse_cmd(t_token **token)
+t_cmd	*parse_cmd(t_prompt *prmpt, t_token **token)
 {
-	t_cmd	*cmd;
+	t_cmd		*cmd;
+	t_file		*file;
+	t_limiter	*limiter;
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	ft_bzero(cmd, sizeof(t_cmd));
+	file = prmpt->file;
+	limiter = prmpt->limiter;
+	if (!prmpt->subshell)
+	{
+		while (file)
+		{
+			ft_fileaddback(&cmd->file, ft_newfile(file->data, file->type, file->quotes));
+			file = file->next;
+		}
+		while (limiter)
+		{
+			add_limiter(&cmd->limiter, limiter->limit, limiter->quotes);
+			limiter = limiter->next;
+		}
+	}
 	fill_redirections(cmd, *token);
 	remove_redirections(token);
 	get_cmd(&cmd, *token);

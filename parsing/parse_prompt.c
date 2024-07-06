@@ -59,15 +59,23 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 	tmp2 = *token;
 	if (check_and_or(tmp) || has_pipe(tmp))
 		handle_subshells(prmpt, token, get_limit(tmp));
-	else if (check_and_or_limit(*token, tmp))
+	else
 	{
-		(*prmpt)->subshell = 1;
-		fill_redirections_sub(*prmpt, *token, tmp);
-		remove_redirections_subshell(token, tmp);
+		if (check_and_or_limit(*token, tmp))
+		{
+			(*prmpt)->subshell = 1;
+			fill_redirections_sub(*prmpt, *token, tmp);
+			remove_redirections_subshell(token, tmp);
+		}
+		else
+		{
+			fill_redirections_sub(*prmpt, tmp, NULL);
+			while (tmp2->next != tmp)
+				tmp2 = tmp2->next;
+			remove_redirections_subshell(&tmp2, NULL);
+		}
 		build_prompt(prmpt, token);
 	}
-	else
-		build_prompt(prmpt, token);
 }
 
 void	build_prompt(t_prompt **prmpt, t_token **token)
