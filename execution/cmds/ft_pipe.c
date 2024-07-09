@@ -47,7 +47,10 @@ int	do_right(t_prompt *prompt, t_env **env, t_pid **pids)
 	if (pid == 0)
 	{
 		if (is_builtin(prompt))
-			exit(ft_builtin(prompt, env));
+		{
+			redirection(prompt, env, prompt->cmd->file);
+			exit(prompt->exit_state);
+		}
 		else
 			none_builtin(prompt, *env, 1, pids);
 	}

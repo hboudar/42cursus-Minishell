@@ -23,7 +23,7 @@ static char	*ft_getcwd(t_env *env)
 			break ;
 		env = env->next;
 	}
-	if (!path)
+	if (!path && env)
 		return (ft_strdup(env->value));
 	return (path);
 }
