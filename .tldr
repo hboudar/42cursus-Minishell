@@ -43,9 +43,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": 305.62890624999955,
-			"y": 246.8242187499991,
-			"lastActivityTimestamp": 1720531900419,
+			"x": 505.36328124999955,
+			"y": 1156.535156249999,
+			"lastActivityTimestamp": 1720531963203,
 			"meta": {}
 		},
 		{
@@ -90,7 +90,7 @@
 			"isFocused": true,
 			"devicePixelRatio": 2,
 			"isCoarsePointer": false,
-			"isHoveringCanvas": true,
+			"isHoveringCanvas": false,
 			"openMenus": [],
 			"isChangingStyle": false,
 			"isReadonly": false,
@@ -103,7 +103,9 @@
 		{
 			"editingShapeId": null,
 			"croppingShapeId": null,
-			"selectedShapeIds": [],
+			"selectedShapeIds": [
+				"shape:f4aHluNCWRBO6n4FtDRIx"
+			],
 			"hoveredShapeId": null,
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
@@ -12204,6 +12206,199 @@
 			},
 			"parentId": "page:page",
 			"index": "b0R",
+			"typeName": "shape"
+		},
+		{
+			"x": 172.24218749999955,
+			"y": 834.9726562499991,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:f4aHluNCWRBO6n4FtDRIx",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"w": 200.4921875,
+				"text": "7na 3adna hadi",
+				"font": "draw",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 1
+			},
+			"parentId": "page:page",
+			"index": "b0S",
+			"typeName": "shape"
+		},
+		{
+			"x": 93.26953124999955,
+			"y": 851.5507812499991,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:XpAYlI74vyq0z4fs-_4et",
+			"type": "draw",
+			"props": {
+				"segments": [
+					{
+						"type": "free",
+						"points": [
+							{
+								"x": 0,
+								"y": 0,
+								"z": 0.5
+							},
+							{
+								"x": 1.1,
+								"y": 0.29,
+								"z": 0.5
+							},
+							{
+								"x": 10.5,
+								"y": 1.4,
+								"z": 0.5
+							},
+							{
+								"x": 16.78,
+								"y": 1.98,
+								"z": 0.5
+							},
+							{
+								"x": 24.57,
+								"y": 1.98,
+								"z": 0.5
+							},
+							{
+								"x": 29.33,
+								"y": 1.98,
+								"z": 0.5
+							},
+							{
+								"x": 30.66,
+								"y": 1.98,
+								"z": 0.5
+							},
+							{
+								"x": 30.88,
+								"y": 1.98,
+								"z": 0.5
+							}
+						]
+					}
+				],
+				"color": "black",
+				"fill": "none",
+				"dash": "draw",
+				"size": "m",
+				"isComplete": true,
+				"isClosed": false,
+				"isPen": false,
+				"scale": 1
+			},
+			"parentId": "page:page",
+			"index": "b0T",
+			"typeName": "shape"
+		},
+		{
+			"x": 127.40234374999955,
+			"y": 839.5820312499991,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:kimm8osEc4_HG_LaNetTT",
+			"type": "draw",
+			"props": {
+				"segments": [
+					{
+						"type": "free",
+						"points": [
+							{
+								"x": 0,
+								"y": 0,
+								"z": 0.5
+							},
+							{
+								"x": 0.68,
+								"y": 0.46,
+								"z": 0.5
+							},
+							{
+								"x": 5.92,
+								"y": 4.11,
+								"z": 0.5
+							},
+							{
+								"x": 9.73,
+								"y": 7.44,
+								"z": 0.5
+							},
+							{
+								"x": 11.73,
+								"y": 10.21,
+								"z": 0.5
+							},
+							{
+								"x": 12.55,
+								"y": 13.46,
+								"z": 0.5
+							},
+							{
+								"x": 12.55,
+								"y": 18.22,
+								"z": 0.5
+							},
+							{
+								"x": 11.5,
+								"y": 22.97,
+								"z": 0.5
+							},
+							{
+								"x": 7.49,
+								"y": 26.97,
+								"z": 0.5
+							},
+							{
+								"x": 4.64,
+								"y": 29,
+								"z": 0.5
+							},
+							{
+								"x": -4.77,
+								"y": 31.11,
+								"z": 0.5
+							},
+							{
+								"x": -8.79,
+								"y": 31.58,
+								"z": 0.5
+							},
+							{
+								"x": -10.54,
+								"y": 31.58,
+								"z": 0.5
+							},
+							{
+								"x": -10.77,
+								"y": 31.58,
+								"z": 0.5
+							}
+						]
+					}
+				],
+				"color": "black",
+				"fill": "none",
+				"dash": "draw",
+				"size": "m",
+				"isComplete": true,
+				"isClosed": false,
+				"isPen": false,
+				"scale": 1
+			},
+			"parentId": "page:page",
+			"index": "b0U",
 			"typeName": "shape"
 		}
 	]
