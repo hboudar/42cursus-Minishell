@@ -275,7 +275,6 @@ int			ft_unset(t_prompt *prompt, t_env **env);
 int			ft_env(t_prompt *prompt, t_env *env);
 int			ft_exit(t_prompt *prompt);
 
-int			error(char *msg);
 int			ft_builtin(t_prompt *prompt, t_env **env);
 int			is_builtin(t_prompt *prompt);
 char		*find_path(char **cmd, t_env *env);
@@ -289,6 +288,7 @@ void		sig_handler_child(int sig);
 char		*get_env(char *key, t_env *env, int mode);
 void		pid_addback(t_pid **pids, t_pid *new);
 int			change_underscore(t_env **env, char *str);
+int			check_underscore(char *arg);
 t_pid		*new_pid(pid_t pid);
 void		free_pid(t_pid **pids);
 

@@ -12,12 +12,6 @@
 
 #include "../../minishell.h"
 
-int	error(char *msg)
-{
-	perror(msg);
-	return (1);
-}
-
 void	sig_handler_child(int sig)
 {
 	extern int	g_caught;

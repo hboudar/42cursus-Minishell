@@ -19,7 +19,7 @@ void	do_left(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 	setup_signal_handlers(sig_handler_child, sig_handler_child);
 	pid = fork();
 	if (pid == -1)
-		error("fork");
+		perror("fork failed");
 	if (pid == 0)
 	{
 		(1) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));
@@ -43,7 +43,7 @@ int	do_right(t_prompt *prompt, t_env **env, t_pid **pids)
 	setup_signal_handlers(sig_handler_child, sig_handler_child);
 	pid = fork();
 	if (pid == -1)
-		error("fork");
+		perror("fork failed");
 	if (pid == 0)
 	{
 		if (is_builtin(prompt))
@@ -68,7 +68,7 @@ int	ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid **pids)
 
 	if (side == 'L')
 		if (pipe(fd) == -1)
-			error("pipe");
+			perror("pipe failed");
 	if (prompt->subshell)
 	{
 		(side == 'L') && (prompt->exit_state = subshell(prompt, env, fd, pids));

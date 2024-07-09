@@ -45,6 +45,18 @@ int	is_builtin(t_prompt *prompt)
 	return (0);
 }
 
+int	check_underscore(char *arg)
+{
+	if (!ft_strncmp(arg, "_", 2) || !ft_strncmp(arg, "_=", 2)
+		|| !ft_strncmp(arg, "_+", 2))
+	{
+		free(arg);
+		arg = ft_strdup("_");
+		return (1);
+	}
+	return (0);
+}
+
 int	change_underscore(t_env **env, char *str)
 {
 	t_env	*tmp;
@@ -54,6 +66,7 @@ int	change_underscore(t_env **env, char *str)
 	{
 		if (!ft_strncmp(tmp->key, "_=", 3))
 		{
+			tmp->print = ENV_PRINT;
 			(tmp->value) && (free(tmp->value), tmp->value = NULL);
 			tmp->value = ft_strdup(str);
 			if (!tmp->value)

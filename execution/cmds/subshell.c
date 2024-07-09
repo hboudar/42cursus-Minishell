@@ -20,7 +20,7 @@ int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 	setup_signal_handlers(sig_handler_child, sig_handler_child);
 	pid = fork();
 	if (pid == -1)
-		error("fork");
+		perror("fork");
 	if (pid == 0)
 	{
 		(fd) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));

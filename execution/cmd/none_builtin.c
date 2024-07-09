@@ -62,7 +62,7 @@ int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 		setup_signal_handlers(sig_handler_child, sig_handler_child);
 		pid = fork();
 		if (pid == -1)
-			return (error("fork failed"));
+			perror("fork failed");
 		else if (pid == 0)
 			child_process(prompt, env, NULL, NULL);
 		else
@@ -75,9 +75,3 @@ int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 		child_process(prompt, env, NULL, NULL);
 	return (prompt->exit_state);
 }
-
-//acces has 4 flags : F_OK, R_OK, W_OK, X_OK
-//F_OK : check if file exists
-//R_OK : check if file is readable
-//W_OK : check if file is writable
-//X_OK : check if file is executable

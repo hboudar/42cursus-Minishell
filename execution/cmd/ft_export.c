@@ -108,11 +108,12 @@ int	ft_export(t_prompt *prompt, t_env *env, char *equal, char *plus)
 		plus = ft_strchr(prompt->cmd->args[i], '+');
 		if (!check_arg(prompt->cmd->args[i], equal, plus))
 		{
-			ft_putstr_fd("export: ", 2);
 			ft_putstr_fd(prompt->cmd->args[i], 2);
 			ft_putstr_fd(": not a valid identifier\n", 2);
 			prompt->exit_state = 1;
 		}
+		else if (check_underscore(prompt->cmd->args[i]))
+			;
 		else if (!equal && !plus)
 			add_env(prompt->cmd->args[i], env);
 		else if (!plus || (plus && equal && plus > equal))
