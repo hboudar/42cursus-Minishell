@@ -118,7 +118,7 @@ t_cmd	*parse_cmd(t_prompt *prmpt, t_token **token)
 	{
 		while (file)
 		{
-			ft_fileaddback(&cmd->file, ft_newfile(file->data, file->type, file->quotes));
+			ft_fileaddback(&cmd->file, ft_newfile(ft_strdup(file->data), file->type, file->quotes));
 			file = file->next;
 		}
 		while (limiter)

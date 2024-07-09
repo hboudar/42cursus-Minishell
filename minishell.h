@@ -232,7 +232,7 @@ void		remove_token(t_token **token, t_token *node);
 void		ft_fileaddback(t_file **file, t_file *new);
 void		free_prompt(t_prompt **prompt);
 void		free_cmd(t_cmd **cmd);
-void		free_files(t_file *file);
+void		free_files(t_file **file);
 void		remove_redirections(t_token **token);
 void		fill_redirections_sub(t_prompt *prmpt, t_token *tkn, t_token *lmt);
 void		ft_shell_lvl(t_env *env);

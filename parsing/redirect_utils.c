@@ -67,14 +67,14 @@ void	ft_fileaddback(t_file **file, t_file *new)
 	tmp->next = new;
 }
 
-void	free_files(t_file *file)
+void	free_files(t_file **file)
 {
 	t_file	*tmp;
 
-	while (file)
+	while (*file)
 	{
-		tmp = file;
-		file = file->next;
+		tmp = *file;
+		*file = (*file)->next;
 		if (tmp->fd)
 			close(tmp->fd);
 		if (tmp->data)

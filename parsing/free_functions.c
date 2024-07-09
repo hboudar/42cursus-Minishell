@@ -69,7 +69,7 @@ void	free_cmd(t_cmd **cmd)
 		return ;
 	free_tab(&(*cmd)->args);
 	free_limiter(&(*cmd)->limiter);
-	free_files((*cmd)->file);
+	free_files(&(*cmd)->file);
 	free_expand(&(*cmd)->expand);
 	free_data(&(*cmd)->data);
 	if (*cmd)
@@ -84,7 +84,7 @@ void	free_prompt(t_prompt **prompt)
 	free_prompt(&(*prompt)->left);
 	free_prompt(&(*prompt)->right);
 	free_cmd(&(*prompt)->cmd);
-	free_files((*prompt)->file);
+	free_files((&(*prompt)->file));
 	free_limiter(&(*prompt)->limiter);
 	if (*prompt)
 		free(*prompt);
