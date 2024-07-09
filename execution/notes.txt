@@ -5,7 +5,6 @@ to solve :----------------------------------------------------------------------
 
 *New minishell*:---------------------------------------------------------------------------------
 for parsing :
-    when : > file (permission 000) : echo $? : should be 1 but it is 0
 for me :
     _ does not show in export (env only)
     rediections : case : (cmd > file) > file1
@@ -29,4 +28,5 @@ solved :------------------------------------------------------------------------
 [V] ctrl c exit state
 [V] when unseting something (because i only hide) : $KEY : should be expanded to nothing
 [V] (redirection with subshell)
+[V] when : > file (permission 000) : echo $? : should be 1 but it is 0
 ------------------------------------------------------------------------------------------------------------------------------------
