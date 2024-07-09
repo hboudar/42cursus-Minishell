@@ -1,6 +1,5 @@
 to solve :---------------------------------------------------------------------------------
 # ^\ should return 131 in child process
-# (redirection for one command in subshell)
 -------------------------------------------------------------------------------------------------
 
 
@@ -29,4 +28,5 @@ solved :------------------------------------------------------------------------
 [V] error displaying before execve
 [V] ctrl c exit state
 [V] when unseting something (because i only hide) : $KEY : should be expanded to nothing
+[V] (redirection with subshell)
 ------------------------------------------------------------------------------------------------------------------------------------
