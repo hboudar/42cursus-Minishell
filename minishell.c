@@ -39,6 +39,8 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 		prompt->exit_state = 130;
 	else if (prompt->exit_state > 255)
 		prompt->exit_state = prompt->exit_state >> 8;
+	if (prompt->exit_state == 3)
+		prompt->exit_state = 131;
 	printf("{prep :%d}\n", prompt->exit_state);
 	free_pid(&tmp);
 	return (prompt->exit_state);
