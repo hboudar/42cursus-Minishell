@@ -61,19 +61,12 @@ void	handle_par(t_prompt **prmpt, t_token **token, t_token *tmp)
 		handle_subshells(prmpt, token, get_limit(tmp));
 	else
 	{
+		while (tmp2->next != tmp)
+			tmp2 = tmp2->next;
 		if (check_and_or_limit(*token, tmp))
-		{
 			(*prmpt)->subshell = 1;
-			fill_redirections_sub(*prmpt, *token, tmp);
-			remove_redirections_subshell(token, tmp);
-		}
-		else
-		{
-			fill_redirections_sub(*prmpt, tmp, NULL);
-			while (tmp2->next != tmp)
-				tmp2 = tmp2->next;
-			remove_redirections_subshell(&tmp2, NULL);
-		}
+		fill_redirections_sub(*prmpt, tmp, NULL);
+		remove_redirections_subshell(&tmp2, NULL);
 		build_prompt(prmpt, token);
 	}
 }

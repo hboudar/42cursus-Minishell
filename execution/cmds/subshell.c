@@ -17,29 +17,30 @@ void	print_redirection(t_file *file, char c)
 	t_file	*tmp;
 
 	if (c == 'P')
-		printf("\nin prompt :");
+		printf("in prompt : ");
 	else if (c == 'L')
-		printf("\nin left :");
+		printf("in left : ");
 	else if (c == 'R')
-		printf("\nin right :");
+		printf("in right : ");
 	if (!file)
 	{
-		printf("no redirection");
+		printf("no redirection\n");
 		return ;
 	}
 	tmp = file;
 	while (tmp)
 	{
 		if (tmp->type == 1)
-			printf("redirection out : %s |", tmp->data);
+			printf("redirection out : %s | ", tmp->data);
 		else if (tmp->type == 2)
-			printf("redirection out append : %s |", tmp->data);
+			printf("redirection out append : %s | ", tmp->data);
 		else if (tmp->type == 0)
-			printf("redirection in : %s |", tmp->data);
+			printf("redirection in : %s | ", tmp->data);
 		else if (tmp->type == 3)
-			printf("here_doc : %s |", tmp->data);
+			printf("here_doc : %s | ", tmp->data);
 		tmp = tmp->next;
 	}
+	printf("\n");
 }
 
 int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
@@ -48,8 +49,8 @@ int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 
 	prompt->subshell = 0;
 	print_redirection(prompt->file, 'P');
-	print_redirection(prompt->left->file, 'L');
-	print_redirection(prompt->right->file, 'R');
+	print_redirection(prompt->left->cmd->file, 'L');
+	print_redirection(prompt->right->cmd->file, 'R');
 	exit(0);
 	setup_signal_handlers(sig_handler_child, sig_handler_child);
 	pid = fork();
