@@ -32,7 +32,6 @@ int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 			prompt->cmd->args[ft_tablen(prompt->cmd->args) - 1]);
 	else if (prompt->cmd)
 		change_underscore(env, "");
-	printf("{cmd} = %d\n", prompt->exit_state);
 	return (prompt->exit_state);
 }
 
