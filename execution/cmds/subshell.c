@@ -12,11 +12,45 @@
 
 #include "../../minishell.h"
 
+void	print_redirection(t_file *file, char c)
+{
+	t_file	*tmp;
+
+	if (c == 'P')
+		printf("\nin prompt :");
+	else if (c == 'L')
+		printf("\nin left :");
+	else if (c == 'R')
+		printf("\nin right :");
+	if (!file)
+	{
+		printf("no redirection");
+		return ;
+	}
+	tmp = file;
+	while (tmp)
+	{
+		if (tmp->type == 1)
+			printf("redirection out : %s |", tmp->data);
+		else if (tmp->type == 2)
+			printf("redirection out append : %s |", tmp->data);
+		else if (tmp->type == 0)
+			printf("redirection in : %s |", tmp->data);
+		else if (tmp->type == 3)
+			printf("here_doc : %s |", tmp->data);
+		tmp = tmp->next;
+	}
+}
+
 int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 {
 	pid_t	pid;
 
 	prompt->subshell = 0;
+	print_redirection(prompt->file, 'P');
+	print_redirection(prompt->left->file, 'L');
+	print_redirection(prompt->right->file, 'R');
+	exit(0);
 	setup_signal_handlers(sig_handler_child, sig_handler_child);
 	pid = fork();
 	if (pid == -1)
