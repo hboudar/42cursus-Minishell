@@ -42,7 +42,7 @@ void	handle_error(char *path)
 static void	child_process(t_prompt *prompt, t_env *env, char **envp, char *path)
 {
 	none_redirection(prompt, env, prompt->cmd->file);
-	if (prompt->cmd->args[0] == NULL || strlen(prompt->cmd->args[0]) == 0)
+	if (prompt->cmd->args[0] == NULL || ft_strlen(prompt->cmd->args[0]) == 0)
 		handle_error(NULL);
 	path = find_path(prompt->cmd->args, env);
 	handle_error(path);
