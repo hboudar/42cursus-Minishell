@@ -85,4 +85,3 @@ void	expand_string(char **str, t_env *env, int quotes, char *tmp2)
 	}
 	(*str != tmp2) && (free(*str), *str = tmp2);
 }
-

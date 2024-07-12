@@ -6,7 +6,7 @@ limiter state should change after joining them : the way to fix this is to fill 
 
 reset the in and out fds between the and/or commands : fixed
 
-^\ should return 131 in child process
+^\ should return 131 in child process fixed
 
 fork every pipe then execute the pipes to get the correct exit state : to be disscussed
 

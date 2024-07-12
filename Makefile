@@ -13,7 +13,7 @@ OBJ		= $(SRC:.c=.o)
 HEADER	= minishell.h
 NAME	= minishell
 CC		= cc
-CFLAGS	= -Wall -Wextra
+CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
 LIBFT	= utils/libft.a
 
