@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:27:16 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:27:17 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/14 09:37:54 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,32 @@ void	add_files(t_token **token, t_token *limit, char **files)
 	}
 }
 
-int	match(char *pattern, char *str)
+int match(const char *pattern, const char *str)
 {
-	int	i;
-
-	i = 0;
-	while (pattern[i] != '*' && pattern[i])
-	{
-		if (pattern[i] != str[i])
-			return (0);
-		i++;
-	}
-	if (pattern[i] == '*' && str[i] && pattern[i + 1] == '\0')
-		return (1);
-	else if (!str[i])
-		return (0);
-	else
-		return (match(pattern + i + 1, str + i));
+    while (*pattern)
+    {
+        if (*pattern == '*')
+        {
+            pattern++;
+            if (!*pattern)
+                return 1;
+            while (*str)
+            {
+                if (match(pattern, str))
+                    return 1;
+                str++;
+            }
+            return (0);
+        }
+        else if (*pattern == *str)
+        {
+            pattern++;
+            str++;
+        }
+        else
+            return (0);
+    }
+    return (!*str);
 }
 
 char	**get_files(char *pattern)

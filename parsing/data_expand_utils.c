@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:47:56 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 08:47:57 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/14 10:08:23 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,23 @@ void	add_data(t_data **original, t_data **data, char **new_data, int join)
 		i++;
 		tmp2 = tmp;
 	}
+}
+
+void	addback_data(t_data **data, char *new_data, enum e_state state, int join)
+{
+	t_data	*tmp;
+	t_data	*tmp2;
+
+	tmp = (t_data *)malloc(sizeof(t_data));
+	ft_bzero(tmp, sizeof(t_data));
+	tmp->arg = ft_strdup(new_data);
+	tmp->state = state;
+	tmp->joinable = join;
+	tmp2 = *data;
+	while (tmp2 && tmp2->next)
+		tmp2 = tmp2->next;
+	if (!tmp2)
+		*data = tmp;
+	else
+		tmp2->next = tmp;
 }

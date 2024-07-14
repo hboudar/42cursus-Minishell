@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:20:56 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:20:57 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/14 10:12:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	add_limiter(t_limiter **limiter, char *data, int state)
 	t_limiter	*tmp;
 
 	new = (t_limiter *)malloc(sizeof(t_limiter));
+	ft_bzero(new, sizeof(t_limiter));
 	if (!new)
 		exit(1);
 	new->limit = ft_strdup(data);
 	new->quotes = state;
-	new->next = NULL;
 	if (!*limiter)
 	{
 		*limiter = new;

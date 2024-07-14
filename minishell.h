@@ -244,6 +244,7 @@ void		end_token(t_token **token);
 void		get_args(t_cmd *cmd);
 void		get_cmd(t_cmd **cmd, t_token *token);
 void		add_limiter(t_limiter **limiter, char *data, int state);
+void		addback_data(t_data **data, char *new_data, enum e_state state, int join);
 t_env		*ft_tabdup(char **args, int i, int j);
 t_cmd		*parse_cmd(t_prompt *prmpt, t_token **token);
 size_t		ft_tablen(char **args);

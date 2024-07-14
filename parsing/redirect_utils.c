@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:19:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:19:49 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/14 10:10:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,28 @@ void	add_last(char ***file, char *data)
 	*file = new;
 }
 
-t_file	*ft_newfile(char *data, int type, enum e_state state)
+t_file	*ft_newfile(t_token *token, int type, enum e_state state)
 {
 	t_file	*new;
 
 	new = (t_file *)malloc(sizeof(t_file));
-	new->data = data;
+	ft_bzero(new, sizeof(t_file));
+	if (!token->joinable)
+	{
+		addback_data(&new->args, token->data, token->state, token->joinable);
+		new->quotes = state;
+	}
+	while (token->joinable)
+	{
+		addback_data(&new->args, token->data, token->state, token->joinable);
+		if (type == REDIR_HERE_DOC
+			&& (token->state == IN_SQUOTES || token->state == IN_DQUOTES))
+			new->quotes = token->state;
+		else
+			new->quotes = state;
+		token = token->next;
+	}
 	new->type = type;
-	new->quotes = state;
-	new->next = NULL;
 	return (new);
 }
 
