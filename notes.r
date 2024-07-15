@@ -11,8 +11,6 @@ reset the in and out fds between the and/or commands : fixed
 fork every pipe then execute the pipes to get the correct exit state : soon to be fixed
 
 expand * in execution after the normal expand : fixed most of it
-        to do : expand * for redirections and add ambiguous redirect incase of multiple files
-                dont expand * in the case of quotes 
 
 
 // Function to check if a string matches a wildcard pattern
@@ -43,3 +41,9 @@ int wildcard_match(const char *pattern, const char *str)
     }
     return !*str;
 }
+
+to be fixed : 
+            _ isnt updated properly
+            ctrl + D shouldnt print exit
+            dont expand * in the case of quotes
+            expand * for redirections and add ambiguous redirect incase of multiple files
