@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:20:56 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/14 10:12:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:54:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_limiter(t_limiter **limiter, char *data, int state)
+void	add_limiter(t_limiter **limiters, char *arg, int state)
 {
 	t_limiter	*new;
 	t_limiter	*tmp;
@@ -21,27 +21,44 @@ void	add_limiter(t_limiter **limiter, char *data, int state)
 	ft_bzero(new, sizeof(t_limiter));
 	if (!new)
 		exit(1);
-	new->limit = ft_strdup(data);
+	new->limit = ft_strdup(arg);
 	new->quotes = state;
-	if (!*limiter)
-	{
-		*limiter = new;
-		return ;
-	}
-	tmp = *limiter;
-	while (tmp->next)
+	tmp = *limiters;
+	while (tmp && tmp->next)
 		tmp = tmp->next;
-	tmp->next = new;
+	if (tmp)
+		tmp->next = new;
+	else
+		*limiters = new;
 }
 
-int	count_files(char **file)
+void	add_limiters(t_limiter **limiter, t_token *token, int state)
 {
-	int	i;
+	t_limiter	*new;
+	t_limiter	*tmp;
 
-	i = 0;
-	while (file[i])
-		i++;
-	return (i);
+	(1) && (new = (t_limiter *)malloc(sizeof(t_limiter)), tmp = *limiter);
+	ft_bzero(new, sizeof(t_limiter));
+	if (!new)
+		exit(1);
+	if (!token->joinable)
+	{
+		addback_data(&new->args, token->data, token->state, token->joinable);
+		new->quotes = state;
+	}
+	while (token && token->joinable)
+	{
+		addback_data(&new->args, token->data, token->state, token->joinable);
+		if (token->state == IN_SQUOTES || token->state == IN_DQUOTES)
+			new->quotes = token->state;
+		else if (!new->quotes)
+			new->quotes = state;
+		token = token->next;
+	}
+	while (tmp && tmp->next)
+		tmp = tmp->next;
+	(*limiter) && (tmp->next = new);
+	(!*limiter) && (*limiter = new);
 }
 
 void	remove_redirections(t_token **token)
@@ -50,17 +67,23 @@ void	remove_redirections(t_token **token)
 	t_token	*tmp2;
 
 	tmp = *token;
-	//edit the removal to remove all the tokens you saved into the file struct
 	while (tmp)
 	{
 		if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT
 			|| tmp->type == APPEND || tmp->type == REDIR_HERE_DOC)
 		{
+			if (!tmp->next->joinable)
+			{
+				tmp2 = tmp->next;
+				remove_token(token, tmp2);
+			}
+			while (tmp->next && tmp->next->joinable)
+			{
+				tmp2 = tmp->next;
+				remove_token(token, tmp2);
+			}
 			tmp2 = tmp->next;
-			remove_token(token, tmp2);
-			tmp2 = tmp->next;
-			remove_token(token, tmp);
-			tmp = tmp2;
+			(1) && (remove_token(token, tmp), tmp = tmp2);
 		}
 		else if (tmp)
 			tmp = tmp->next;
@@ -69,28 +92,21 @@ void	remove_redirections(t_token **token)
 
 void	fill_redirections(t_cmd *cmd, t_token *token)
 {
-	//edit addlimiter and newfile to match the new struct and to edit on the actual token to skip all the ones
 	while (token)
 	{
 		if (token->type == REDIR_IN)
-		{
 			ft_fileaddback(&(cmd->file),
-				ft_newfile(ft_strdup(token->next->data), 0,
-					token->next->state));
-			token = token->next;
-		}
+				ft_newfiles(&token, 0, token->next->state));
 		else if (token->type == REDIR_OUT || token->type == APPEND)
-		{
 			ft_fileaddback(&(cmd->file),
-				ft_newfile(ft_strdup(token->next->data),
+				ft_newfiles(&token,
 					1 + (token->type == APPEND), token->next->state));
-			token = token->next;
-		}
 		else if (token->type == REDIR_HERE_DOC)
 		{
-			ft_fileaddback(&(cmd->file), ft_newfile(NULL, 3, token->state));
-			add_limiter(&cmd->limiter, token->next->data, token->next->state);
-			token = token->next;
+			add_limiters(&cmd->limiter, token->next, token->next->state);
+			join_limit(cmd->limiter);
+			ft_fileaddback(&(cmd->file),
+				ft_newfiles(&token, 3, token->next->state));
 		}
 		token = token->next;
 	}
@@ -101,24 +117,18 @@ void	fill_redirections_sub(t_prompt *prmpt, t_token *token, t_token *lmt)
 	while (token && token != lmt)
 	{
 		if (token->type == REDIR_IN)
-		{
 			ft_fileaddback(&(prmpt->file),
-				ft_newfile(ft_strdup(token->next->data),
-					0, token->next->state));
-			token = token->next;
-		}
+				ft_newfiles(&token, 0, token->next->state));
 		else if (token->type == REDIR_OUT || token->type == APPEND)
-		{
 			ft_fileaddback(&(prmpt->file),
-				ft_newfile(ft_strdup(token->next->data),
+				ft_newfiles(&token,
 					1 + (token->type == APPEND), token->next->state));
-			token = token->next;
-		}
 		else if (token->type == REDIR_HERE_DOC)
 		{
-			ft_fileaddback(&(prmpt->file), ft_newfile(NULL, 3, token->state));
-			add_limiter(&prmpt->limiter, token->next->data, token->next->state);
-			token = token->next;
+			add_limiters(&prmpt->limiter, token->next, token->next->state);
+			join_limit(prmpt->limiter);
+			ft_fileaddback(&(prmpt->file),
+				ft_newfiles(&token, 3, token->next->state));
 		}
 		token = token->next;
 	}

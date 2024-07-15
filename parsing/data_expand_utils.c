@@ -6,11 +6,31 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:47:56 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/14 10:08:23 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/15 09:44:00 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_file	*ft_newfile(t_data *args, int type, enum e_state state)
+{
+	t_file	*new;
+	t_data	*tmp_args;
+
+	new = (t_file *)malloc(sizeof(t_file));
+	if (!new)
+		exit(1);
+	ft_bzero(new, sizeof(t_file));
+	new->type = type;
+	new->quotes = state;
+	tmp_args = args;
+	while (tmp_args)
+	{
+		addback_data(&new->args, tmp_args->arg, tmp_args->state, tmp_args->joinable);
+		tmp_args = tmp_args->next;
+	}
+	return (new);
+}
 
 int	get_args_count(t_data *data)
 {

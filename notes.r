@@ -2,8 +2,7 @@ ctrl c exit state : fixed
 
 export key{anything except alpha or = or _}+=value shouldnt work : fixed
 
-limiter state should change after joining them : the way to fix this is to fill the new variable t_data in each file/limiter
-and then expand the data after executing the commands leading to it then join them all to get the proper limiter/filename
+limiter state should change after joining them : fixed
 
 reset the in and out fds between the and/or commands : fixed
 

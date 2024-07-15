@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:27:16 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/14 09:37:54 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:54:40 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_files(t_token **token, t_token *limit, char **files)
+void	add_files_tokens(t_token **token, t_token *limit, char **files)
 {
 	int		i;
 	t_token	*tmp;
@@ -117,11 +117,35 @@ void	expand_wildcard(t_token **token)
 			}
 			tmp2 = tmp->next;
 			remove_token(token, tmp);
-			add_files(token, tmp2, files);
+			add_files_tokens(token, tmp2, files);
 			free_tab(&files);
 			tmp = tmp2;
 		}
 		else
 			tmp = tmp->next;
+	}
+}
+
+void	handle_expanded_wildcards(t_cmd *cmd, int *i)
+{
+	char	**files;
+	t_data	*tmp;
+
+	tmp = cmd->data;
+	while (tmp)
+	{
+		if (ft_strchr(tmp->arg, '*'))
+		{
+			files = get_files(tmp->arg);
+			if (!files)
+			{
+				tmp = tmp->next;
+				continue ;
+			}
+			else
+				add_files_data(&cmd->data, tmp->next, files, i);
+			free_tab(&files);
+		}
+		tmp = tmp->next;
 	}
 }

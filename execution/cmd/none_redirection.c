@@ -65,8 +65,7 @@ void	none_redirection(t_prompt *prompt, t_env *env, t_file *file)
 	(1) && (fd0 = 0, fd1 = 1, prompt->exit_state = 0);
 	while (file != NULL)
 	{
-		if (file->quotes != IN_SQUOTES)
-			expand_string(&file->data, env, 0, NULL);
+		expand_file(file, env);
 		if (file->data && !file->data[0] && !file->quotes)
 		{
 			(fd0 != 0) && (close(fd0));

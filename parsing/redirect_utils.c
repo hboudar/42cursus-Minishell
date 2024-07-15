@@ -6,11 +6,21 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:19:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/14 10:10:00 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/15 15:51:09 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	count_files(char **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+		i++;
+	return (i);
+}
 
 void	add_last(char ***file, char *data)
 {
@@ -40,26 +50,29 @@ void	add_last(char ***file, char *data)
 	*file = new;
 }
 
-t_file	*ft_newfile(t_token *token, int type, enum e_state state)
+t_file	*ft_newfiles(t_token **token, int type, enum e_state state)
 {
 	t_file	*new;
 
 	new = (t_file *)malloc(sizeof(t_file));
 	ft_bzero(new, sizeof(t_file));
-	if (!token->joinable)
+	if (!(*token)->next->joinable)
 	{
-		addback_data(&new->args, token->data, token->state, token->joinable);
+		addback_data(&new->args,
+			(*token)->next->data, (*token)->next->state, (*token)->next->joinable);
 		new->quotes = state;
 	}
-	while (token->joinable)
+	while ((*token)->next && (*token)->next->joinable)
 	{
-		addback_data(&new->args, token->data, token->state, token->joinable);
+		addback_data(&new->args,
+			(*token)->next->data, (*token)->next->state, (*token)->next->joinable);
 		if (type == REDIR_HERE_DOC
-			&& (token->state == IN_SQUOTES || token->state == IN_DQUOTES))
-			new->quotes = token->state;
+			&& ((*token)->next->state == IN_SQUOTES
+			|| (*token)->next->state == IN_DQUOTES))
+			new->quotes = (*token)->next->state;
 		else
 			new->quotes = state;
-		token = token->next;
+		*token = (*token)->next;
 	}
 	new->type = type;
 	return (new);
@@ -95,6 +108,8 @@ void	free_files(t_file **file)
 			free(tmp->data);
 			tmp->data = NULL;
 		}
+		if (tmp->args)
+			free_data(&tmp->args);
 		if (tmp)
 		{
 			free(tmp);

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:16:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:16:32 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:55:33 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,14 @@ void	get_args(t_cmd *cmd)
 	data = cmd->data;
 	while (data)
 	{
-		if (data->next && data->next->joinable)
+		if (data->next && data->joinable)
 		{
 			tmp = data->arg;
 			data->arg = ft_strjoin(data->arg, data->next->arg);
 			free(tmp);
 			tmp_data = data->next;
 			data->next = data->next->next;
+			data->joinable = tmp_data->joinable;
 			free(tmp_data->arg);
 			free(tmp_data);
 		}
@@ -101,6 +102,7 @@ void	get_args(t_cmd *cmd)
 			data = data->next;
 	}
 	i = get_args_count(cmd->data);
+	handle_expanded_wildcards(cmd, &i);
 	fill_args(cmd, i);
 }
 
@@ -118,7 +120,7 @@ t_cmd	*parse_cmd(t_prompt *prmpt, t_token **token)
 	{
 		while (file)
 		{
-			ft_fileaddback(&cmd->file, ft_newfile(ft_strdup(file->data), file->type, file->quotes));
+			ft_fileaddback(&cmd->file, ft_newfile(file->args, file->type, file->quotes));
 			file = file->next;
 		}
 		while (limiter)
