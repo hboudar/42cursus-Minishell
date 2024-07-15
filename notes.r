@@ -10,7 +10,9 @@ reset the in and out fds between the and/or commands : fixed
 
 fork every pipe then execute the pipes to get the correct exit state : soon to be fixed
 
-expand * in execution after the normal expand : make your own match function and you should be good to go
+expand * in execution after the normal expand : fixed most of it
+        to do : expand * for redirections and add ambiguous redirect incase of multiple files
+                dont expand * in the case of quotes 
 
 
 // Function to check if a string matches a wildcard pattern
