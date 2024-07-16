@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:16:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/15 20:55:33 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 08:44:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,7 @@ t_cmd	*parse_cmd(t_prompt *prmpt, t_token **token)
 	file = prmpt->file;
 	limiter = prmpt->limiter;
 	if (!prmpt->subshell)
-	{
-		while (file)
-		{
-			ft_fileaddback(&cmd->file, ft_newfile(file->args, file->type, file->quotes));
-			file = file->next;
-		}
-		while (limiter)
-		{
-			add_limiter(&cmd->limiter, limiter->limit, limiter->quotes);
-			limiter = limiter->next;
-		}
-	}
+		add_par_files(cmd, file, limiter);
 	fill_redirections(cmd, *token);
 	remove_redirections(token);
 	get_cmd(&cmd, *token);

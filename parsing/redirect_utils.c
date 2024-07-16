@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:19:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/15 15:51:09 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 08:51:17 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ t_file	*ft_newfiles(t_token **token, int type, enum e_state state)
 	ft_bzero(new, sizeof(t_file));
 	if (!(*token)->next->joinable)
 	{
-		addback_data(&new->args,
-			(*token)->next->data, (*token)->next->state, (*token)->next->joinable);
+		addback_data(&new->args, (*token)->next->data,
+			(*token)->next->state, (*token)->next->joinable);
 		new->quotes = state;
 	}
 	while ((*token)->next && (*token)->next->joinable)
 	{
-		addback_data(&new->args,
-			(*token)->next->data, (*token)->next->state, (*token)->next->joinable);
+		addback_data(&new->args, (*token)->next->data,
+			(*token)->next->state, (*token)->next->joinable);
 		if (type == REDIR_HERE_DOC
 			&& ((*token)->next->state == IN_SQUOTES
-			|| (*token)->next->state == IN_DQUOTES))
+				|| (*token)->next->state == IN_DQUOTES))
 			new->quotes = (*token)->next->state;
 		else
 			new->quotes = state;

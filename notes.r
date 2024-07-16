@@ -12,36 +12,6 @@ fork every pipe then execute the pipes to get the correct exit state : soon to b
 
 expand * in execution after the normal expand : fixed most of it
 
-
-// Function to check if a string matches a wildcard pattern
-int wildcard_match(const char *pattern, const char *str)
-{
-    while (*pattern)
-    {
-        if (*pattern == '*')
-        {
-            pattern++;
-            if (!*pattern)
-                return 1;
-            while (*str)
-            {
-                if (wildcard_match(pattern, str))
-                    return 1;
-                str++;
-            }
-            return 0;
-        }
-        else if (*pattern == *str)
-        {
-            pattern++;
-            str++;
-        }
-        else
-            return 0;
-    }
-    return !*str;
-}
-
 to be fixed : 
             _ isnt updated properly
             ctrl + D shouldnt print exit
