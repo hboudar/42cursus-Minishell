@@ -16,4 +16,4 @@ to be fixed :
             _ isnt updated properly
             ctrl + D shouldnt print exit
             dont expand * in the case of quotes
-            expand * for redirections and add ambiguous redirect incase of multiple files
+            expand * for redirections and add ambiguous redirect incase of multiple files : done

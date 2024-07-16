@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minshell.c                                         :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 07:49:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 07:49:12 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 08:58:36 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_caught = 0;
+
+void	update_exit_state(t_prompt *prompt)
+{
+	if (prompt->exit_state == 2)
+		prompt->exit_state = 130;
+	else if (prompt->exit_state > 255)
+		prompt->exit_state = prompt->exit_state >> 8;
+	if (prompt->exit_state == 3)
+		prompt->exit_state = 131;
+}
 
 int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 {
@@ -35,12 +45,7 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 		waitpid(pid->pid, &prompt->exit_state, 0);
 		pid = pid->next;
 	}
-	if (prompt->exit_state == 2)
-		prompt->exit_state = 130;
-	else if (prompt->exit_state > 255)
-		prompt->exit_state = prompt->exit_state >> 8;
-	if (prompt->exit_state == 3)
-		prompt->exit_state = 131;
+	update_exit_state(prompt);
 	printf("{prep :%d}\n", prompt->exit_state);
 	free_pid(&tmp);
 	return (prompt->exit_state);
