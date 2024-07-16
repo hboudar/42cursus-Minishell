@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:19:01 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/15 11:46:16 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 10:34:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	fix_token(t_token **token)
 		else if ((tmp->type == WORD || tmp->type == ENV))
 		{
 			if (tmp->next && (tmp->next->type == WORD
-					|| tmp->next->type == ENV))
+					|| tmp->next->type == ENV) && tmp->next->data)
 			{
 				tmp->next->joinable = 1;
 				tmp->joinable = 1;
