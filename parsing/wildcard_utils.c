@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:39:36 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 08:51:58 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:02:52 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	expand_wildcard_file(t_file *file)
 	if (ft_strchr(file->data, '*'))
 		files = get_files(file->data);
 	len = ft_tablen(files);
-	if (len == 1)
+	if (len == 1 && !file->args->state)
 	{
 		free(file->data);
 		file->data = ft_strdup(files[0]);
 	}
-	else if (len > 1)
+	else if (len > 1 && !file->args->state)
 	{
 		free(file->data);
 		file->data = ft_strdup("");

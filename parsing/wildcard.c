@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:27:16 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 08:40:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:07:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ void	expand_wildcard(t_token **token)
 	(1) && (tmp = *token, files = NULL);
 	while (tmp)
 	{
-		if (tmp->type == WILDCARD
-			|| (tmp->state == GENERAL && ft_strchr(tmp->data, '*')))
+		if (tmp->state == GENERAL && ft_strchr(tmp->data, '*'))
 		{
 			files = get_files(tmp->data);
 			if (!files)
@@ -134,7 +133,7 @@ void	handle_expanded_wildcards(t_cmd *cmd, int *i)
 	tmp = cmd->data;
 	while (tmp)
 	{
-		if (ft_strchr(tmp->arg, '*'))
+		if (tmp->state == GENERAL && ft_strchr(tmp->arg, '*'))
 		{
 			files = get_files(tmp->arg);
 			if (!files)

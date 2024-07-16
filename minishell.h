@@ -76,7 +76,6 @@ enum e_type
 	OR_TOKEN,
 	SEMI_COLON,
 	ERROR,
-	WILDCARD
 };
 
 enum e_print
