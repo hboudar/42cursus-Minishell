@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 07:49:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/19 14:06:58 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:36:03 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 		pid = pid->next;
 	}
 	update_exit_state(prompt);
-	printf("{prep :%d}\n", prompt->exit_state);
 	free_pid(&tmp);
 	return (prompt->exit_state);
 }
