@@ -20,4 +20,8 @@ solved :------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------
 
 
-serious question : if dup, dup2, malloc, pipe... other functions.. failed : what exactly should we do?  
+serious question : if dup, dup2, malloc, pipe... other functions.. failed : what exactly should we do?
+
+printing exit when ctrl d?
+
+ft_tablen for the underscore?
