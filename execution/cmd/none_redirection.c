@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:57:17 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 14:57:18 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:26:38 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	non_outredirect(t_file *file, int *fd1)
 	if (dup2(*fd1, 1) == -1)
 	{
 		(*fd1 != 1) && (close(*fd1));
-		perror("dup2 in out");
+		ft_putstr_fd("dup2 in out\n", 2);
 		return (0);
 	}
 	return (1);
@@ -45,13 +45,14 @@ static int	non_inredirect(t_file *file, int *fd0)
 	}
 	if (*fd0 == -1)
 	{
-		perror(file->data);
+		ft_putstr_fd(file->data, 2);
+		ft_putstr_fd("\n", 2);
 		return (0);
 	}
 	if (dup2(*fd0, 0) == -1)
 	{
 		(*fd0 != 0) && (close(*fd0));
-		perror("dup2 in in");
+		ft_putstr_fd("dup2 in in\n", 2);
 		return (0);
 	}
 	return (1);

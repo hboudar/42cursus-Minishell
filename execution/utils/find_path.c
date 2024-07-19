@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:07:28 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 16:07:30 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:28:06 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ static char	*ft_pathcmd(char *cmd, char **path, int i)
 	tmp = ft_strjoin(path[i], "/");
 	if (!tmp)
 	{
-		perror("ft_strjoin failed");
+		ft_putstr_fd("ft_strjoin failed\n", 2);
 		return (free_array(path));
 	}
 	tmp2 = ft_strjoin(tmp, cmd);
 	free(tmp);
 	if (!tmp2)
 	{
-		perror("ft_strjoin failed");
+		ft_putstr_fd("ft_strjoin failed\n", 2);
 		return (free_array(path));
 	}
 	return (tmp2);

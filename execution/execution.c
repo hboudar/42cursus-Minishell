@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:47:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 16:31:18 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:23:21 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 	tmp_env = *env;
 	if (!prompt->cmd)
 	{
-		perror("malloc");
+		ft_putstr_fd("malloc\n", 2);
 		return (1);
 	}
 	if (prompt->cmd && prompt->cmd->args)
