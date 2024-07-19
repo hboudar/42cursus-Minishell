@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 15:38:26 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 16:06:00 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 16:19:25 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,15 @@ int	check_underscore(char *arg)
 int	change_underscore(t_env **env, char *str)
 {
 	t_env	*tmp;
-	char	*arg;
 
-	(1) && (tmp = *env, arg = NULL);
+	tmp = *env;
 	while (tmp)
 	{
 		if (!ft_strncmp(tmp->key, "_=", 3))
 		{
 			tmp->print = ENV_PRINT;
 			(tmp->value) && (free(tmp->value), tmp->value = NULL);
-			arg = find_path(&str, *env);
-			if (!arg)
-				tmp->value = ft_strdup(str);
-			else
-				tmp->value = ft_strdup(arg);
-			(arg && !ft_strchr(str, '/')) && (free(arg), arg = NULL);
+			tmp->value = ft_strdup(str);
 			if (!tmp->value)
 				return (1);
 			break ;

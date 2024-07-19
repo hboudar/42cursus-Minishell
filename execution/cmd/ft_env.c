@@ -6,11 +6,26 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:53:31 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 14:53:32 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 16:24:13 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static void	print_env(t_env *env)
+{
+	while (env)
+	{
+		if (env->value && (env->print == ENV_PRINT || env->print == PRINT))
+		{
+			if (!ft_strncmp(env->key, "_=", 3))
+				printf("_=/usr/bin/env\n");
+			else
+				printf("%s%s\n", env->key, env->value);
+		}
+		env = env->next;
+	}
+}
 
 int	ft_env(t_prompt *prompt, t_env *env)
 {
@@ -30,11 +45,6 @@ int	ft_env(t_prompt *prompt, t_env *env)
 		return (127);
 	}
 	free (path);
-	while (env)
-	{
-		if (env->value && (env->print == ENV_PRINT || env->print == PRINT))
-			printf("%s%s\n", env->key, env->value);
-		env = env->next;
-	}
+	print_env(env);
 	return (0);
 }
