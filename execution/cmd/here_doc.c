@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:56:28 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 14:56:29 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:04:14 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	here_doc3(char *limiter, int fd, int quotes, t_env *env)
 	char		*str;
 
 	setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
-	printf("limiter : %s\n", limiter);
 	while (1)
 	{
 		str = readline("> ");

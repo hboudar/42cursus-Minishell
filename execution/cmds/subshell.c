@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:51:45 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 14:51:46 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 16:13:01 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 		(fd) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));
 		none_redirection(prompt, *env, prompt->file);
 		prompt->exit_state = prep_execution(prompt, env, 1);
-		printf("{subshell :%d}\n", prompt->exit_state);
 		exit(prompt->exit_state);
 	}
 	else
