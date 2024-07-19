@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:16:31 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 08:44:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:40:14 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	get_args(t_cmd *cmd)
 		{
 			tmp = data->arg;
 			data->arg = ft_strjoin(data->arg, data->next->arg);
-			free(tmp);
-			tmp_data = data->next;
+			(1) && (free(tmp), tmp_data = data->next);
+			if (!data->state && tmp_data->state)
+				data->state = tmp_data->state;
 			data->next = data->next->next;
 			data->joinable = tmp_data->joinable;
-			free(tmp_data->arg);
-			free(tmp_data);
+			(1) && (free(tmp_data->arg), free(tmp_data), i = 0);
 		}
 		else
 			data = data->next;

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 07:49:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 08:58:36 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:06:58 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	main(int argc, char **argv, char **envp)
 			parse_prompt(&prompt, line);
 			if (!was_syn_err(prompt) && (prompt->type != P_CMD || prompt->cmd))
 				prompt->exit_state = prep_execution(prompt, &env, 0);
-			printf("{mini %d}\n", prompt->exit_state);
 		}
 		free(line);
 	}

@@ -6,11 +6,56 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:48:37 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 08:54:58 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/19 09:06:09 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	set_type_env(t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strchr(tmp->key, '=') && ft_strncmp(tmp->key, "_=", 3))
+			tmp->print = PRINT;
+		else if (!ft_strncmp(tmp->key, "_=", 3))
+			tmp->print = ENV_PRINT;
+		else
+			tmp->print = EXP_PRINT;
+		tmp = tmp->next;
+	}
+}
+
+t_env	*ft_tabdup(char **args, int i, int j)
+{
+	t_env	*tmp;
+	t_env	*newenv;
+
+	newenv = (t_env *)malloc(sizeof(t_env));
+	if (!newenv)
+		exit(1);
+	tmp = newenv;
+	while (args[++i])
+	{
+		j = 0;
+		if (!ft_strncmp(args[i], "OLDPWD", 6))
+			continue ;
+		while (args[i][j] && args[i][j] != '=')
+			j++;
+		tmp->key = ft_substr(args[i], 0, j + 1);
+		tmp->value = ft_substr(args[i], j + 1, ft_strlen(args[i]) - j - 1);
+		tmp->next = (t_env *)malloc(sizeof(t_env));
+		ft_bzero(tmp->next, sizeof(t_env));
+		tmp = tmp->next;
+	}
+	tmp->key = ft_strdup("OLDPWD");
+	set_type_env(newenv);
+	ft_shell_lvl(newenv);
+	return (newenv);
+}
 
 int	check_env(char **envp)
 {
