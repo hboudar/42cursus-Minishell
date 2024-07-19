@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:57:36 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 14:57:37 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:01:00 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	redirection(t_prompt *prompt, t_env **env, t_file *file)
 		file = file->next;
 	}
 	if (prompt->cmd && prompt->cmd->args != NULL)
-	{
 		ft_builtin(prompt, env);
-		(fd1 != 1) && (close(fd1));
-	}
+	(fd1 != 1) && (close(fd1));
 }
