@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:19:01 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 10:34:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:16:30 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_token	*parse_token(char *line)
 	i = 0;
 	if (check_quotes(line))
 	{
-		printf("Syntax error\n");
+		perror("Syntax error\n");
 		return (NULL);
 	}
 	token = (t_token *)malloc(sizeof(t_token));
@@ -115,7 +115,7 @@ t_token	*parse_token(char *line)
 		tokenize(&line, &i, &tmp);
 	if (has_error(token) || has_semicolon(token))
 	{
-		printf("Syntax error\n");
+		perror("Syntax error\n");
 		free_token(&token);
 		return (NULL);
 	}
