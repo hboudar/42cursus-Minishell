@@ -6,13 +6,13 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:27:16 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:27:17 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 09:07:02 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_files(t_token **token, t_token *limit, char **files)
+void	add_files_tokens(t_token **token, t_token *limit, char **files)
 {
 	int		i;
 	t_token	*tmp;
@@ -40,23 +40,32 @@ void	add_files(t_token **token, t_token *limit, char **files)
 	}
 }
 
-int	match(char *pattern, char *str)
+int	match(const char *pattern, const char *str)
 {
-	int	i;
-
-	i = 0;
-	while (pattern[i] != '*' && pattern[i])
+	while (*pattern)
 	{
-		if (pattern[i] != str[i])
+		if (*pattern == '*')
+		{
+			pattern++;
+			if (!*pattern)
+				return (1);
+			while (*str)
+			{
+				if (match(pattern, str))
+					return (1);
+				str++;
+			}
 			return (0);
-		i++;
+		}
+		else if (*pattern == *str)
+		{
+			pattern++;
+			str++;
+		}
+		else
+			return (0);
 	}
-	if (pattern[i] == '*' && str[i] && pattern[i + 1] == '\0')
-		return (1);
-	else if (!str[i])
-		return (0);
-	else
-		return (match(pattern + i + 1, str + i));
+	return (!*str);
 }
 
 char	**get_files(char *pattern)
@@ -97,8 +106,7 @@ void	expand_wildcard(t_token **token)
 	(1) && (tmp = *token, files = NULL);
 	while (tmp)
 	{
-		if (tmp->type == WILDCARD
-			|| (tmp->state == GENERAL && ft_strchr(tmp->data, '*')))
+		if (tmp->state == GENERAL && ft_strchr(tmp->data, '*'))
 		{
 			files = get_files(tmp->data);
 			if (!files)
@@ -108,11 +116,35 @@ void	expand_wildcard(t_token **token)
 			}
 			tmp2 = tmp->next;
 			remove_token(token, tmp);
-			add_files(token, tmp2, files);
+			add_files_tokens(token, tmp2, files);
 			free_tab(&files);
 			tmp = tmp2;
 		}
 		else
 			tmp = tmp->next;
+	}
+}
+
+void	handle_expanded_wildcards(t_cmd *cmd, int *i)
+{
+	char	**files;
+	t_data	*tmp;
+
+	tmp = cmd->data;
+	while (tmp)
+	{
+		if (tmp->state == GENERAL && ft_strchr(tmp->arg, '*'))
+		{
+			files = get_files(tmp->arg);
+			if (!files)
+			{
+				tmp = tmp->next;
+				continue ;
+			}
+			else
+				add_files_data(&cmd->data, tmp->next, files, i);
+			free_tab(&files);
+		}
+		tmp = tmp->next;
 	}
 }

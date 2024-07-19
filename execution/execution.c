@@ -17,6 +17,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 	t_env	*tmp_env;
 
 	expand_cmd(prompt, *env);
+	printf("cmd->args[0] = %s\n", prompt->cmd->args[0]);
 	tmp_env = *env;
 	if (!prompt->cmd)
 	{

@@ -76,7 +76,6 @@ enum e_type
 	OR_TOKEN,
 	SEMI_COLON,
 	ERROR,
-	WILDCARD
 };
 
 enum e_print
@@ -182,9 +181,10 @@ int			was_syn_err(t_prompt *prompt);
 int			check_and_or_limit(t_token *token, t_token *limit);
 int			prep_execution(t_prompt *prompt, t_env **env, int mode);
 char		*ft_remove_quotes(char *str);
+char		*get_expanded_value(char **data, t_env *env);
 char		**ft_split_expand(char *str);
 char		**ft_dupexpand(char **expand);
-char		*get_expanded_value(char **data, t_env *env);
+char		**get_files(char *pattern);
 void		replace_exit_state(t_prompt *prompt, t_data *data);
 void		init_signals(t_prompt *prompt, int mode);
 void		remove_arg(t_cmd *cmd, int i, char *to_add);
@@ -208,6 +208,10 @@ void		tokenize_squotes(char **line, int *i, t_token **token);
 void		tokenize_pipe(char **line, int *i, t_token **token);
 void		get_cmd(t_cmd **cmd, t_token *token);
 void		free_tab(char ***args);
+void		free_data(t_data **data);
+void		handle_expanded_wildcards(t_cmd *cmd, int *i);
+void		expand_wildcard_file(t_file *file);
+void		add_files_data(t_data **data, t_data *limit, char **file, int *len);
 void		tokenize_append(char **line, int *i, t_token **token);
 void		free_cmd(t_cmd **cmd);
 void		split_expanded(t_prompt *prmpt, t_data **data, char *expanded);
@@ -221,7 +225,6 @@ void		tokenize_env(char **line, int *i, t_token **token);
 void		tokenize_word(char **line, int *i, t_token **token);
 void		tokenize_semicolon(char **line, int *i, t_token **token);
 void		tokenize_error(char **line, int *i, t_token **token);
-void		tokenize_wildcard(char **line, int *i, t_token **token);
 void		tokenize(char **line, int *i, t_token **token);
 void		fix_token(t_token **token);
 void		get_token_state(t_token *token);
@@ -242,12 +245,19 @@ void		parse_prompt(t_prompt **oldprmpt, char *line);
 void		split_token(t_token *token, t_token *split, t_token **res);
 void		end_token(t_token **token);
 void		get_args(t_cmd *cmd);
+void		expand_file(t_file *file, t_env *env);
+void		join_limit(t_limiter *limiter);
 void		get_cmd(t_cmd **cmd, t_token *token);
-void		add_limiter(t_limiter **limiter, char *data, int state);
+void		add_limiter(t_limiter **limiters, char *arg, int state);
+void		add_limiters(t_limiter **limiter, t_token *token, int state);
+void		addback_data(t_data **d, char *newdata, enum e_state state, int j);
+void		add_par_files(t_cmd *cmd, t_file *file, t_limiter *limiter);
+void		update_syntaxe_error(t_prompt *prompt, t_token **token);
 t_env		*ft_tabdup(char **args, int i, int j);
 t_cmd		*parse_cmd(t_prompt *prmpt, t_token **token);
 size_t		ft_tablen(char **args);
-t_file		*ft_newfile(char *data, int type, enum e_state state);
+t_file		*ft_newfile(t_data *args, int type, enum e_state state);
+t_file		*ft_newfiles(t_token **token, int type, enum e_state state);
 t_token		*get_closepar(t_token *token);
 t_token		*parse_token(char *line);
 t_token		*get_and_or(t_token *token);

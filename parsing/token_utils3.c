@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:24:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:24:05 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:00:30 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,6 @@ void	tokenize_error(char **line, int *i, t_token **token)
 	(*token)->data = ft_strdup("&");
 	(*token)->size = 1;
 	(*token)->type = ERROR;
-	(*token)->state = GENERAL;
-	*line = *line + 1;
-	*i = 0;
-	(*token)->next = (t_token *)malloc(sizeof(t_token));
-	(*token) = (*token)->next;
-	ft_bzero(*token, sizeof(t_token));
-}
-
-void	tokenize_wildcard(char **line, int *i, t_token **token)
-{
-	(*token)->data = ft_strdup("*");
-	(*token)->size = 1;
-	(*token)->type = WILDCARD;
 	(*token)->state = GENERAL;
 	*line = *line + 1;
 	*i = 0;

@@ -6,11 +6,21 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:19:48 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:19:49 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 08:51:17 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	count_files(char **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+		i++;
+	return (i);
+}
 
 void	add_last(char ***file, char *data)
 {
@@ -40,15 +50,31 @@ void	add_last(char ***file, char *data)
 	*file = new;
 }
 
-t_file	*ft_newfile(char *data, int type, enum e_state state)
+t_file	*ft_newfiles(t_token **token, int type, enum e_state state)
 {
 	t_file	*new;
 
 	new = (t_file *)malloc(sizeof(t_file));
-	new->data = data;
+	ft_bzero(new, sizeof(t_file));
+	if (!(*token)->next->joinable)
+	{
+		addback_data(&new->args, (*token)->next->data,
+			(*token)->next->state, (*token)->next->joinable);
+		new->quotes = state;
+	}
+	while ((*token)->next && (*token)->next->joinable)
+	{
+		addback_data(&new->args, (*token)->next->data,
+			(*token)->next->state, (*token)->next->joinable);
+		if (type == REDIR_HERE_DOC
+			&& ((*token)->next->state == IN_SQUOTES
+				|| (*token)->next->state == IN_DQUOTES))
+			new->quotes = (*token)->next->state;
+		else
+			new->quotes = state;
+		*token = (*token)->next;
+	}
 	new->type = type;
-	new->quotes = state;
-	new->next = NULL;
 	return (new);
 }
 
@@ -82,6 +108,8 @@ void	free_files(t_file **file)
 			free(tmp->data);
 			tmp->data = NULL;
 		}
+		if (tmp->args)
+			free_data(&tmp->args);
 		if (tmp)
 		{
 			free(tmp);

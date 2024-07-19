@@ -30,6 +30,7 @@ static void	here_doc3(char *limiter, int fd, int quotes, t_env *env)
 	char		*str;
 
 	setup_signal_handlers(sigint_handler_heredoc, SIG_IGN);
+	printf("limiter : %s\n", limiter);
 	while (1)
 	{
 		str = readline("> ");

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:16:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:16:05 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:24:10 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_limiter(t_limiter **limiter)
 		*limiter = (*limiter)->next;
 		if (tmp->limit)
 			free(tmp->limit);
+		if (tmp->args)
+			free_data(&tmp->args);
 		if (tmp)
 			free(tmp);
 	}

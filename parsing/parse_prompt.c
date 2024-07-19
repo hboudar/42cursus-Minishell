@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:18:11 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:18:12 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 08:50:23 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,7 @@ void	parse_prompt(t_prompt **oldprmpt, char *line)
 		prmpt->exit_state = g_caught;
 	g_caught = 0;
 	if (check_syntax_bonus(token) || check_syntax(token))
-	{
-		printf("Syntax error\n");
-		prmpt->exit_state = 300;
-		free_token(&token);
-	}
+		update_syntaxe_error(prmpt, &token);
 	else
 		build_prompt(&prmpt, &token);
 	*oldprmpt = prmpt;

@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:14:53 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/12 09:14:54 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:08:25 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	split_expanded(t_prompt *prmpt, t_data **data, char *expanded)
 		new_data = ft_split_expand(expanded);
 		free((*data)->arg);
 		(*data)->arg = ft_strdup("");
-		add_data(&prmpt->cmd->data, data, new_data, 1);
+		add_data(&prmpt->cmd->data, data, new_data, (*data)->joinable);
+		(*data)->joinable = 1;
 		free_tab(&new_data);
 		free(expanded);
 	}
