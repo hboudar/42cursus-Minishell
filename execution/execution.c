@@ -23,15 +23,15 @@ int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 		perror("malloc");
 		return (1);
 	}
-	if (!prompt->cmd->args || is_builtin(prompt))
-		redirection(prompt, env, prompt->cmd->file);
-	else
-		none_builtin(prompt, *env, 0, pids);
 	if (prompt->cmd && prompt->cmd->args)
 		change_underscore(env,
 			prompt->cmd->args[ft_tablen(prompt->cmd->args) - 1]);
 	else if (prompt->cmd)
 		change_underscore(env, "");
+	if (!prompt->cmd->args || is_builtin(prompt))
+		redirection(prompt, env, prompt->cmd->file);
+	else
+		none_builtin(prompt, *env, 0, pids);
 	return (prompt->exit_state);
 }
 
