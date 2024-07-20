@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:57:17 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 17:26:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/20 18:21:01 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	non_outredirect(t_file *file, int *fd1)
 	if (dup2(*fd1, 1) == -1)
 	{
 		(*fd1 != 1) && (close(*fd1));
-		ft_putstr_fd("dup2 in out\n", 2);
+		ft_putstr_fd("dup2 failed in outredirect\n", 2);
 		return (0);
 	}
 	return (1);
@@ -45,8 +45,9 @@ static int	non_inredirect(t_file *file, int *fd0)
 	}
 	if (*fd0 == -1)
 	{
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(file->data, 2);
-		ft_putstr_fd("\n", 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		return (0);
 	}
 	if (dup2(*fd0, 0) == -1)

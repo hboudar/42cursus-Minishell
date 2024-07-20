@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:57:36 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 17:27:26 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/20 18:20:03 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	out_redirect(t_prompt *prompt, t_file *file, int *fd1, int quotes)
 	}
 	else if (dup2(*fd1, 1) == -1)
 	{
-		(1) && (ft_putstr_fd("dup2\n", 2), close(*fd1));
+		(1) && (ft_putstr_fd("dup2 failed\n", 2), close(*fd1));
 		prompt->exit_state = 1;
 		return (0);
 	}
@@ -60,8 +60,9 @@ static int	in_redirect(t_prompt *prompt, t_file *file, int *fd0, int quotes)
 	}
 	if (*fd0 == -1)
 	{
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(file->data, 2);
-		ft_putstr_fd("\n", 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 		prompt->exit_state = 1;
 		return (0);
 	}
