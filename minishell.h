@@ -265,13 +265,13 @@ t_token		*get_limit(t_token *token);
 t_token		*pipeless_token(t_token *token);
 
 void		here_doc(t_prompt *prompt, t_env *env);
-int			execution(t_prompt *prompt, t_env **env, t_pid **pids);
+int			execution(t_prompt *prompt, t_env **env, t_pid **pids, int mode);
 int			subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids);
-int			ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids);
+int			ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids, int mode);
 int			none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids);
 int			ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid **pids);
-int			ft_or(t_prompt *prompt, t_env **env, t_pid **pids);
-int			ft_and(t_prompt *prompt, t_env **env, t_pid **pids);
+int			ft_or(t_prompt *prompt, t_env **env, t_pid **pids, int mode);
+int			ft_and(t_prompt *prompt, t_env **env, t_pid **pids, int mode);
 
 void		redirection(t_prompt *prompt, t_env **env, t_file *file);
 void		none_redirection(t_prompt *prompt, t_env *env, t_file *file);

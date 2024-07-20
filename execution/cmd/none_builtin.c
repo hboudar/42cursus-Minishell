@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:57:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 17:22:57 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/20 15:15:17 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 {
 	pid_t	pid;
 
-	if (!mode)
+	if (!mode || mode == 2)
 	{
 		setup_signal_handlers(sig_handler_child, sig_handler_child);
 		pid = fork();
@@ -68,6 +68,11 @@ int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 		else
 		{
 			ignore_signals();
+			if (mode == 2)
+			{
+				waitpid(pid, &prompt->exit_state, 0);
+				prompt->exit_state = WEXITSTATUS(prompt->exit_state);
+			}
 			pid_addback(pids, new_pid(pid));
 		}
 	}
