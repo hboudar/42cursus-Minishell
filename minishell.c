@@ -6,13 +6,25 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 07:49:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/20 15:19:21 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:24:29 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		g_caught = 0;
+
+// void	print_limiters(t_limiter *limiter)
+// {
+// 	t_limiter	*tmp;
+
+// 	tmp = limiter;
+// 	while (tmp)
+// 	{
+// 		printf("limiter: %s\n", tmp->limit);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 void	update_exit_state(t_prompt *prompt)
 {
@@ -32,10 +44,11 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 	t_pid	*tmp;
 
 	(1) && (std_in = dup(0), std_out = dup(1), pid = NULL);
+	// print_limiters(prompt->cmd->limiter);
 	if (!mode)
 		here_doc(prompt, *env);
 	if (g_caught != 2)
-		prompt->exit_state = execution(prompt, env, &pid, 0);
+		prompt->exit_state = execution(prompt, env, &pid, mode);
 	else
 		prompt->exit_state = 1;
 	tmp = pid;
