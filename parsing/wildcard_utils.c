@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 16:39:36 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 09:02:52 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:43:27 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	add_files_data(t_data **data, t_data *limit, char **files, int *len)
 		new = (t_data *)malloc(sizeof(t_data));
 		if (!new)
 		{
-			perror("malloc");
+			ft_putstr_fd("malloc\n", 2);
 			exit(1);
 		}
 		ft_bzero(new, sizeof(t_data));

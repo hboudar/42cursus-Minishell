@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:21:11 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 08:50:10 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:21:26 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	update_syntaxe_error(t_prompt *prompt, t_token **token)
 {
-	printf("Syntax error\n");
+	ft_putstr_fd("Syntax error\n", 2);
 	prompt->exit_state = 300;
 	free_token(token);
 }
