@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:07:44 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/20 14:43:53 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/20 15:23:14 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,4 @@ void	pid_addback(t_pid **pid, t_pid *new)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-}
-
-int	get_exit_status(t_pid *pids)
-{
-	int		status;
-	t_pid	*tmp;
-
-	status = 0;
-	tmp = pids;
-	waitpid(tmp->pid, &status, 0);
-	tmp = tmp->next;
-	return (status);
 }
