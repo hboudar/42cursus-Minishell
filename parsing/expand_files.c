@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 10:10:08 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 08:45:16 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:33:24 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,15 @@ void	add_par_files(t_cmd *cmd, t_file *file, t_limiter *limiter)
 
 void	join_limit(t_limiter *limiter)
 {
-	char	*limit;
-	char	*tmplimit;
-	t_data	*tmp;
+	char		*limit;
+	char		*tmplimit;
+	t_data		*tmp;
+	t_limiter	*tmp_limiter;
 
-	tmp = limiter->args;
+	tmp_limiter = limiter;
+	while (tmp_limiter->next)
+		tmp_limiter = tmp_limiter->next;
+	tmp = tmp_limiter->args;
 	limit = ft_strdup("");
 	while (tmp)
 	{
@@ -43,7 +47,7 @@ void	join_limit(t_limiter *limiter)
 		free(tmplimit);
 		tmp = tmp->next;
 	}
-	limiter->limit = limit;
+	tmp_limiter->limit = limit;
 }
 
 void	expand_file(t_file *file, t_env *env)
