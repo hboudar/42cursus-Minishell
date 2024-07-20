@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:47:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/20 15:13:19 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/20 15:20:52 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids, int mode)
 	return (prompt->exit_state);
 }
 
-int	ft_or(t_prompt *prompt, t_env **env, t_pid **pids, int mode)
+int	ft_or(t_prompt *prompt, t_env **env, t_pid **pids)
 {
 	int	fd0;
 	int	fd1;
@@ -46,13 +46,12 @@ int	ft_or(t_prompt *prompt, t_env **env, t_pid **pids, int mode)
 	(1) && (dup2(fd0, 0), dup2(fd1, 1));
 	(fd0 != 0) && (close(fd0));
 	(fd1 != 1) && (close(fd1));
-	// prompt->exit_state = get_exit_status(*pids);
 	if (prompt->exit_state)
 		prompt->exit_state = execution(prompt->right, env, pids, 0);
 	return (prompt->exit_state);
 }
 
-int	ft_and(t_prompt *prompt, t_env **env, t_pid **pids, int mode)
+int	ft_and(t_prompt *prompt, t_env **env, t_pid **pids)
 {
 	int	fd0;
 	int	fd1;
@@ -80,8 +79,8 @@ int	execution(t_prompt *prompt, t_env **env, t_pid **pids, int mode)
 		prompt->exit_state = ft_pipe(prompt->right, env, 'R', pids);
 	}
 	else if (prompt->type == P_OR)
-		prompt->exit_state = ft_or(prompt, env, pids, 2);
+		prompt->exit_state = ft_or(prompt, env, pids);
 	else if (prompt->type == P_AND)
-		prompt->exit_state = ft_and(prompt, env, pids, 2);
+		prompt->exit_state = ft_and(prompt, env, pids);
 	return (prompt->exit_state);
 }

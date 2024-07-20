@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:51:11 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 17:27:09 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/20 15:18:11 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ int	ft_pipe(t_prompt *prompt, t_env **env, char side, t_pid **pids)
 		(side == 'R') && (do_right(prompt, env, pids), side = 'R');
 	}
 	else
-		prompt->exit_state = execution(prompt, env, pids);
+		prompt->exit_state = execution(prompt, env, pids, 0);
 	return (prompt->exit_state);
 }
