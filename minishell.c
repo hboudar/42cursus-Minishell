@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 07:49:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/20 17:16:16 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/20 17:31:59 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 	}
 	update_exit_state(prompt);
 	free_pid(&tmp);
+	if (!mode)
+		g_caught = 0;
 	return (prompt->exit_state);
 }
 
