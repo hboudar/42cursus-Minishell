@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 07:49:04 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/19 17:05:58 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/20 15:19:21 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	prep_execution(t_prompt *prompt, t_env **env, int mode)
 	if (!mode)
 		here_doc(prompt, *env);
 	if (g_caught != 2)
-		prompt->exit_state = execution(prompt, env, &pid);
+		prompt->exit_state = execution(prompt, env, &pid, 0);
 	else
 		prompt->exit_state = 1;
 	tmp = pid;

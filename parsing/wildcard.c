@@ -6,7 +6,7 @@
 /*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 09:27:16 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/16 09:07:02 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:43:09 by aoulahra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	add_files_tokens(t_token **token, t_token *limit, char **files)
 		new = (t_token *)malloc(sizeof(t_token));
 		if (!new)
 		{
-			perror("malloc");
+			ft_putstr_fd("malloc\n", 2);
 			exit(1);
 		}
 		ft_bzero(new, sizeof(t_token));
@@ -46,7 +46,8 @@ int	match(const char *pattern, const char *str)
 	{
 		if (*pattern == '*')
 		{
-			pattern++;
+			while (*pattern == '*')
+				pattern++;
 			if (!*pattern)
 				return (1);
 			while (*str)
@@ -78,7 +79,7 @@ char	**get_files(char *pattern)
 	files = NULL;
 	if (!dir)
 	{
-		perror("opendir");
+		ft_putstr_fd("opendir\n", 2);
 		return (NULL);
 	}
 	entry = readdir(dir);
