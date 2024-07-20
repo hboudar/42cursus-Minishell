@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:51:45 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 16:13:01 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:27:41 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	subshell(t_prompt *prompt, t_env **env, int *fd, t_pid **pids)
 	setup_signal_handlers(sig_handler_child, sig_handler_child);
 	pid = fork();
 	if (pid == -1)
-		perror("fork");
+		ft_putstr_fd("fork\n", 2);
 	if (pid == 0)
 	{
 		(fd) && (dup2(fd[1], 1), close(fd[0]), close(fd[1]));

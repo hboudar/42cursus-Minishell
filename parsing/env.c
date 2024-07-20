@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aoulahra <aoulahra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 08:48:37 by aoulahra          #+#    #+#             */
-/*   Updated: 2024/07/19 09:06:09 by aoulahra         ###   ########.fr       */
+/*   Updated: 2024/07/19 17:58:41 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_shell_lvl(t_env *env)
 		{
 			str = ft_itoa(ft_atoi(tmp->value) + 1);
 			if (!str)
-				return (perror("E: ft_itoa in ft_shell_lvl"));
+				return (ft_putstr_fd("E: ft_itoa in ft_shell_lvl"));
 			if (ft_strncmp(tmp->value, "999", 3) == 0)
 			{
 				free(str);

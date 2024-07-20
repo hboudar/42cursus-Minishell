@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:07:10 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 16:07:13 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:27:53 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**env_to_envp(t_env *tmp)
 	i = len_env(tmp);
 	envp = malloc(sizeof(char *) * (i + 1));
 	if (!envp)
-		return (perror("malloc function"), NULL);
+		return (ft_putstr_fd("malloc function\n", 2), NULL);
 	i = -1;
 	while (tmp)
 	{
@@ -61,7 +61,7 @@ char	**env_to_envp(t_env *tmp)
 			envp[++i] = ft_strjoin(tmp->key, tmp->value);
 			if (envp[i] == NULL)
 			{
-				perror("ft_strjoin failed");
+				ft_putstr_fd("ft_strjoin failed\n", 2);
 				return (free_envp(envp));
 			}
 		}

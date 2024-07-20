@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:52:42 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 14:52:43 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:24:10 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	tohome_wego(t_env *env, char *home, char *oldpwd, char *pwd)
 	if (chdir(home) == -1)
 	{
 		(oldpwd) && (free(oldpwd), oldpwd = NULL);
-		perror("Error in chdir");
+		ft_putstr_fd("Error in chdir\n", 2);
 		return (1);
 	}
 	pwd = ft_getpath(NULL, env, 0);
@@ -92,7 +92,7 @@ int	ft_cd(t_prompt *prompt, t_env *env, char *oldpwd, char *pwd)
 	if (chdir(prompt->cmd->args[1]) == -1)
 	{
 		(oldpwd) && (free(oldpwd), oldpwd = NULL);
-		perror("chdir failed");
+		ft_putstr_fd("chdir failed\n", 2);
 		return (1);
 	}
 	pwd = ft_getpath(prompt->cmd->args[1], env, 1);

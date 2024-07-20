@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:57:55 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 15:17:38 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:22:57 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	child_process(t_prompt *prompt, t_env *env, char **envp, char *path)
 	handle_error(path, prompt->cmd->args[0]);
 	envp = env_to_envp(env);
 	if (execve(path, prompt->cmd->args, envp) == -1)
-		perror("execve: failed");
+		ft_putstr_fd("execve: failed\n", 2);
 	free_envp(envp);
 	exit(1);
 }
@@ -62,7 +62,7 @@ int	none_builtin(t_prompt *prompt, t_env *env, int mode, t_pid **pids)
 		setup_signal_handlers(sig_handler_child, sig_handler_child);
 		pid = fork();
 		if (pid == -1)
-			perror("fork failed");
+			ft_putstr_fd("fork failed\n", 2);
 		else if (pid == 0)
 			child_process(prompt, env, NULL, NULL);
 		else

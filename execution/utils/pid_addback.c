@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 16:07:44 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 16:07:45 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:28:15 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_pid	*new_pid(pid_t pid)
 	new = (t_pid *)malloc(sizeof(t_pid));
 	if (!new)
 	{
-		perror("malloc");
+		ft_putstr_fd("malloc\n", 2);
 		return (NULL);
 	}
 	new->pid = pid;

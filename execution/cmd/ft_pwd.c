@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:55:34 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 14:55:35 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/19 17:25:55 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_pwd(t_env *env)
 	pwd = ft_getcwd(env);
 	if (!pwd)
 	{
-		perror("pwd failed");
+		ft_putstr_fd("pwd failed\n", 2);
 		return (1);
 	}
 	printf("%s\n", pwd);

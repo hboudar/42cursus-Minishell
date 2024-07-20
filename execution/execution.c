@@ -6,7 +6,7 @@
 /*   By: hboudar <hboudar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 14:47:57 by hboudar           #+#    #+#             */
-/*   Updated: 2024/07/19 16:31:18 by hboudar          ###   ########.fr       */
+/*   Updated: 2024/07/20 13:37:46 by hboudar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_cmd(t_prompt *prompt, t_env **env, t_pid **pids)
 	tmp_env = *env;
 	if (!prompt->cmd)
 	{
-		perror("malloc");
+		ft_putstr_fd("malloc\n", 2);
 		return (1);
 	}
 	if (prompt->cmd && prompt->cmd->args)
@@ -40,9 +40,12 @@ int	ft_or(t_prompt *prompt, t_env **env, t_pid **pids)
 	int	fd0;
 	int	fd1;
 
+	(1) && (fd0 = 0, fd1 = 1);
 	(1) && (fd0 = dup(0), fd1 = dup(1));
 	prompt->exit_state = execution(prompt->left, env, pids);
 	(1) && (dup2(fd0, 0), dup2(fd1, 1));
+	(fd0 != 0) && (close(fd0));
+	(fd1 != 1) && (close(fd1));
 	if (prompt->exit_state)
 		prompt->exit_state = execution(prompt->right, env, pids);
 	return (prompt->exit_state);
@@ -53,9 +56,12 @@ int	ft_and(t_prompt *prompt, t_env **env, t_pid **pids)
 	int	fd0;
 	int	fd1;
 
+	(1) && (fd0 = 0, fd1 = 1);
 	(1) && (fd0 = dup(0), fd1 = dup(1));
 	prompt->exit_state = execution(prompt->left, env, pids);
 	(1) && (dup2(fd0, 0), dup2(fd1, 1));
+	(fd0 != 0) && (close(fd0));
+	(fd1 != 1) && (close(fd1));
 	if (!prompt->exit_state)
 		prompt->exit_state = execution(prompt->right, env, pids);
 	return (prompt->exit_state);
